@@ -166,6 +166,9 @@
     <ResourceCompile Include="WindowsProject1.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\Icon1.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
     <Image Include="small.ico" />
     <Image Include="WindowsProject1.ico" />
   </ItemGroup>

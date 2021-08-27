@@ -7,16 +7,30 @@
 
 
 #include <winrt/base.h>
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.UI.Xaml.Controls.h>
+#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+#include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Hosting.h>
 #include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
+#include <winrt/Windows.UI.Xaml.Media.h>
+#include <winrt/Windows.UI.Xaml.Media.Imaging.h>
+#include <winrt/Windows.UI.h>
+#include <winrt/Windows.ApplicationModel.DataTransfer.h>
+#include <winrt/Windows.ApplicationModel.DataTransfer.DragDrop.h>
+
+#include <winrt/Windows.UI.Xaml.Markup.h>
 
 using namespace winrt;
+using namespace Windows::Foundation;
+using namespace Windows::UI;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Hosting;
-
+using namespace Windows::UI::Xaml::Media;
+using namespace Imaging;
 using namespace Microsoft::Toolkit::Win32::UI::XamlHost;
 
 
@@ -111,7 +125,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_WINDOWSPROJECT1));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_WINDOWSPROJECT1);
+    wcex.lpszMenuName = nullptr;
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -132,8 +146,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_POPUP,
+      0, 0,  1024, 768, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
@@ -146,6 +160,43 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    // The call to winrt::init_apartment initializes COM; by default, in a multithreaded apartment.
 
    return TRUE;
+}
+
+
+struct Item {
+  std::wstring displayName;
+  std::wstring iconPath;
+};
+
+auto MakeBitmapIcon(const std::wstring& filename) {
+  BitmapImage bi;
+
+  wchar_t cwd[MAX_PATH] = {};
+  GetCurrentDirectoryW(std::size(cwd), cwd);
+  auto absolutePath = std::wstring(cwd) + L"\\" + filename;
+
+  bi.UriSource(Uri{ absolutePath });
+  Image i;
+  i.Source(bi);
+  auto size = 64;
+  i.Width(size);
+  i.Height(size);
+  
+  return i;
+
+/*
+  BitmapImage bi;
+  auto size = 128;
+  bi.DecodePixelWidth(size);
+  bi.DecodePixelHeight(size);
+  bi.UriSource(Uri{ uri });
+  Image img;
+  img.Source(bi);
+  img.Width(size);
+  img.Height(size);
+  return img;
+  */
+  
 }
 
 //
@@ -179,9 +230,130 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
       SetWindowPos(hWndXamlIsland, nullptr, 0, 0, createStruct->cx, createStruct->cy, SWP_SHOWWINDOW);
 
+      BitmapImage bi;
+      bi.UriSource(Uri{ L"https://w.wallhaven.cc/full/0q/wallhaven-0qmo8d.jpg" });
+      Image i;
+      i.Source(bi);
+      
+      Canvas c;
+      Canvas::SetZIndex(i, -100);
+      c.Children().Append(i);
+
       TextBlock tb;
       tb.Text(L"Hello world!");
-      desktopXamlSource.Content(tb);
+      tb.Foreground(SolidColorBrush(Colors::White()));
+      
+      Canvas::SetLeft(tb, 100);
+      Canvas::SetTop(tb, 200);
+
+      c.Children().Append(tb);
+
+
+      GridView gv;
+      auto ipt= Markup::XamlReader::Load(LR"(
+        <ItemsPanelTemplate xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+          <ItemsWrapGrid VerticalAlignment="Top" ItemWidth="64" Orientation="Horizontal" MaximumRowsOrColumns="5"/>
+        </ItemsPanelTemplate>
+      )").as<ItemsPanelTemplate>();
+      gv.ItemsPanel(ipt);
+
+      std::vector<Item> items = {
+        {L"item 1", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 2", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 3", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 4", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 5", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 6", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 7", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 1", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 2", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 3", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 4", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 5", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 6", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 7", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 1", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 2", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 3", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 4", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 5", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 6", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+        {L"item 7", L"Assets\\Icon1.png" /*L"https://www.vectorico.com/download/office/folder-icon.jpg"*/},
+      };
+      for (const auto& e : items) {
+        StackPanel sp;
+        sp.Orientation(Orientation::Vertical);
+        sp.Margin(ThicknessHelper::FromUniformLength(6));
+        auto img = MakeBitmapIcon(e.iconPath);
+        
+        Border border;
+        border.CornerRadius(CornerRadiusHelper::FromUniformRadius(8));
+        border.Child(img);
+        sp.Children().Append(border);
+        
+        TextBlock tb;
+        tb.Text(e.displayName);
+        tb.Foreground(SolidColorBrush{ Colors::Orange() });
+        tb.Margin(ThicknessHelper::FromUniformLength(4));
+
+        tb.Tapped([=](auto&, auto&) {
+          TextBox box;
+          box.Text(tb.Text());
+          box.SelectAll();
+          tb.Visibility(Visibility::Collapsed);
+          sp.Children().Append(box);
+          box.Focus(FocusState::Keyboard);
+          box.KeyDown([=](auto&, Xaml::Input::KeyRoutedEventArgs a) {
+            bool dismiss = false;
+            if (a.Key() == Windows::System::VirtualKey::Enter) {
+              tb.Text(box.Text());
+              dismiss = true;
+            }
+            else if (a.Key() == Windows::System::VirtualKey::Escape) {
+              dismiss = true;
+            }
+
+            if (dismiss) {
+              sp.Children().RemoveAtEnd();
+              tb.Visibility(Visibility::Visible);
+            }
+            });
+          });
+        sp.Children().Append(tb);
+
+        gv.Items().Append(sp);
+
+        sp.RightTapped([=](auto& sender, auto& args) {
+          MenuFlyout mf;
+
+          std::vector commands = { L"Command 1", L"Command 2" };
+          for (const auto& c : commands) {
+            MenuFlyoutItem mfi;
+            mfi.Text(c);
+            mfi.Icon(SymbolIcon{ Symbol::Comment });
+            mf.Items().Append(mfi);
+          }
+          mf.ShowAt(sp);
+          });
+
+        sp.DoubleTapped([=](auto& sender, auto& args) {
+          MessageBeep(MB_ICONASTERISK);
+          });
+
+      }
+      
+      c.Children().Append(gv);
+
+      gv.CanReorderItems(true);
+      gv.CanDragItems(true);
+      gv.IsItemClickEnabled(true);
+      gv.AllowDrop(true);
+      gv.Drop([=](auto& s, const DragEventArgs& a) {
+        Canvas::SetLeft(s.as<UIElement>(), a.GetPosition(c).X);
+        Canvas::SetTop(s.as<UIElement>(), a.GetPosition(c).Y);
+        });
+
+      desktopXamlSource.Content(c);
 
 
       break;

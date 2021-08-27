@@ -45,6 +45,9 @@
     <Image Include="WindowsProject1.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Assets\Icon1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

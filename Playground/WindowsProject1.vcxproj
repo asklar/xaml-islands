@@ -29,7 +29,7 @@
     <ProjectGuid>{1aca4f14-b0c1-495d-8fff-b4e93d7f12c6}</ProjectGuid>
     <RootNamespace>WindowsProject1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
-    <ProjectName>UnpackagedWin32</ProjectName>
+    <ProjectName>Playground</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -200,6 +200,4 @@
     <Error Condition="!Exists('packages\Microsoft.UI.Xaml.2.7.0-prerelease.210816001\build\native\Microsoft.UI.Xaml.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.UI.Xaml.2.7.0-prerelease.210816001\build\native\Microsoft.UI.Xaml.targets'))" />
     <Error Condition="!Exists('packages\Microsoft.VCRTForwarders.140.1.0.7\build\native\Microsoft.VCRTForwarders.140.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VCRTForwarders.140.1.0.7\build\native\Microsoft.VCRTForwarders.140.targets'))" />
   </Target>
-
-
 </Project>

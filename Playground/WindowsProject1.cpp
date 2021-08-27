@@ -18,7 +18,7 @@ using namespace Microsoft::UI::Xaml::Controls;
 // to host WinRT XAML controls in any UI element that is associated with a window handle (HWND).
 DesktopWindowXamlSource desktopXamlSource{ nullptr };
 XamlApplication xapp{ nullptr };
-Frame frame{ nullptr };
+ContentPresenter presenter{ nullptr };
 
 #define MAX_LOADSTRING 100
 
@@ -57,7 +57,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());
     
     desktopXamlSource = DesktopWindowXamlSource();
-
+    SetThreadDescription(GetCurrentThread(), L"XAML thread");
     // Perform application initialization:
     if (!InitInstance (hInstance, nCmdShow))
     {
@@ -184,10 +184,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
       TextBlock tb;
       tb.Text(L"XAML islands Playground");
       tb.HorizontalAlignment(HorizontalAlignment::Center);
-      tb.FontWeight(Windows::UI::Text::FontWeights::ExtraBlack());
+      tb.FontWeight(Windows::UI::Text::FontWeights::Black());
       tb.FontSize(32);
       main.Children().Append(tb);
 
+      auto infobar = Microsoft::UI::Xaml::Controls::InfoBar();
+      main.Children().Append(infobar);
 
       StackPanel sp;
       sp.Orientation(Orientation::Horizontal);
@@ -217,34 +219,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
       run.Tapped([=](auto&, auto&) {
         try {
           auto parsedContent = Markup::XamlReader::Load(edit.Text());
-          frame.Content(parsedContent);
+          presenter.Content(parsedContent);
         }
         catch (const winrt::hresult_error& e) {
-          auto infobar = Microsoft::UI::Xaml::Controls::InfoBar();
-          infobar.MinHeight(20);
-          infobar.Message(L"asodijfasoid");
-          infobar.Severity(InfoBarSeverity::Informational);
-
-          main.Children().InsertAt(1, infobar);
           infobar.Title(L"Error");
           infobar.Message(e.message());
           infobar.Severity(InfoBarSeverity::Error);
-          infobar.Visibility(Visibility::Visible);
+          infobar.IsOpen(true);
         }
         });
+
+      run.Margin(ThicknessHelper::FromUniformLength(4));
+
+      editPanel.Margin(ThicknessHelper::FromUniformLength(12));
       editPanel.Children().Append(run);
 
       sp.Children().Append(editPanel);
-      frame = Frame();
-      frame.Background(Media::SolidColorBrush{ Windows::UI::Colors::Aqua() });
-      frame.MinWidth(600);
-      frame.MinHeight(800);
-      sp.Children().Append(frame);
+      presenter = ContentPresenter();
+      presenter.HorizontalAlignment(HorizontalAlignment::Stretch);
+      presenter.Background(Media::SolidColorBrush{ Windows::UI::Colors::Aqua() });
+      presenter.Margin(ThicknessHelper::FromUniformLength(4));
+
+      presenter.MinWidth(600);
+      presenter.MinHeight(800);
+      sp.Children().Append(presenter);
 
       main.Children().Append(sp);
 
       desktopXamlSource.Content(main);
-
 
       break;
     }

@@ -194,11 +194,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
       StackPanel sp;
       sp.Orientation(Orientation::Horizontal);
 
-      StackPanel editPanel;
+      Grid editPanel;
       TextBox edit;
       edit.Height(600);
       edit.MinWidth(600);
       edit.HorizontalAlignment(HorizontalAlignment::Stretch);
+      edit.VerticalAlignment(VerticalAlignment::Top);
       edit.AcceptsReturn(true);
       edit.IsSpellCheckEnabled(false);
       Media::FontFamily consolas(L"Consolas");
@@ -230,7 +231,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         });
 
       run.Margin(ThicknessHelper::FromUniformLength(4));
-
+      run.HorizontalAlignment(HorizontalAlignment::Right);
+      run.VerticalAlignment(VerticalAlignment::Top);
       editPanel.Margin(ThicknessHelper::FromUniformLength(12));
       editPanel.Children().Append(run);
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>Unpackaged</id>
+    <version>0.0.1</version>
+    <authors>Alexander Sklar</authors>
+    <owners>Alexander Sklar</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="file">LICENSE.txt</license>
+    <projectUrl>https://github.com/asklar/xaml-islands</projectUrl>
+    <description>Helpers for unpackaged and xaml islands apps</description>
+    <copyright>Copyright Alexander Sklar (c) 2021</copyright>
+    <tags>unpackaged msix xaml islands xaml-islands</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="build\*" target="build" />
+    <file src="LICENSE.txt" target="" />
+  </files>
+</package>

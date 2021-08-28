@@ -1,30 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31612.314
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnpackagedWin32", "WindowsProject1.vcxproj", "{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Playground", "Playground.vcxproj", "{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|ARM = Debug|ARM
-		Debug|ARM64 = Debug|ARM64
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
-		Release|ARM = Release|ARM
-		Release|ARM64 = Release|ARM64
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}.Debug|ARM.ActiveCfg = Debug|Win32
-		{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}.Debug|ARM64.ActiveCfg = Debug|Win32
 		{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}.Debug|x64.ActiveCfg = Debug|x64
 		{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}.Debug|x64.Build.0 = Debug|x64
 		{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}.Debug|x86.ActiveCfg = Debug|Win32
 		{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}.Debug|x86.Build.0 = Debug|Win32
-		{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}.Release|ARM.ActiveCfg = Release|Win32
-		{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}.Release|ARM64.ActiveCfg = Release|Win32
 		{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}.Release|x64.ActiveCfg = Release|x64
 		{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}.Release|x64.Build.0 = Release|x64
 		{1ACA4F14-B0C1-495D-8FFF-B4E93D7F12C6}.Release|x86.ActiveCfg = Release|Win32

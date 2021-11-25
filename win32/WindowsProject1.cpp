@@ -10,7 +10,10 @@
 #include <winrt/Windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Hosting.h>
+#include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
+
+#include <winrt/AppMarkup.h>
 
 using namespace winrt;
 using namespace Windows::UI::Xaml::Controls;
@@ -46,9 +49,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // TODO: Place code here.
-
-    // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_WINDOWSPROJECT1, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
@@ -56,8 +56,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     winrt::init_apartment(apartment_type::single_threaded);
 
     auto winuiIXMP = winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider();
+    auto markupIXMP = winrt::AppMarkup::XamlMetaDataProvider();
 
-    xapp = XamlApplication({winuiIXMP});
+    xapp = XamlApplication({winuiIXMP, markupIXMP});
 
     WindowsXamlManager winxamlmanager = WindowsXamlManager::InitializeForCurrentThread();
     xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());
@@ -184,11 +185,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
       check_hresult(interop->get_WindowHandle(&hWndXamlIsland));
 
       SetWindowPos(hWndXamlIsland, nullptr, 0, 0, createStruct->cx, createStruct->cy, SWP_SHOWWINDOW);
-
-      TextBlock tb;
-      tb.Text(L"Hello world!");
-      desktopXamlSource.Content(tb);
-
+      Frame f;
+      desktopXamlSource.Content(f);
+      f.Navigate(winrt::xaml_typename<AppMarkup::BlankPage>());
 
       break;
     }

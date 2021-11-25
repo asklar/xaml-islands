@@ -21,8 +21,9 @@ if ERRORLEVEL 1 (
   exit /b 2
 )
 
-msbuild %~dp0..\WapProjectTemplate1\WapProjectTemplate1.wapproj /p:Platform=%arch;Configuration=%config% /restore /p:RestorePackagesConfig=true
-echo copy WapProjectTemplate1\bin\%arch%\%config%\resources.pri %~dp0%config%
+nuget restore %~dp0
+msbuild %~dp0..\WapProjTemplate1\WapProjTemplate1.wapproj /p:Platform=%arch% /p:Configuration=%config% /p:RestorePackagesConfig=true /restore  /bl
+copy %~dp0..\WapProjTemplate1\bin\%arch%\%config%\resources.pri %~dp0%config%
 exit /b 0
 
 endlocal

@@ -19,6 +19,7 @@ using namespace Windows::UI::Xaml::Hosting;
 
 using namespace Microsoft::Toolkit::Win32::UI::XamlHost;
 
+XamlApplication xapp{ nullptr };
 
 // This DesktopWindowXamlSource is the object that enables a non-UWP desktop application 
 // to host WinRT XAML controls in any UI element that is associated with a window handle (HWND).
@@ -54,7 +55,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     winrt::init_apartment(apartment_type::single_threaded);
 
+    auto winuiIXMP = winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider();
+
+    xapp = XamlApplication({winuiIXMP});
+
     WindowsXamlManager winxamlmanager = WindowsXamlManager::InitializeForCurrentThread();
+    xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());
 
     desktopXamlSource = DesktopWindowXamlSource();
 
@@ -221,6 +227,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
       break;
     }
     case WM_DESTROY:
+        xapp.Close();
         PostQuitMessage(0);
         break;
     default:

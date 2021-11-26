@@ -22,8 +22,8 @@ if ERRORLEVEL 1 (
 )
 
 nuget restore %~dp0
-msbuild %~dp0..\WapProjTemplate1\WapProjTemplate1.wapproj /p:Platform=%arch% /p:Configuration=%config% /p:RestorePackagesConfig=true /restore  /bl
-copy %~dp0..\WapProjTemplate1\bin\%arch%\%config%\resources.pri %~dp0%config%
+msbuild %~dp0\WindowsProject1.sln /p:Platform=%arch% /p:Configuration=%config% /p:RestorePackagesConfig=true /restore  /bl
+makepri new /pr . /cf .\priconfig.xml /of .\%config%\resources.pri /o
 exit /b 0
 
 endlocal

@@ -11,6 +11,7 @@
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Hosting.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
+#include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
 
 #include <winrt/AppMarkup.h>
@@ -46,9 +47,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
-
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_WINDOWSPROJECT1, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
@@ -97,13 +95,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     return (int) msg.wParam;
 }
 
-
-
-//
-//  FUNCTION: MyRegisterClass()
-//
-//  PURPOSE: Registers the window class.
-//
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
     WNDCLASSEXW wcex;
@@ -125,16 +116,6 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     return RegisterClassExW(&wcex);
 }
 
-//
-//   FUNCTION: InitInstance(HINSTANCE, int)
-//
-//   PURPOSE: Saves instance handle and creates main window
-//
-//   COMMENTS:
-//
-//        In this function, we save the instance handle in a global variable and
-//        create and display the main program window.
-//
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
@@ -150,21 +131,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
-   // The call to winrt::init_apartment initializes COM; by default, in a multithreaded apartment.
-
    return TRUE;
 }
 
-//
-//  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
-//
-//  PURPOSE: Processes messages for the main window.
-//
-//  WM_COMMAND  - process the application menu
-//  WM_PAINT    - Paint the main window
-//  WM_DESTROY  - post a quit message and return
-//
-//
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
   // Get handle to the core window.
@@ -183,12 +152,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
       // Get the new child window's hwnd
       HWND hWndXamlIsland = nullptr;
       check_hresult(interop->get_WindowHandle(&hWndXamlIsland));
-
       SetWindowPos(hWndXamlIsland, nullptr, 0, 0, createStruct->cx, createStruct->cy, SWP_SHOWWINDOW);
+
+#ifdef CREATE_UI_IN_CODE
+      // Option 1: create UI in code:
+      Controls::TextBlock tb;
+      tb.Text(L"Hello world!");
+      desktopXamlSource.Content(tb);
+#elif defined(CREATE_UI_FROM_STRING)
+      // Option 2: create UI from a string
+      auto tb = Markup::XamlReader::Load(LR"(
+        <TextBlock Text="Hello world!"/>
+)").as<TextBlock>();
+      desktopXamlSource.Content(tb);
+#else
+      // Option 3: use a Windows Runtime component to define the UI in markup, and load it here
       Frame f;
       desktopXamlSource.Content(f);
       f.Navigate(winrt::xaml_typename<AppMarkup::BlankPage>());
-
+#endif
       break;
     }
     case WM_COMMAND:
@@ -210,10 +192,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_PAINT:
         {
-//            PAINTSTRUCT ps;
-//            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: Add any drawing code that uses hdc here...
-//            EndPaint(hWnd, &ps);
         }
         break;
     case WM_SIZE:

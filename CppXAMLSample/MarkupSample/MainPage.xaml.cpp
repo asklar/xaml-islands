@@ -27,9 +27,10 @@ using namespace std::chrono;
             
 namespace winrt::MarkupSample::implementation
 {
-    MainPage::MainPage()
+    MainPage::MainPage() : INIT_PROPERTY(MyInt, 42)
     {
         InitializeComponent();
+        // Properties can be assigned to and read from with the operator= too!
         ImplString = winrt::hstring{ L"This string comes from the implementation" };
         winrt::hstring v = ImplString;
         BuildUIProgrammatically();

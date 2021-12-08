@@ -82,7 +82,7 @@ namespace cppxaml {
         /// </summary>
         /// <remarks>
         /// <example>
-        ///   <c>auto xw = XamlWindow::Make(L"MyPage", L"&lt;StackPanel&gt;&lt;TextBlock&gt;Hello&lt;/TextBlock&gt;&lt;/StackPanel&gt;", c);</c>
+        ///   <c>auto& xw = cppxaml::XamlWindow::Make(L"MyPage", L"&lt;StackPanel&gt;&lt;TextBlock&gt;Hello&lt;/TextBlock&gt;&lt;/StackPanel&gt;", c);</c>
         /// </example>
         /// </remarks>
         /// 
@@ -110,7 +110,7 @@ namespace cppxaml {
         /// <param name="id"></param>
         /// <param name="getUI">
         /// App-provided function to create UI. This can e.g. instantiate XAML types programmatically.
-        /// <example><c>XamlWindow::Make(L"Foo", [](auto&amp;...) { return winrt::Windows::UI::Xaml::Controls::Button(); }</c></example>
+        /// <example><c>auto& xw = cppxaml::XamlWindow::Make(L"Foo", [](auto&amp;...) { return winrt::Windows::UI::Xaml::Controls::Button(); });</c></example>
         /// </param>
         /// <param name="c"></param>
         /// <returns></returns>

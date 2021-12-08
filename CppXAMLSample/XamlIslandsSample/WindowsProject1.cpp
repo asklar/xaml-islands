@@ -14,7 +14,6 @@ using namespace winrt;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Hosting;
-using namespace cppxaml;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -28,16 +27,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     auto xapp = winrt::Microsoft::Toolkit::Win32::UI::XamlHost::XamlApplication({ winuiIXMP, markupIXMP });
 
-    AppController controller(hInstance, xapp);
+    cppxaml::AppController controller(hInstance, xapp);
 
-    controller.OnUICreated = [](UIElement page, XamlWindow* xw) {
+    controller.OnUICreated = [](UIElement page, cppxaml::XamlWindow* xw) {
         if (auto mainPage = page.try_as<MarkupSample::MainPage>()) {
             assert(xw->Id() == L"MarkupSample");
             mainPage.InterfaceStr(L"This string comes from the win32 app");
             mainPage.EventHappened([xw](Windows::Foundation::IInspectable sender, winrt::hstring str) {
                 if (str == L"LinkClicked") {
-                    auto& modalWindow = XamlWindow::Get(L"Modal");
-                    auto& mainWindow = XamlWindow::Get(L"MarkupSample");
+                    auto& modalWindow = cppxaml::XamlWindow::Get(L"Modal");
+                    auto& mainWindow = cppxaml::XamlWindow::Get(L"MarkupSample");
                     modalWindow.Create(L"Modal", 0 /*WS_POPUPWINDOW*/, mainWindow.hwnd(), 600 * GetDpiForSystem() / 96, 600 * GetDpiForSystem() / 96);
                     EnableWindow(mainWindow.hwnd(), FALSE);
                 }
@@ -50,13 +49,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             assert(xw->Id() == L"Modal");
             modalPage.OkClicked([xw](auto&...) {
                 DestroyWindow(xw->hwnd());
-                SetFocus(XamlWindow::Get(L"MarkupSample").hwnd());
+                SetFocus(cppxaml::XamlWindow::Get(L"MarkupSample").hwnd());
                 });
         }
     };
 
     controller.WndProc =
-        [](HWND hWnd, INT message, WPARAM wParam, LPARAM lParam, XamlWindow* xw) -> LRESULT {
+        [](HWND hWnd, INT message, WPARAM wParam, LPARAM lParam, cppxaml::XamlWindow* xw) -> LRESULT {
         switch (message) {
         case WM_CREATE: {
             auto hInstance = xw->Controller()->HInstance();
@@ -72,7 +71,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         case WM_KEYUP: {
             if (xw->Id() == L"Modal" && wParam == VK_ESCAPE) {
                 DestroyWindow(xw->hwnd());
-                SetFocus(XamlWindow::Get(L"MarkupSample").hwnd());
+                SetFocus(cppxaml::XamlWindow::Get(L"MarkupSample").hwnd());
                 return 0;
             }
             break;
@@ -82,7 +81,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 PostQuitMessage(0);
             }
             else if (xw->Id() == L"Modal") {
-                EnableWindow(XamlWindow::Get(L"MarkupSample").hwnd(), TRUE);
+                EnableWindow(cppxaml::XamlWindow::Get(L"MarkupSample").hwnd(), TRUE);
             }
             break;
         }
@@ -90,9 +89,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     };
 
     xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());
-    auto& mainWindow = XamlWindow::Make<MarkupSample::MainPage>(L"MarkupSample", &controller);
-    auto& modalWindow = XamlWindow::Make<MarkupSample::ModalPage>(L"Modal", &controller);
-
+    auto& mainWindow = cppxaml::XamlWindow::Make<MarkupSample::MainPage>(L"MarkupSample", &controller);
+    auto& modalWindow = cppxaml::XamlWindow::Make<MarkupSample::ModalPage>(L"Modal", &controller);
+    
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT1));
     mainWindow.SetAcceleratorTable(hAccelTable);
 

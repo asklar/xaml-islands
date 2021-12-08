@@ -9,6 +9,8 @@ namespace MarkupSample
         String InterfaceStr{ get; set; };
         String ImplString{ get; };
         event Windows.Foundation.EventHandler<String> EventHappened;
+
+        Int32 MyInt{ get; set; };
         
     }
 }

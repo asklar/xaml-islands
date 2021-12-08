@@ -7,19 +7,18 @@
 #include "MainPage.g.h"
 
 
-using namespace cppxaml;
 namespace winrt::MarkupSample::implementation
 {
 
 
-    struct MainPage : MainPageT<MainPage>, SimpleNotifyPropertyChanged<MainPage>
+    struct MainPage : MainPageT<MainPage>, cppxaml::SimpleNotifyPropertyChanged<MainPage>
     {
         MainPage();
-        XamlProperty<winrt::hstring> InterfaceStr;
-        XamlProperty<winrt::hstring> ImplString;
+        cppxaml::XamlProperty<winrt::hstring> InterfaceStr;
+        cppxaml::XamlProperty<winrt::hstring> ImplString;
 
-        XamlEvent<winrt::hstring> EventHappened;
-
+        cppxaml::XamlEvent<winrt::hstring> EventHappened;
+        cppxaml::XamlPropertyWithNPC<int> MyInt;
         void Button_Tapped(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs const& e);
         void Hyperlink_Click(winrt::Windows::UI::Xaml::Documents::Hyperlink const& sender, winrt::Windows::UI::Xaml::Documents::HyperlinkClickEventArgs const& args);
 

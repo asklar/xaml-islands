@@ -15,10 +15,11 @@
 #include <chrono>
 #undef max
 
-using namespace winrt;
-using namespace Microsoft::UI::Xaml;
-using namespace Windows::UI::Xaml::Controls;
-namespace xaml = Windows::UI::Xaml;
+namespace winrt {
+    using namespace Microsoft::UI::Xaml;
+    using namespace Windows::UI::Xaml::Controls;
+}
+namespace xaml = winrt::Windows::UI::Xaml;
 
 using namespace std::chrono;
 // To learn more about WinUI, the WinUI project structure,

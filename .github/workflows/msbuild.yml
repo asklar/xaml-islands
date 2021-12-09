@@ -18,6 +18,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: dir powershell
+      run: dir C:\Windows\System32\WindowsPowerShell\powershell.exe /s
+      shell: cmd
+
     - name: Add MSBuild to PATH
       uses: microsoft/setup-msbuild@v1.0.2
 

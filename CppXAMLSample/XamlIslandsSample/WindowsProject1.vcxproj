@@ -28,7 +28,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{1aca4f14-b0c1-495d-8fff-b4e93d7f12c6}</ProjectGuid>
     <RootNamespace>WindowsProject1</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.22504.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>XamlIslandsSample</ProjectName>
     <WebView2UseWinRT>true</WebView2UseWinRT>
   </PropertyGroup>

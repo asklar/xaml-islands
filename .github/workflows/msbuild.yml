@@ -57,7 +57,7 @@ jobs:
       run: nuget restore CppXAMLSample\Sample.sln
 
     - name: Fix up PRI file list
-      working-directory: ${{env.GITHUB_WORKSPACE}}\CppXAMLSample
+      working-directory: CppXAMLSample
       run: fixUpPRIFileList.ps1 -Arch x64 -Config Release
 
     - name: Build

@@ -9,7 +9,7 @@ namespace winrt::MarkupSample::implementation
     {
         ModalPage();
 
-        cppxaml::XamlEvent<winrt::hstring> OkClicked;
+        cppxaml::TypedXamlEvent<MarkupSample::ModalPage, winrt::hstring> OkClicked;
 
         void Page_KeyUp(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::KeyRoutedEventArgs const& e);
         void Button_Click(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::RoutedEventArgs const& e);

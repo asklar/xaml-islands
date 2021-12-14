@@ -13,9 +13,10 @@ namespace winrt {
 }
 
 namespace cppxaml {
+
     template<typename T>
-    struct XamlEvent {
-        winrt::event_token operator()(winrt::Windows::Foundation::EventHandler<T> const& handler) {
+    struct XamlEvent_t {
+        winrt::event_token operator()(T const& handler) {
             return m_handler.add(handler);
         }
         auto operator()(const winrt::event_token& token) noexcept { return m_handler.remove(token); }
@@ -25,9 +26,14 @@ namespace cppxaml {
             return m_handler(args...);
         }
     private:
-        winrt::event<winrt::Windows::Foundation::EventHandler<T>> m_handler;
+        winrt::event<T> m_handler;
     };
 
+    template<typename T>
+    using XamlEvent = XamlEvent_t<winrt::Windows::Foundation::EventHandler<T>>;
+
+    template<typename TSender, typename TArgs>
+    using TypedXamlEvent = XamlEvent_t<winrt::Windows::Foundation::TypedEventHandler<TSender, TArgs>>;
 
     template<typename T>
     struct SimpleNotifyPropertyChanged {
@@ -115,3 +121,4 @@ namespace cppxaml {
 
 #define INIT_PROPERTY(NAME, VALUE)  \
     NAME(&m_propertyChanged, winrt::try_as<winrt::Windows::Foundation::IInspectable>(this), std::wstring_view{ L#NAME }, VALUE)
+

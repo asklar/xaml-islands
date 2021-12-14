@@ -5,6 +5,6 @@ namespace MarkupSample
     {
         ModalPage();
 
-        event Windows.Foundation.EventHandler<String> OkClicked;
+        event Windows.Foundation.TypedEventHandler<ModalPage, String> OkClicked;
     }
 }

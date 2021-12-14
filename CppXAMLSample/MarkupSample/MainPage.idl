@@ -8,7 +8,7 @@ namespace MarkupSample
         
         String InterfaceStr;
         String ImplString{ get; };
-        event Windows.Foundation.EventHandler<String> EventHappened;
+        event Windows.Foundation.TypedEventHandler<MainPage, String> EventHappened;
 
         Int32 MyInt{ get; set; };
         

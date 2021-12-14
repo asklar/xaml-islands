@@ -53,6 +53,7 @@ XAMLWindow implements an HWND based host for XAML Islands. You can create a `Xam
 - `SimpleNotifyPropertyChanged<F>`
 - `XamlPropertyWithNPC<T>`
 - `XamlEvent<T>`
+- `XamlTypedEvent<TSender, TArgs>`
 
 These provide stock/simple property objects that remove the need for verbose hand-written options. 
 

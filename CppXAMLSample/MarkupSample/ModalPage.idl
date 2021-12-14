@@ -1,0 +1,10 @@
+namespace MarkupSample
+{
+    [default_interface]
+    runtimeclass ModalPage : Windows.UI.Xaml.Controls.Page
+    {
+        ModalPage();
+
+        event Windows.Foundation.TypedEventHandler<ModalPage, String> OkClicked;
+    }
+}

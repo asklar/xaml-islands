@@ -1,0 +1,16 @@
+
+namespace MarkupSample
+{
+
+    runtimeclass MainPage : Windows.UI.Xaml.Controls.Page, Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        MainPage();
+        
+        String InterfaceStr;
+        String ImplString{ get; };
+        event Windows.Foundation.TypedEventHandler<MainPage, String> EventHappened;
+
+        Int32 MyInt{ get; set; };
+        
+    }
+}

@@ -43,6 +43,7 @@ namespace cppxaml {
         AppController* m_controller{ nullptr };
         std::wstring m_Id;
         std::wstring m_markup;
+        winrt::Windows::UI::Xaml::UIElement m_ui{ nullptr };
 
         static inline std::unordered_map<std::wstring, XamlWindow> s_windows{};
     public:
@@ -59,6 +60,11 @@ namespace cppxaml {
 
         HWND hwnd() const {
             return m_hWnd;
+        }
+
+        template<typename T = winrt::Windows::UI::Xaml::UIElement>
+        T GetUIElement() const {
+            return m_ui.as<T>();
         }
 
         /// <summary>
@@ -224,11 +230,11 @@ namespace cppxaml {
                 // Parent the DesktopWindowXamlSource object to the current window.
                 winrt::check_hresult(interop->AttachToWindow(m_hWnd));  // This fails due to access violation!
 
-                auto mainPage = this->m_getUI(*this);
+                this->m_ui = this->m_getUI(*this);
                 if (m_controller && m_controller->OnUICreated) {
-                    m_controller->OnUICreated(mainPage, this);
+                    m_controller->OnUICreated(m_ui, this);
                 }
-                m_desktopXamlSource.Content(mainPage);
+                m_desktopXamlSource.Content(m_ui);
                 break;
             }
             case WM_SIZE:

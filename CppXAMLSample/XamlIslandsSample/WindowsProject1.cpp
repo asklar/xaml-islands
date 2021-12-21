@@ -7,8 +7,10 @@
 
 #include <winrt/MarkupSample.h>
 #include <cppxaml/XamlWindow.h>
-
+#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 #include <dwmapi.h>
+#include <winrt/Windows.UI.Xaml.Input.h>
+#include <winrt/Windows.UI.Xaml.Documents.h>
 
 using namespace winrt;
 using namespace Windows::UI::Xaml::Controls;
@@ -33,16 +35,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         if (auto mainPage = page.try_as<MarkupSample::MainPage>()) {
             assert(xw->Id() == L"MarkupSample");
             mainPage.InterfaceStr(L"This string comes from the win32 app");
-            mainPage.EventHappened([xw](Windows::Foundation::IInspectable sender, winrt::hstring str) {
-                if (str == L"LinkClicked") {
-                    auto& modalWindow = cppxaml::XamlWindow::Get(L"Modal");
-                    auto& mainWindow = cppxaml::XamlWindow::Get(L"MarkupSample");
-                    modalWindow.Create(L"Modal", 0 /*WS_POPUPWINDOW*/, mainWindow.hwnd(), 600 * GetDpiForSystem() / 96, 600 * GetDpiForSystem() / 96);
-                    EnableWindow(mainWindow.hwnd(), FALSE);
-                }
-                else if (str == L"OkClicked") {
-                    DestroyWindow(xw->hwnd());
-                }
+
+            mainPage.Link().Click([](auto&...) {
+                auto& modalWindow = cppxaml::XamlWindow::Get(L"Modal");
+                auto& mainWindow = cppxaml::XamlWindow::Get(L"MarkupSample");
+                modalWindow.Create(L"Modal", 0 /*WS_POPUPWINDOW*/, mainWindow.hwnd(), 600 * GetDpiForSystem() / 96, 600 * GetDpiForSystem() / 96);
+                EnableWindow(mainWindow.hwnd(), FALSE);
+                });
+
+            mainPage.OkButton().Tapped([xw](Windows::Foundation::IInspectable, auto&) {
+                DestroyWindow(xw->hwnd());
                 });
         }
         else if (auto modalPage = page.try_as<MarkupSample::ModalPage>()) {

@@ -17,15 +17,14 @@ namespace winrt::MarkupSample::implementation
         cppxaml::XamlProperty<winrt::hstring> InterfaceStr;
         cppxaml::XamlProperty<winrt::hstring> ImplString;
 
-        cppxaml::TypedXamlEvent<MarkupSample::MainPage, winrt::hstring> EventHappened;
         cppxaml::XamlPropertyWithNPC<int> MyInt;
-        void Button_Tapped(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs const& e);
-        void Hyperlink_Click(winrt::Windows::UI::Xaml::Documents::Hyperlink const& sender, winrt::Windows::UI::Xaml::Documents::HyperlinkClickEventArgs const& args);
-
-
+        auto Link() const {
+            return m_hl;
+        }
     private:
         void BuildUIProgrammatically();
         std::wstring m_EvaluationStrTemplate;
+        winrt::Windows::UI::Xaml::Documents::Hyperlink m_hl{nullptr};
     };
 }
 

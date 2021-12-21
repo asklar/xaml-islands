@@ -51,12 +51,10 @@ namespace winrt::MarkupSample::implementation
                 if (anchorEnd > anchorStart) {
                     xaml::Documents::Run linkText;
                     linkText.Text(paraStr.substr(textStart, anchorEnd - textStart));
-                    xaml::Documents::Hyperlink hl;
-                    hl.Inlines().Append(linkText);
-                    hl.Click([this](auto&...) {
-                        EventHappened.invoke(*this, L"LinkClicked");
-                        });
-                    rtbParagraph().Inlines().Append(hl);
+                    assert(m_hl == nullptr);
+                    m_hl = winrt::Windows::UI::Xaml::Documents::Hyperlink();
+                    m_hl.Inlines().Append(linkText);
+                    rtbParagraph().Inlines().Append(m_hl);
                     i = anchorEnd + std::size(L"</A>") - 1;
                 }
             }
@@ -71,13 +69,3 @@ namespace winrt::MarkupSample::implementation
     }
 }
 
-void winrt::MarkupSample::implementation::MainPage::Button_Tapped(winrt::Windows::Foundation::IInspectable const&, winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs const&)
-{
-    EventHappened.invoke(*this, L"OkClicked");
-}
-
-
-void winrt::MarkupSample::implementation::MainPage::Hyperlink_Click(winrt::Windows::UI::Xaml::Documents::Hyperlink const&, winrt::Windows::UI::Xaml::Documents::HyperlinkClickEventArgs const&)
-{
-    EventHappened.invoke(*this, L"LicenseLinkClicked");
-}

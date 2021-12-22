@@ -12,10 +12,80 @@
 #include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Documents.h>
 
+#include <cppxaml/Controls.h>
+
 using namespace winrt;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Hosting;
+
+
+std::vector<std::wstring> fontNames{};
+
+auto GetFontFamilies() {
+    if (fontNames.size() == 0) {
+        auto hDC = GetDC(nullptr);
+        LOGFONT lf{};
+        lf.lfCharSet = DEFAULT_CHARSET;
+        int nRet = EnumFontFamiliesEx(hDC, &lf, [](const LOGFONT* lf, const TEXTMETRIC* tm, DWORD fontType, LPARAM lParam) {
+            auto& _names = *(std::vector<std::wstring>*)lParam;
+            if (std::find(_names.begin(), _names.end(), lf->lfFaceName) == _names.end()) {
+                _names.push_back(lf->lfFaceName);
+            }
+            return 1;
+            }, (LPARAM)&fontNames, 0);
+
+        ReleaseDC(nullptr, hDC);
+    }
+
+    return fontNames;
+}
+
+winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
+    auto gl = cppxaml::details::GridLength2(10);
+    auto gl2 = cppxaml::details::GridLength2("*");
+    auto gl3 = cppxaml::details::GridLength2("Auto");
+    auto gl4 = cppxaml::details::GridLength2("2*");
+
+    auto gc = cppxaml::details::GridColumns({ 10, 20 });
+    auto gc2 = cppxaml::details::GridColumns({ 10,  {"*"}, {"Auto"} });
+
+    auto gr = cppxaml::details::GridRows("10, 20, *");
+    auto gr2 = cppxaml::details::GridRows{ "10, 20, *, Auto" };
+    auto gr3 = cppxaml::details::GridRows{ 10, 20, {"*"}, {"Auto"} };
+        
+    auto cd = cppxaml::ContentDialog(
+        cppxaml::MakeContentControl<cppxaml::xaml::Controls::ScrollViewer>({
+            cppxaml::StackPanel({
+            cppxaml::Grid({"40, *"}, {"Auto, Auto"}, {
+                {0, 0, cppxaml::TextBlock(L"first") },
+                {0, 1, cppxaml::TextBlock(L"second") },
+                {1, 0, cppxaml::TextBlock(L"third") },
+                {1, 1, cppxaml::TextBlock(L"fourth") },
+                }),
+                //cppxaml::Wrapper<Controls::ColorPicker>().Name(L"cp"),
+                cppxaml::AutoSuggestBox(GetFontFamilies())
+                    .EnableDefaultSearch()
+                    .Margin(0, 16, 0, 4)
+                    .Name(L"fontTB"),
+            }).Orientation(Controls::Orientation::Vertical)
+        })
+    ).PrimaryButtonText(L"Ok");
+
+    auto fontTB = cppxaml::FindChildByName<Controls::AutoSuggestBox>(*cd, L"fontTB");
+
+    cppxaml::InitializeWithWindow(cd, xw);
+    auto res = co_await cd->ShowAsync();
+    if (res == cppxaml::xaml::Controls::ContentDialogResult::Primary) {
+        //auto cp = cppxaml::FindChildByName<Controls::ColorPicker>(*cd, L"cp");
+        //auto color = std::format(L"#{:x}{:x}{:x}", cp.Color().R, cp.Color().G, cp.Color().B);
+        //auto jsres = co_await wv().ExecuteScriptAsync(std::format(L"document.body.style.backgroundColor = '{}';", color));
+
+        fontTB = cppxaml::FindChildByName<Controls::AutoSuggestBox>(*cd, L"fontTB");
+        auto fontName = fontTB.Text();
+    }
+
+}
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
@@ -37,8 +107,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             mainPage.InterfaceStr(L"This string comes from the win32 app");
 
             mainPage.Link().Click([](auto&...) {
+
                 auto& modalWindow = cppxaml::XamlWindow::Get(L"Modal");
                 auto& mainWindow = cppxaml::XamlWindow::Get(L"MarkupSample");
+
+                CreateCppXamlUI(&mainWindow);
+
+
                 modalWindow.Create(L"Modal", 0 /*WS_POPUPWINDOW*/, mainWindow.hwnd(), 600 * GetDpiForSystem() / 96, 600 * GetDpiForSystem() / 96);
                 EnableWindow(mainWindow.hwnd(), FALSE);
                 });

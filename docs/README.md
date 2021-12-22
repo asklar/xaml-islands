@@ -44,6 +44,23 @@ XAMLWindow implements an HWND based host for XAML Islands. You can create a `Xam
    });
    ```
 
+### Parenting flyouts
+To parent a flyout or context menu, you may use one of the `InitializeWithWindow` methods:
+
+- Initialize with a WinUI 3 `Window`-like object:
+  ```cpp
+  template<typename TWindow>
+  std::enable_if_t<!std::is_assignable_v<TWindow, cppxaml::XamlWindow*>> InitializeWithWindow(winrt::Windows::Foundation::IInspectable obj, TWindow /*winrt::Microsoft::UI::Xaml::Window*/ w)
+  ```
+- Initialize with an `HWND`:
+  ```cpp
+  bool InitializeWithWindow(cppxaml::xaml::FrameworkElement obj, HWND hwnd)
+  ```
+- Initialize with a `XamlWindow`:
+  ```cpp
+  void InitializeWithWindow(cppxaml::xaml::FrameworkElement obj, const cppxaml::XamlWindow* xw)
+  ```
+
 ## AppController
 `AppController` is responsible for coordinating XamlWindow instances, can extend their wndproc, and provides an opportunity to hook up event handlers once a XAML UI becomes live
 
@@ -76,3 +93,95 @@ MainPage::MainPage() : INIT_PROPERTY(MyInt, 42)
 }
 ```
 
+## Control helpers
+CppXAML includes some primitives to make it more natural to write XAML UI in code.
+
+
+### TextBlock
+Most commonly, you will want to construct a `TextBlock` from a string of text. This can be a bit cumbersome if you are using C++/WinRT directly. With cppxaml, you can just write:
+```cpp
+auto tb = cppxaml::TextBlock(L"Hello");
+```
+
+### `xaml` Namespace alias
+Since we want CppXAML to be future proof and work with WinUI 3, CppXAML creates a namespace alias `cppxaml::xaml` which points at either `Windows::UI::Xaml` or `Microsoft::UI::Xaml` for system XAML or WinUI 3, respectively.
+
+### Fluent-style programming style
+C++/WinRT enables setting properties on a type by calling a property setter method, e.g. `myTextBlock.Text(L"text");`. If you then want to set another property, then you have to make another call `myTextBlock.XYZ(...);`. This can get verbose when having to set multiple properties. CppXAML enables writing fluent-style code instead of the former imperative-style:
+```cpp
+auto myTextBlock = cppxaml::TextBlock(L"Hello world")
+                    .Margin(4)
+                    .Padding(6)
+                    .Name(L"myTB");
+```
+
+### StackPanel
+Panels in XAML can have zero or more children. CppXAML makes it easy to naturally describe a panel's children with an initializer list. For example:
+```cpp
+auto sp = cppxaml::StackPanel({
+  cppxaml::TextBlock(L"Hello"),
+  cppxaml::TextBlock(L"world!")
+  });
+```
+
+
+You can also set its `Orientation`:
+```cpp
+auto sp cppxaml::StackPanel({
+    cppxaml::TextBlock(L"Hello"),
+    cppxaml::TextBlock(L"world!").Name(L"worldTB")
+  }).Orientation(cppxaml::xaml::Controls::Orientation::Horizontal);
+```
+
+### ContentControl (Button, etc.)
+Sub-classes of XAML's `ContentControl` enable nesting one control into another via the `Content` property. CppXAML makes this easier:
+```cpp
+auto scrollViewer = cppxaml::MakeContentControl<cppxaml::xaml::Controls::ScrollViewer>({
+  cppxaml::StackPanel({
+    cppxaml::TextBlock(L"Hello"),
+    cppxaml::TextBlock(L"world!").Name(L"worldTB")
+  })
+});
+```
+
+### Locating elements by name
+Sometimes you will need to perform some operation on an element that is deeply nested in a fluent-style declaration. You can use `FindChildByName` to find an element in a XAML tree with a given name:
+```cpp
+auto worldTB = cppxaml::FindChildByName<Controls::TextBlock>(*scrollViewer, L"worldTB");
+```
+
+### Grid
+Declaring a `Grid` in XAML via code is cumbersome as one has to create and set its `RowDefinitions` and `ColumnDefinitions`. 
+CppXAML makes this a lot more straightforward:
+```cpp
+auto grid = cppxaml::Grid({"40, *"}, {"Auto, Auto"}, {
+                {0, 0, cppxaml::TextBlock(L"first") },
+                {0, 1, cppxaml::TextBlock(L"second") },
+                {1, 0, cppxaml::TextBlock(L"third") },
+                {1, 1, cppxaml::TextBlock(L"fourth") },
+                }),
+```
+
+Here we defined a 2x2 `Grid`. The rows have heights of 40 px and `*`, and the columns are `Auto`. Then each child of the Grid is added in the cell designated by each entry in the initializer list, read as "row, column, child".
+
+In addition to the string syntax (which requires some parsing/tokenizing), this also works:
+```cpp
+auto grid = cppxaml::Grid({40, {"*"}}, {{"Auto"}, {"Auto"}}, {
+                {0, 0, cppxaml::TextBlock(L"first") },
+                {0, 1, cppxaml::TextBlock(L"second") },
+                {1, 0, cppxaml::TextBlock(L"third") },
+                {1, 1, cppxaml::TextBlock(L"fourth") },
+                }),
+```
+
+### AutoSuggestBox
+You can easily create an `AutoSuggestBox` from a `std::vector<std::wstring>`; make sure the vector's lifetime extends for at least as long as the XAML UI is up.
+
+`EnableDefaultSearch()` will provide a reasonable default search experience (filters the list of items down to those that contain the search string). This behavior is case insensitive by default, but can be made case sensitive by passing `false`.
+
+```cpp
+auto asb = cppxaml::AutoSuggestBox(GetFontFamilies())
+                    .EnableDefaultSearch()
+                    .Margin(0, 16, 0, 4)
+                    .Name(L"fontTB");
+```

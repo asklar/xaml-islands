@@ -22,10 +22,10 @@
                HorizontalAlignment="Left" />
         <TextBlock Text="{x:Bind InterfaceStr}" Margin="4"/>
         <TextBlock Text="{x:Bind ImplString}" Margin="4"/>
-        <RichTextBlock Margin="4">
+        <RichTextBlock Margin="4" x:Name="rtb">
             <Paragraph x:Name="rtbParagraph"/>
         </RichTextBlock>
-        <Button Margin="4,12,12,0" Content="Ok" HorizontalAlignment="Right" Tapped="Button_Tapped"/>
+        <Button Margin="4,12,12,0" Content="Ok" HorizontalAlignment="Right" x:Name="OkButton" />
 
     </StackPanel>
 

@@ -7,6 +7,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "XamlIslandsSample", "XamlIs
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MarkupSample", "MarkupSample\MarkupSample.vcxproj", "{DEC83DBE-36DF-4102-A195-B98CBB92844A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CppXAML", "CppXAML", "{942DF2BD-662B-417D-88F9-AE7DFFB1A3A2}"
+	ProjectSection(SolutionItems) = preProject
+		..\inc\cppxaml\Controls.h = ..\inc\cppxaml\Controls.h
+		..\docs\README.md = ..\docs\README.md
+		..\inc\cppxaml\XamlProperty.h = ..\inc\cppxaml\XamlProperty.h
+		..\inc\cppxaml\XamlWindow.h = ..\inc\cppxaml\XamlWindow.h
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM

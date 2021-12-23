@@ -12,6 +12,13 @@ namespace winrt {
     }
 }
 
+/**
+ * @file
+*/
+
+/**
+ * @namespace
+*/
 namespace cppxaml {
 
     template<typename T>
@@ -29,12 +36,28 @@ namespace cppxaml {
         winrt::event<T> m_handler;
     };
 
+    /**
+     * @brief A default event handler that maps to [Windows.Foundation.EventHandler](https://docs.microsoft.com/uwp/api/windows.foundation.eventhandler-1).
+     * @tparam T The event data type.
+    */
     template<typename T>
     using XamlEvent = XamlEvent_t<winrt::Windows::Foundation::EventHandler<T>>;
 
+    /**
+     * @brief A default event handler that maps to [Windows.Foundation.TypedEventHandler](https://docs.microsoft.com/uwp/api/windows.foundation.typedeventhandler-2).
+     * @tparam T The event data type.
+    */
     template<typename TSender, typename TArgs>
     using TypedXamlEvent = XamlEvent_t<winrt::Windows::Foundation::TypedEventHandler<TSender, TArgs>>;
 
+    /**
+     * @brief Helper base class to inherit from to have a simple implementation of [INotifyPropertyChanged](https://docs.microsoft.com/uwp/api/windows.ui.xaml.data.inotifypropertychanged).
+     * @tparam T CRTP type
+     * @details When you declare your class, make this class a base class and pass your class as a template parameter:
+     * @code
+     * struct MyCppWinRTType : MyCppWinRTTypeT<MyCPPWinRTType>, SimpleNotifyPropertyChanged<MyCPPWinRTType> { ... }
+     * @endcode
+    */
     template<typename T>
     struct SimpleNotifyPropertyChanged {
     public:
@@ -52,7 +75,10 @@ namespace cppxaml {
         friend struct XamlProperty;
     };
 
-
+    /**
+     * @brief Implements a simple property (without change notifications).
+     * @tparam T the property type.
+    */
     template<typename T>
     struct XamlProperty {
         using Type = T;
@@ -82,6 +108,11 @@ namespace cppxaml {
         Type m_value{};
     };
 
+    /**
+     * @brief Implements a property type with notifications
+     * @tparam T the property type
+     * @details Use the #INIT_PROPERTY macro to initialize this property in your class constructor. This will set up the right property name, and bind it to the `SimpleNotifyPropertyChanged` implementation.
+    */
     template<typename T>
     struct XamlPropertyWithNPC : XamlProperty<T> {
         using Type = T;
@@ -119,6 +150,10 @@ namespace cppxaml {
     };
 }
 
+/**
+* @def INIT_PROPERTY
+* @brief use this to initialize a cppxaml::XamlPropertyWithNPC in your class constructor.
+*/
 #define INIT_PROPERTY(NAME, VALUE)  \
     NAME(&m_propertyChanged, winrt::try_as<winrt::Windows::Foundation::IInspectable>(this), std::wstring_view{ L#NAME }, VALUE)
 

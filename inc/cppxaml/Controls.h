@@ -11,6 +11,22 @@
 #include <microsoft.ui.xaml.window.h>
 #endif
 
+/** @file
+* @author Alexander Sklar
+* @section LICENSE
+* MIT
+*/
+
+#ifndef DOXY
+#define IF_ASSIGNABLE_CONTROL(XAMLTYPE)     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::XAMLTYPE, T>, cppxaml::details::Wrapper<T>>
+#else
+#define IF_ASSIGNABLE_CONTROL(XAMLTYPE)     cppxaml::details::Wrapper<T>
+#endif
+
+/**
+ * @namespace cppxaml
+ * @brief The main CppXAML namespace
+*/
 namespace cppxaml {
 
 #ifdef USE_WINUI3
@@ -19,14 +35,89 @@ namespace cppxaml {
     namespace xaml = winrt::Windows::UI::Xaml;
 #endif
 
+    /**
+     * @namespace cppxaml::utils
+     * @brief Various utilities
+    */
     namespace utils {
+        /**
+         * @brief 
+         * @param sv 
+         * @return 
+        */
         auto tolower(std::wstring_view sv) {
             std::wstring copy(sv);
             std::transform(copy.begin(), copy.end(), copy.begin(), [](wchar_t x) { return (wchar_t)::tolower(x); });
             return copy;
         }
+
+        /**
+         * @brief Maps each element in a container via a unary operation on each element
+         * @tparam TOutContainer The output container type. Defaults to std::vector.
+         * @tparam TInContainer The type of the container
+         * @tparam UnaryOp Lambda type
+         * @param iterable The container
+         * @param unary_op The lambda for the unary operation; takes the element type of the input container.
+         * @return A container comprised of the mapped elements
+         * @details
+         * Example:\n
+         *
+         *
+        */
+        template<template<typename...> typename TOutContainer = std::vector, typename TInContainer, typename UnaryOp>
+        auto transform(TInContainer const& iterable, UnaryOp&& unary_op) {
+            using result_t = std::invoke_result_t<UnaryOp, typename TInContainer::value_type>;
+            TOutContainer<result_t> out{};
+            auto o = std::inserter(out, out.end());
+            for (auto i = iterable.cbegin(); i != iterable.cend(); i++) {
+                o = unary_op(*i);
+            }
+            return out;
+        }
+
+        /**
+         * @brief Maps each element in a container via a unary operation on each element
+         * @tparam TOutContainer The output container type. Defaults to std::vector.
+         * @tparam TInContainer The type of the container
+         * @tparam UnaryOp Lambda type
+         * @param iterable The container
+         * @param unary_op The lambda for the unary operation; takes the element type of the input container, and the index within the container.
+         * @return A container comprised of the mapped elements
+         * @details Example:\n
+         * Here we can define a Grid with Buttons, each of whose content is sourced from a string vector:
+         * @code
+         * auto strs = std::vector<std::wstring>{ L"first", L"second", L"third", L"fourth" };
+         * auto grid = cppxaml::Grid({"40, *"}, {"Auto, Auto"},
+         *      cppxaml::utils::transform_with_index(strs, [](const std::wstring& t, auto index) {
+         *                 return cppxaml::details::UIElementInGrid{
+         *                     (int)index / 2,
+         *                     (int)index % 2,
+         *                     cppxaml::Button(winrt::hstring(t))
+         *                 };
+         *             })
+         *           );
+         * @endcode
+        */
+        template<template<typename...> typename TOutContainer = std::vector, typename TInContainer, typename UnaryOp>
+        auto transform_with_index(TInContainer const& iterable, UnaryOp&& unary_op) {
+            using result_t = std::invoke_result_t<UnaryOp, typename TInContainer::value_type, typename TInContainer::const_iterator::difference_type>;
+            TOutContainer<result_t> out{};
+            auto o = std::inserter(out, out.end());
+            for (auto i = iterable.cbegin(); i != iterable.cend(); i++) {
+                o = unary_op(*i, i - iterable.cbegin());
+            }
+            return out;
+        }
+
     }
 
+    /**
+     * @brief Finds a XAML element by name.
+     * @tparam T Expected type of the element - defaults to DependencyObject.
+     * @param d XAML element object.
+     * @param name The name to search for.
+     * @return The XAML element whose name matches the one specified as input.
+    */
     template<typename T = cppxaml::xaml::DependencyObject>
     T FindChildByName(cppxaml::xaml::DependencyObject d, std::wstring_view name) {
         if (auto fe = d.try_as<cppxaml::xaml::FrameworkElement>()) {
@@ -40,6 +131,11 @@ namespace cppxaml {
     }
 
     namespace details {
+        /**
+         * @brief Internal wrapper type that powers fluent-style programming. \n
+         * This type is usually constructed and destructed in a single declaration line, only serving to set properties on the underlying XAML element, or to add the element to a parent.
+         * @tparam T the XAML element type to hold.
+        */
         template<typename T>
         struct WrapperT {
             T m_value{ nullptr };
@@ -50,19 +146,73 @@ namespace cppxaml {
                 return m_value;
             }
             const T* operator->() const { return &m_value; }
+
+            /**
+             * @brief Returns the element's Name
+             * @return 
+            */
             auto Name() const { return m_value.Name(); }
+            /**
+             * @brief Set the element's Name
+             * @param n 
+             * @return 
+            */
             auto Name(std::wstring_view n) const { m_value.Name(n); return *this; }
 
+            /**
+             * @brief 
+             * @return 
+            */
             auto Margin() const { return m_value.Margin(); }
+            /**
+             * @brief 
+             * @param t 
+             * @return 
+            */
             auto Margin(cppxaml::xaml::Thickness t) const { m_value.Margin(t); return *this; }
+            /**
+             * @brief 
+             * @param m 
+             * @return 
+            */
             auto Margin(double m) const { m_value.Margin(cppxaml::xaml::ThicknessHelper::FromUniformLength(m)); return *this; }
+            /**
+             * @brief 
+             * @param l 
+             * @param t 
+             * @param r 
+             * @param b 
+             * @return 
+            */
             auto Margin(double l, double t, double r, double b) const {
                 m_value.Margin(cppxaml::xaml::ThicknessHelper::FromLengths(l, t, r, b)); return *this;
             }
 
+            /**
+             * @brief 
+             * @return 
+            */
             auto Padding() const { return m_value.Padding(); }
+            /**
+             * @brief 
+             * @param t 
+             * @return 
+            */
             auto Padding(cppxaml::xaml::Thickness t) const { m_value.Padding(t); return *this; }
+            /**
+             * @brief 
+             * @param m 
+             * @return 
+            */
             auto Padding(double m) const { m_value.Padding(cppxaml::xaml::ThicknessHelper::FromUniformLength(m)); return *this; }
+            /**
+             * @brief 
+             * @param l 
+             * @param t 
+             * @param r 
+             * @param b 
+             * @return 
+            */
             auto Padding(double l, double t, double r, double b) const {
                 m_value.Padding(cppxaml::xaml::ThicknessHelper::FromLengths(l, t, r, b)); return *this;
             }
@@ -77,6 +227,9 @@ namespace cppxaml {
         template<typename T, typename TItems = void>
         struct Wrapper : WrapperT<T> {};
 
+        /**
+         * @brief Fluent-style wrapper for `ContentDialog`
+        */
         template<>
         struct Wrapper<cppxaml::xaml::Controls::ContentDialog> : WrapperT<cppxaml::xaml::Controls::ContentDialog> {
             auto PrimaryButtonText(std::wstring_view t) {
@@ -85,6 +238,9 @@ namespace cppxaml {
             }
         };
 
+        /**
+         * @brief Fluent-style wrapper for `StackPanel`
+        */
         template<>
         struct Wrapper<cppxaml::xaml::Controls::StackPanel> : WrapperT<cppxaml::xaml::Controls::StackPanel> {
             auto Orientation(cppxaml::xaml::Controls::Orientation o) {
@@ -93,7 +249,10 @@ namespace cppxaml {
             }
         };
 
-
+        /**
+         * @brief Fluent-style wrapper for `AutoSuggestBox`
+         * @tparam TItems the type of collection from which to initialize the `AutoSuggestBox`'s `Items`.
+        */
         template<typename TItems>
         struct Wrapper<cppxaml::xaml::Controls::AutoSuggestBox, TItems> : WrapperT<cppxaml::xaml::Controls::AutoSuggestBox>, std::enable_shared_from_this<Wrapper<cppxaml::xaml::Controls::AutoSuggestBox, TItems>> {
             TItems m_items;
@@ -165,6 +324,11 @@ namespace cppxaml {
 
             }
         public:
+            /**
+             * @brief Enables a default search experience for the AutoSuggestBox. The list of items shown gets filtered as the user searches, leaving only items that include the search string.
+             * @param caseInsensitive Whether the search should be case insensitive or not. Default is true.
+             * @return 
+            */
             auto EnableDefaultSearch(bool caseInsensitive = true) {
                 SetEventHandlers(caseInsensitive);
                 return *this;
@@ -223,22 +387,41 @@ namespace cppxaml {
 
     } // namespace details
 
-    template<typename T, typename TItems = void>
-    std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::ContentControl, T>, cppxaml::details::Wrapper<T, TItems>>
+    /**
+     * @brief Create a XAML element of a class that derives from `ContentControl`
+     * @tparam T The XAML type, e.g. `Button`.
+     * Defaults to `void`.\n 
+     * @param i The object that will be set as the `Content` property.
+     * @return 
+    */
+    template<typename T>
+    IF_ASSIGNABLE_CONTROL(ContentControl)
         MakeContentControl(winrt::Windows::Foundation::IInspectable i) {
         cppxaml::details::Wrapper<T> t;
         t->Content(i);
         return t;
     }
 
+    /**
+     * @brief Create a XAML element of a class that derives from `ContentControl` by wrapping a string as its content.
+     * @tparam T The XAML type, e.g. `Button`.
+     * @param v The string that will be set as the `Content` property.
+     * @return
+    */
     template<typename T>
-    std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::ContentControl, T>, cppxaml::details::Wrapper<T>>
+    IF_ASSIGNABLE_CONTROL(ContentControl)
         MakeContentControl(winrt::hstring v) {
         cppxaml::details::Wrapper<T> t;
         t->Content(winrt::box_value(v));
         return t;
     }
 
+    /**
+     * @brief Creates a XAML element of a type that is a subclass of `Panel`.
+     * @tparam T The XAML type.
+     * @param elems The list of `UIElements`
+     * @return 
+    */
     template<typename T>
     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::Panel, T>, cppxaml::details::Wrapper<T>>
         MakePanel(const std::initializer_list<cppxaml::xaml::UIElement>& elems) {
@@ -249,17 +432,47 @@ namespace cppxaml {
         return panel;
     }
 
+    /**
+     * @brief Creates a `ContentDialog`
+     * @tparam C Type of list of child controls
+     * @param i The list of child controls
+     * @return 
+    */
     template<typename C>
     auto ContentDialog(C i) {
         return MakeContentControl<cppxaml::xaml::Controls::ContentDialog>(i);
     }
 
-
+    /**
+     * @brief Creates a `StackPanel`.
+     * @param elems The list of child controls.
+     * @return 
+    */
     auto StackPanel(const std::initializer_list<cppxaml::xaml::UIElement>& elems) {
         return MakePanel<cppxaml::xaml::Controls::StackPanel>(elems);
     }
 
-    auto Grid(details::GridRows gr, cppxaml::details::GridColumns gc, const std::initializer_list<details::UIElementInGrid>& elems) {
+    /**
+     * @brief Creates a `Grid` with the specified rows, columns, and children.
+     * @details 
+     * The row and column definitions are specified with the same syntax.\n
+     * This will be either an initializer list where each element is a height (a `double`, or the strings `"Auto"`, or `"N*"` where `N` is an integer), or a string with the corresponding format. \n\n 
+     * Example usage:\n
+     * @code
+     *      auto grid = cppxaml::Grid({"40, *"}, {"Auto, Auto"}, {
+     *           {0, 0, cppxaml::TextBlock(L"first") },
+     *           {0, 1, cppxaml::TextBlock(L"second") },
+     *           {1, 0, cppxaml::TextBlock(L"third") },
+     *           {1, 1, cppxaml::TextBlock(L"fourth") },
+     *           }),
+     * @endcode
+     * @param gr The set of grid row definitions. 
+     * @param gc The set of grid column definitions.
+     * @param elems A list of cppxaml::details::UIElementInGrid entries where each entry is a `{rowNumber, columnNumber, myUIElement}`
+     * @return
+    */ 
+    template<typename TElements>
+    auto Grid(details::GridRows gr, cppxaml::details::GridColumns gc, TElements /*std::initializer_list<details::UIElementInGrid>& */&& elems) {
         auto grid = cppxaml::details::Wrapper<cppxaml::xaml::Controls::Grid>();
         for (auto& r : gr.m_lengths) {
             auto rd = cppxaml::xaml::Controls::RowDefinition();
@@ -280,13 +493,26 @@ namespace cppxaml {
         return grid;
     }
 
+    /**
+     * @brief Creates a `TextBox`
+     * @param text The text to create the control from
+     * @return 
+    */
     auto TextBox(std::wstring_view text = L"") {
         cppxaml::details::Wrapper<cppxaml::xaml::Controls::TextBox> tb;
         tb->Text(text);
         return tb;
     }
 
-
+    /**
+     * @brief Creates a XAML element of a type that derives from `ItemsControl`
+     * @tparam T The XAML type, e.g. `AutoSuggestBox`.
+     * @tparam TItems The type of the collection of items that might be used as seed to construct the control.\n
+     * For example, this could be a `std::vector<std::wstring>` that is used to construct the `Items` collection for an `AutoSuggestBox`.\n
+     * Defaults to `void`.\n 
+     * @param items The list of items to initialize the control with.
+     * @return 
+    */
     template<typename T, typename TItems>
     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::ItemsControl, T>, cppxaml::details::Wrapper<T, TItems>>
         MakeItemsControl(const TItems& /*std::initializer_list<Windows::Foundation::IInspectable>*/ items) {
@@ -302,22 +528,48 @@ namespace cppxaml {
         return t;
     }
 
+    /**
+     * @brief Creates an `AutoSuggestBox` from a list of items
+     * @tparam TItems 
+     * @param svs a list of `wstring_view` to populate the control from.
+     * @return 
+    */
     template<typename TItems>
     auto AutoSuggestBox(const TItems& /*std::initializer_list<std::wstring_view>*/ svs) {
         return MakeItemsControl<cppxaml::xaml::Controls::AutoSuggestBox, TItems>(svs);
     }
 
+    /**
+     * @brief Creates a `TextBlock` from its text content.
+     * @param text The text for the control.
+     * @return 
+    */
     auto TextBlock(std::wstring_view text) {
         cppxaml::xaml::Controls::TextBlock tb;
         tb.Text(text);
         return tb;
     }
 
+    /**
+     * @brief Creates a Button
+     * @tparam C The type of the content to initialize the button with.
+     * @param c The content for the button, e.g. a string, a `TextBlock`, or a panel with some children, etc.
+     * @return 
+    */
     template<typename C>
     auto Button(C c) {
         return MakeContentControl<cppxaml::xaml::Controls::Button>(c);
     }
 
+    /**
+     * @brief Initializes an object with a window-like object
+     * @tparam TWindow the window-like type. \n
+     * In system XAML, it must have a XamlRoot. \n
+     * In WinUI 3, it must implement `IWindowNative` and have a Content property that exposes a XamlRoot (this will usually be Microsoft::UI::Xaml::Window).
+     * @param obj The object to attach to the window, e.g. a `ContentDialog`.
+     * @param w The window-like object.
+     * @return 
+    */
     template<typename TWindow>
     std::enable_if_t<!std::is_assignable_v<TWindow, cppxaml::XamlWindow*>> InitializeWithWindow(winrt::Windows::Foundation::IInspectable obj, TWindow /*winrt::Microsoft::UI::Xaml::Window*/ w) {
 #ifdef USE_WINUI3
@@ -337,6 +589,12 @@ namespace cppxaml {
 #endif
 }
 
+    /**
+     * @brief Initializes a `FrameworkElement` with an HWND
+     * @param obj 
+     * @param hwnd 
+     * @return 
+    */
     bool InitializeWithWindow(cppxaml::xaml::FrameworkElement obj, HWND hwnd) {
         if (auto iww = obj.try_as<IInitializeWithWindow>()) {
             iww->Initialize(hwnd);
@@ -345,12 +603,25 @@ namespace cppxaml {
         return false;
     }
 
+    /**
+     * @brief Initializes a `FrameworkElement` with the window represented by the `XamlWindow` or the XAML content root that the `XamlWindow` object is hosting
+     * @param obj 
+     * @param xw 
+    */
     void InitializeWithWindow(cppxaml::xaml::FrameworkElement obj, const cppxaml::XamlWindow* xw) {
         if (!InitializeWithWindow(obj, xw->hwnd())) {
             obj.XamlRoot(xw->GetUIElement<cppxaml::xaml::FrameworkElement>().XamlRoot());
         }
     }
 
+    /**
+     * @brief 
+     * @tparam TUIElement 
+     * @tparam TWindow 
+     * @param obj 
+     * @param w 
+     * @return 
+    */
     template<typename TUIElement, typename TWindow>
     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::UIElement, TUIElement> &&
         !std::is_same_v<TWindow, const cppxaml::XamlWindow*>, void>

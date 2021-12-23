@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CppXAML: Main Page</title>
+<title>CppXAML: CppXAML</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -13,6 +13,7 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -61,10 +62,130 @@ $(function() {
 </iframe>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">CppXAML Documentation</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">CppXAML </div></div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p ><a class="anchor" id="md_docs_README"></a> <a href="https://github.com/asklar/xaml-islands">CppXAML</a> aims to make usage of XAML and XAML islands in C++ more natural and idiomatic.</p>
+<p ><a href="https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/">C++/WinRT</a> provides a projection of a Windws Runtime component's API, but one that isn’t always easy to use (esp. for XAML). It also is unopinionated w.r.t. how to implement properties. This added flexibility can be good, but is often unnecessary and results in overly-verbose code.</p>
+<p >CppXAML provides several kinds of higher-level helpers. Usage information can be found below. See also <a href="https://asklar.github.io/xaml-islands">API reference</a>.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+XamlWindow</h1>
+<p >XAMLWindow implements an HWND based host for XAML Islands. You can create a <code>XamlWindow</code> from one of three overloads of Make:</p>
+<ol type="1">
+<li>Host a build-time XAML <code>UIElement</code> (usually defined in a runtime component project, often will be a <code>Page</code>) API: <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TUIElement&gt;</div>
+<div class="line"><span class="keyword">static</span> XamlWindow&amp; Make(PCWSTR <span class="keywordtype">id</span>, AppController* controller = <span class="keyword">nullptr</span>);</div>
+</div><!-- fragment --> Usage: <div class="fragment"><div class="line"><span class="keyword">auto</span>&amp; mainWindow = cppxaml::XamlWindow::Make&lt;MarkupSample::MainPage&gt;(L<span class="stringliteral">&quot;MarkupSample&quot;</span>, &amp;controller);</div>
+</div><!-- fragment --></li>
+<li>Host UI created from markup at runtime: API: <div class="fragment"><div class="line"><span class="keyword">static</span> XamlWindow&amp; Make(PCWSTR <span class="keywordtype">id</span>, std::wstring_view markup, AppController* c = <span class="keyword">nullptr</span>)</div>
+</div><!-- fragment --> Usage: <div class="fragment"><div class="line"><span class="keyword">auto</span>&amp; xw = cppxaml::XamlWindow::Make(L<span class="stringliteral">&quot;MyPage&quot;</span>, LR<span class="stringliteral">&quot;(</span></div>
+<div class="line"><span class="stringliteral">  &lt;StackPanel&gt;</span></div>
+<div class="line"><span class="stringliteral">    &lt;TextBlock&gt;Hello&lt;/TextBlock&gt;</span></div>
+<div class="line"><span class="stringliteral">  &lt;/StackPanel&gt;)&quot;, &amp;controller);</span></div>
+</div><!-- fragment --></li>
+<li>Host UI created programmatically at runtime: API: <div class="fragment"><div class="line"><span class="keyword">static</span> XamlWindow&amp; Make(PCWSTR <span class="keywordtype">id</span>, winrt::Windows::UI::Xaml::UIElement(*getUI)(<span class="keyword">const</span> XamlWindow&amp;), AppController* c = <span class="keyword">nullptr</span>);</div>
+</div><!-- fragment --> Usage: <div class="fragment"><div class="line"><span class="keyword">auto</span>&amp; xw = cppxaml::XamlWindow::Make(L<span class="stringliteral">&quot;Foo&quot;</span>, [](<span class="keyword">auto</span>&amp;...) { </div>
+<div class="line">  <span class="keywordflow">return</span> winrt::Windows::UI::Xaml::Controls::Button(); </div>
+<div class="line">});</div>
+</div><!-- fragment --></li>
+</ol>
+<h2><a class="anchor" id="autotoc_md2"></a>
+Parenting flyouts</h2>
+<p >To parent a flyout or context menu, you may use one of the <code>InitializeWithWindow</code> methods:</p>
+<ul>
+<li>Initialize with a WinUI 3 <code>Window</code>-like object: <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> TWindow&gt;</div>
+<div class="line">std::enable_if_t&lt;!std::is_assignable_v&lt;TWindow, cppxaml::XamlWindow*&gt;&gt; InitializeWithWindow(winrt::Windows::Foundation::IInspectable obj, TWindow <span class="comment">/*winrt::Microsoft::UI::Xaml::Window*/</span> w)</div>
+</div><!-- fragment --></li>
+<li>Initialize with an <code>HWND</code>: <div class="fragment"><div class="line"><span class="keywordtype">bool</span> InitializeWithWindow(cppxaml::xaml::FrameworkElement obj, HWND hwnd)</div>
+</div><!-- fragment --></li>
+<li>Initialize with a <code>XamlWindow</code>: <div class="fragment"><div class="line"><span class="keywordtype">void</span> InitializeWithWindow(cppxaml::xaml::FrameworkElement obj, <span class="keyword">const</span> cppxaml::XamlWindow* xw)</div>
+</div><!-- fragment --></li>
+</ul>
+<h1><a class="anchor" id="autotoc_md3"></a>
+AppController</h1>
+<p ><code>AppController</code> is responsible for coordinating XamlWindow instances, can extend their wndproc, and provides an opportunity to hook up event handlers once a XAML UI becomes live</p>
+<h1><a class="anchor" id="autotoc_md4"></a>
+Property and event helpers</h1>
+<ul>
+<li><code>XamlProperty&lt;T&gt;</code></li>
+<li><code>SimpleNotifyPropertyChanged&lt;F&gt;</code></li>
+<li><code>XamlPropertyWithNPC&lt;T&gt;</code></li>
+<li><code>XamlEvent&lt;T&gt;</code></li>
+<li><code>XamlTypedEvent&lt;TSender, TArgs&gt;</code></li>
+</ul>
+<p >These provide stock/simple property objects that remove the need for verbose hand-written options.</p>
+<h3><a class="anchor" id="autotoc_md5"></a>
+Examples:</h3>
+<p ><b>MainPage.h</b>: </p><div class="fragment"><div class="line">cppxaml::XamlEvent&lt;winrt::hstring&gt; OkClicked;</div>
+<div class="line">cppxaml::XamlProperty&lt;winrt::hstring&gt; InterfaceStr;</div>
+<div class="line">cppxaml::XamlProperty&lt;winrt::hstring&gt; InterfaceStrWithNPC;</div>
+</div><!-- fragment --><p ><b>MainPage.cpp</b>: </p><div class="fragment"><div class="line">MainPage::MainPage() : INIT_PROPERTY(MyInt, 42)</div>
+<div class="line">{</div>
+<div class="line">    InitializeComponent();</div>
+<div class="line">    <span class="comment">// Properties can be assigned to and read from with the operator= too!</span></div>
+<div class="line">    ImplString = winrt::hstring{ L<span class="stringliteral">&quot;This string comes from the implementation&quot;</span> };</div>
+<div class="line">    winrt::hstring v = ImplString;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
+Control helpers</h1>
+<p >CppXAML includes some primitives to make it more natural to write XAML UI in code.</p>
+<h2><a class="anchor" id="autotoc_md7"></a>
+TextBlock</h2>
+<p >Most commonly, you will want to construct a <code>TextBlock</code> from a string of text. This can be a bit cumbersome if you are using C++/WinRT directly. With cppxaml, you can just write: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> tb = cppxaml::TextBlock(L<span class="stringliteral">&quot;Hello&quot;</span>);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
+&lt;tt&gt;xaml&lt;/tt&gt; Namespace alias</h2>
+<p >Since we want CppXAML to be future proof and work with WinUI 3, CppXAML creates a namespace alias <code>cppxaml::xaml</code> which points at either <code>Windows::UI::Xaml</code> or <code>Microsoft::UI::Xaml</code> for system XAML or WinUI 3, respectively.</p>
+<h2><a class="anchor" id="autotoc_md9"></a>
+Fluent-style programming style</h2>
+<p >C++/WinRT enables setting properties on a type by calling a property setter method, e.g. <code>myTextBlock.Text(L"text");</code>. If you then want to set another property, then you have to make another call <code>myTextBlock.XYZ(...);</code>. This can get verbose when having to set multiple properties. CppXAML enables writing fluent-style code instead of the former imperative-style: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> myTextBlock = cppxaml::TextBlock(L<span class="stringliteral">&quot;Hello world&quot;</span>)</div>
+<div class="line">                    .Margin(4)</div>
+<div class="line">                    .Padding(6)</div>
+<div class="line">                    .Name(L<span class="stringliteral">&quot;myTB&quot;</span>);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
+StackPanel</h2>
+<p >Panels in XAML can have zero or more children. CppXAML makes it easy to naturally describe a panel's children with an initializer list. For example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> sp = cppxaml::StackPanel({</div>
+<div class="line">  cppxaml::TextBlock(L<span class="stringliteral">&quot;Hello&quot;</span>),</div>
+<div class="line">  cppxaml::TextBlock(L<span class="stringliteral">&quot;world!&quot;</span>)</div>
+<div class="line">  });</div>
+</div><!-- fragment --><p >You can also set its <code>Orientation</code>: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> sp cppxaml::StackPanel({</div>
+<div class="line">    cppxaml::TextBlock(L<span class="stringliteral">&quot;Hello&quot;</span>),</div>
+<div class="line">    cppxaml::TextBlock(L<span class="stringliteral">&quot;world!&quot;</span>).Name(L<span class="stringliteral">&quot;worldTB&quot;</span>)</div>
+<div class="line">  }).Orientation(cppxaml::xaml::Controls::Orientation::Horizontal);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
+ContentControl (Button, etc.)</h2>
+<p >Sub-classes of XAML's <code>ContentControl</code> enable nesting one control into another via the <code>Content</code> property. CppXAML makes this easier: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> scrollViewer = cppxaml::MakeContentControl&lt;cppxaml::xaml::Controls::ScrollViewer&gt;({</div>
+<div class="line">  cppxaml::StackPanel({</div>
+<div class="line">    cppxaml::TextBlock(L<span class="stringliteral">&quot;Hello&quot;</span>),</div>
+<div class="line">    cppxaml::TextBlock(L<span class="stringliteral">&quot;world!&quot;</span>).Name(L<span class="stringliteral">&quot;worldTB&quot;</span>)</div>
+<div class="line">  })</div>
+<div class="line">});</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md12"></a>
+Locating elements by name</h2>
+<p >Sometimes you will need to perform some operation on an element that is deeply nested in a fluent-style declaration. You can use <code>FindChildByName</code> to find an element in a XAML tree with a given name: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> worldTB = cppxaml::FindChildByName&lt;Controls::TextBlock&gt;(*scrollViewer, L<span class="stringliteral">&quot;worldTB&quot;</span>);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md13"></a>
+Grid</h2>
+<p >Declaring a <code>Grid</code> in XAML via code is cumbersome as one has to create and set its <code>RowDefinitions</code> and <code>ColumnDefinitions</code>. CppXAML makes this a lot more straightforward: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> grid = cppxaml::Grid({<span class="stringliteral">&quot;40, *&quot;</span>}, {<span class="stringliteral">&quot;Auto, Auto&quot;</span>}, {</div>
+<div class="line">                {0, 0, cppxaml::TextBlock(L<span class="stringliteral">&quot;first&quot;</span>) },</div>
+<div class="line">                {0, 1, cppxaml::TextBlock(L<span class="stringliteral">&quot;second&quot;</span>) },</div>
+<div class="line">                {1, 0, cppxaml::TextBlock(L<span class="stringliteral">&quot;third&quot;</span>) },</div>
+<div class="line">                {1, 1, cppxaml::TextBlock(L<span class="stringliteral">&quot;fourth&quot;</span>) },</div>
+<div class="line">                }),</div>
+</div><!-- fragment --><p >Here we defined a 2x2 <code>Grid</code>. The rows have heights of 40 px and <code>*</code>, and the columns are <code>Auto</code>. Then each child of the Grid is added in the cell designated by each entry in the initializer list, read as "row, column, child".</p>
+<p >In addition to the string syntax (which requires some parsing/tokenizing), this also works: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> grid = cppxaml::Grid({40, {<span class="stringliteral">&quot;*&quot;</span>}}, {{<span class="stringliteral">&quot;Auto&quot;</span>}, {<span class="stringliteral">&quot;Auto&quot;</span>}}, {</div>
+<div class="line">                {0, 0, cppxaml::TextBlock(L<span class="stringliteral">&quot;first&quot;</span>) },</div>
+<div class="line">                {0, 1, cppxaml::TextBlock(L<span class="stringliteral">&quot;second&quot;</span>) },</div>
+<div class="line">                {1, 0, cppxaml::TextBlock(L<span class="stringliteral">&quot;third&quot;</span>) },</div>
+<div class="line">                {1, 1, cppxaml::TextBlock(L<span class="stringliteral">&quot;fourth&quot;</span>) },</div>
+<div class="line">                }),</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md14"></a>
+AutoSuggestBox</h2>
+<p >You can easily create an <code>AutoSuggestBox</code> from a <code>std::vector&lt;std::wstring&gt;</code>; make sure the vector's lifetime extends for at least as long as the XAML UI is up.</p>
+<p ><code>EnableDefaultSearch()</code> will provide a reasonable default search experience (filters the list of items down to those that contain the search string). This behavior is case insensitive by default, but can be made case sensitive by passing <code>false</code>.</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> asb = cppxaml::AutoSuggestBox(GetFontFamilies())</div>
+<div class="line">                    .EnableDefaultSearch()</div>
+<div class="line">                    .Margin(0, 16, 0, 4)</div>
+<div class="line">                    .Name(L<span class="stringliteral">&quot;fontTB&quot;</span>);</div>
+</div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

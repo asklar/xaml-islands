@@ -8,11 +8,22 @@
 namespace cppxaml {
     struct XamlWindow;
 
+    /**
+     * @brief `AppController` is responsible for coordinating XamlWindow instances, can extend their wndproc, and provides an opportunity to hook up event handlers once a XAML UI becomes live.
+    */
     struct AppController {
     public:
+        /**
+         * @brief App-provided callback to be called when any of this controller's windows create their UI (usually Pages).
+        */
         void (*OnUICreated)(winrt::Windows::UI::Xaml::UIElement content, XamlWindow* xw) { nullptr };
         LRESULT(*WndProc)(HWND, INT, WPARAM, LPARAM, XamlWindow*) { nullptr };
 
+        /**
+         * @brief
+         * @param hInst 
+         * @param xapp 
+        */
         AppController(HINSTANCE hInst, winrt::Windows::UI::Xaml::Application xapp) {
             m_hInstance = hInst;
             m_xapp = xapp;
@@ -29,6 +40,9 @@ namespace cppxaml {
         winrt::Windows::UI::Xaml::Hosting::WindowsXamlManager m_winxamlmanager{ nullptr };
     };
 
+    /**
+     * @brief Implements an HWND based host for XAML Islands. You can create a `XamlWindow` from one of three overloads of XamlWindow::Make.
+    */
     struct XamlWindow {
     private:
         XamlWindow(PCWSTR id) : m_Id(id) {}
@@ -58,22 +72,36 @@ namespace cppxaml {
             m_controller(std::move(other.m_controller))
         {}
 
+        /**
+         * @brief returns the HWND backing the XamlWindow.
+         * @return 
+        */
         HWND hwnd() const {
             return m_hWnd;
         }
 
+        /**
+         * @brief returns the XAML UI that the XamlWindow was created with.
+         * @tparam T XAML type to cast to; defaults to UIElement.
+         * @return 
+        */
         template<typename T = winrt::Windows::UI::Xaml::UIElement>
         T GetUIElement() const {
             return m_ui.as<T>();
         }
 
-        /// <summary>
-        /// Creates a window that hosts a XAML UI element. The template parameter is the XAML type to instantiate, usually a Page.
-        /// </summary>
-        /// <typeparam name="TUIElement">The XAML class to host - usually a Page.</typeparam>
-        /// <param name="id"></param>
-        /// <param name="controller"></param>
-        /// <returns></returns>
+
+        /**
+         * @brief Creates a window that hosts a XAML UI element 
+         * @tparam TUIElement the XAML type to instantiate, usually a subclass of Page; this is usually defined by a separate WinRT Runtime component project, that the XAML Islands project references via C++/WinRT.
+         * @param id 
+         * @param controller 
+         * @return 
+         * @details Usage: \n
+         * @code
+         *  auto& mainWindow = cppxaml::XamlWindow::Make<MarkupSample::MainPage>(L"MarkupSample", &controller);
+         * @endcode
+         */
         template<typename TUIElement>
         static XamlWindow& Make(PCWSTR id, AppController* controller = nullptr) {
             XamlWindow xw(id);
@@ -83,21 +111,21 @@ namespace cppxaml {
             return entry.first->second;
         }
 
-        /// <summary>
-        /// Creates a window that hosts XAML UI, based on some markup provided as an input parameter.
-        /// </summary>
-        /// <remarks>
-        /// <example>
-        ///   <c>auto& xw = cppxaml::XamlWindow::Make(L"MyPage", L"&lt;StackPanel&gt;&lt;TextBlock&gt;Hello&lt;/TextBlock&gt;&lt;/StackPanel&gt;", c);</c>
-        /// </example>
-        /// </remarks>
-        /// 
-        /// <param name="id"></param>
-        /// <param name="markup">
-        /// XAML markup string to use to create the UI.
-        /// </param>
-        /// <param name="c"></param>
-        /// <returns></returns>
+        /**
+         * @brief Creates a window that hosts XAML UI, based on some markup provided as an input parameter.
+         * @param id 
+         * @param markup XAML markup string to use to create the UI.
+         * @param c 
+         * @return 
+         * @details 
+         * Usage: \n
+         * @code
+         *  auto& xw = cppxaml::XamlWindow::Make(L"MyPage", LR"(
+         *      <StackPanel>
+         *        <TextBlock>Hello</TextBlock>
+         *      </StackPanel>)", &controller);
+         * @endcode
+        */
         static XamlWindow& Make(PCWSTR id, std::wstring_view markup, AppController* c = nullptr) {
             XamlWindow xw(id);
             xw.m_controller = c;
@@ -110,16 +138,18 @@ namespace cppxaml {
             return entry.first->second;
         }
 
-        /// <summary>
-        /// Creates a window that hosts XAML UI. The UI will be provided by the app.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="getUI">
-        /// App-provided function to create UI. This can e.g. instantiate XAML types programmatically.
-        /// <example><c>auto& xw = cppxaml::XamlWindow::Make(L"Foo", [](auto&amp;...) { return winrt::Windows::UI::Xaml::Controls::Button(); });</c></example>
-        /// </param>
-        /// <param name="c"></param>
-        /// <returns></returns>
+        /**
+         * @brief Creates a window that hosts XAML UI. The UI will be provided by the app.
+         * @param id 
+         * @param getUI App-provided function to create UI. This can e.g. instantiate XAML types programmatically.
+         * @param c 
+         * @return 
+         * @details
+         * Usage: \n
+         * @code
+         * auto& xw = cppxaml::XamlWindow::Make(L"Foo", [](auto&...) { return winrt::Windows::UI::Xaml::Controls::Button(); });
+         * @endcode
+        */
         static XamlWindow& Make(PCWSTR id, winrt::Windows::UI::Xaml::UIElement(*getUI)(const XamlWindow&), AppController* c = nullptr) {
             XamlWindow xw(id);
             xw.m_controller = c;
@@ -128,9 +158,19 @@ namespace cppxaml {
             return entry.first->second;
         }
 
+        /**
+         * @brief returns the window's id
+         * @return 
+        */
         std::wstring_view Id() const {
             return m_Id;
         }
+        
+        /**
+         * @brief returns the XamlWindow corresponding to the id.
+         * @param id 
+         * @return 
+        */
         static XamlWindow& Get(PCWSTR id) {
             return s_windows.at(id);
         }
@@ -138,6 +178,16 @@ namespace cppxaml {
             return L"XamlWindow";
         }
 
+        /**
+         * @brief Call this function to create the actual window. Afterwards, you will call XamlWindow::RunLoop to process window messages.
+         * @param szTitle The window title.
+         * @param style The window style. See [Window styles](https://docs.microsoft.com/windows/win32/winmsg/window-styles) and [CreateWindow](https://docs.microsoft.com/windows/win32/api/winuser/nf-winuser-createwindoww).
+         * @param parent optional parent window.
+         * @param width optional window width.
+         * @param height optional window height. 
+         * @param nCmdShow Controls how the window is shown. See [ShowWindow](https://docs.microsoft.com/windows/win32/api/winuser/nf-winuser-showwindow).
+         * @return 
+        */
         HWND Create(PCWSTR szTitle, DWORD style, HWND parent = nullptr, int width = CW_USEDEFAULT, int height = CW_USEDEFAULT, int nCmdShow = SW_NORMAL) {
             static std::once_flag once;
 
@@ -178,14 +228,26 @@ namespace cppxaml {
             return hWnd;
         }
 
+        /**
+         * @brief 
+         * @param acc 
+        */
         void SetAcceleratorTable(HACCEL acc) {
             m_hAccelTable = acc;
         }
 
+        /**
+         * @brief 
+         * @return 
+        */
         AppController* Controller() const {
             return m_controller;
         }
 
+        /**
+         * @brief 
+         * @return 
+        */
         int RunLoop() {
             MSG msg;
 

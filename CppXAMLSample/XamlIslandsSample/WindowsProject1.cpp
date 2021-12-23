@@ -11,8 +11,9 @@
 #include <dwmapi.h>
 #include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Documents.h>
-
+#include <winrt/windows.ui.xaml.controls.h>
 #include <cppxaml/Controls.h>
+#include <functional>
 
 using namespace winrt;
 using namespace Windows::UI::Xaml::Controls;
@@ -42,6 +43,11 @@ auto GetFontFamilies() {
 }
 
 winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
+    auto v = std::vector<int>{ 1,2,3 };
+    auto w = cppxaml::utils::transform(v, [](const int& t) { return t; });
+    auto z = cppxaml::utils::transform_with_index(v, [](const int& t, std::vector<int>::const_iterator::difference_type dt) { return t + dt; });
+
+
     auto gl = cppxaml::details::GridLength2(10);
     auto gl2 = cppxaml::details::GridLength2("*");
     auto gl3 = cppxaml::details::GridLength2("Auto");
@@ -53,17 +59,32 @@ winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
     auto gr = cppxaml::details::GridRows("10, 20, *");
     auto gr2 = cppxaml::details::GridRows{ "10, 20, *, Auto" };
     auto gr3 = cppxaml::details::GridRows{ 10, 20, {"*"}, {"Auto"} };
-        
+    
+    auto strs = std::vector<std::wstring>{ L"first", L"second", L"third", L"fourth" };
+
+    auto lambda = [](const std::wstring& t, std::vector<std::wstring>::const_iterator::difference_type index) {
+        return cppxaml::details::UIElementInGrid{
+            (int)index / 2,
+            (int)index % 2,
+            cppxaml::Button(winrt::hstring(t))
+        };
+    };
+
     auto cd = cppxaml::ContentDialog(
         cppxaml::MakeContentControl<cppxaml::xaml::Controls::ScrollViewer>({
             cppxaml::StackPanel({
-            cppxaml::Grid({"40, *"}, {"Auto, Auto"}, {
-                {0, 0, cppxaml::TextBlock(L"first") },
-                {0, 1, cppxaml::TextBlock(L"second") },
-                {1, 0, cppxaml::TextBlock(L"third") },
-                {1, 1, cppxaml::TextBlock(L"fourth") },
-                }),
-                //cppxaml::Wrapper<Controls::ColorPicker>().Name(L"cp"),
+                cppxaml::Grid(
+                    {"40, *"}, {"Auto, Auto"},
+                    cppxaml::utils::transform_with_index(strs,
+                        [](const std::wstring& t, auto index) {
+                            return cppxaml::details::UIElementInGrid{
+                                (int)index / 2,
+                                (int)index % 2,
+                                cppxaml::Button(winrt::hstring(t))
+                            };
+                      })
+                    ),
+                //cppxaml::details::Wrapper<Controls::ColorPicker>().Name(L"cp"),
                 cppxaml::AutoSuggestBox(GetFontFamilies())
                     .EnableDefaultSearch()
                     .Margin(0, 16, 0, 4)
@@ -77,10 +98,6 @@ winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
     cppxaml::InitializeWithWindow(cd, xw);
     auto res = co_await cd->ShowAsync();
     if (res == cppxaml::xaml::Controls::ContentDialogResult::Primary) {
-        //auto cp = cppxaml::FindChildByName<Controls::ColorPicker>(*cd, L"cp");
-        //auto color = std::format(L"#{:x}{:x}{:x}", cp.Color().R, cp.Color().G, cp.Color().B);
-        //auto jsres = co_await wv().ExecuteScriptAsync(std::format(L"document.body.style.backgroundColor = '{}';", color));
-
         fontTB = cppxaml::FindChildByName<Controls::AutoSuggestBox>(*cd, L"fontTB");
         auto fontName = fontTB.Text();
     }

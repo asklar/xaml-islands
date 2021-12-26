@@ -23,6 +23,7 @@ using namespace Windows::UI::Xaml::Hosting;
 
 std::vector<std::wstring> fontNames{};
 
+/*
 namespace cppxaml::details {
     template<>
     struct Wrapper<cppxaml::xaml::Controls::MenuFlyoutItem> : WrapperT<cppxaml::xaml::Controls::MenuFlyoutItem> {
@@ -84,7 +85,7 @@ namespace cppxaml {
     }
 
 }
-
+*/
 
 auto GetFontFamilies() {
     if (fontNames.size() == 0) {

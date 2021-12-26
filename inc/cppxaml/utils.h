@@ -3,7 +3,9 @@
 /** @file
 * @author Alexander Sklar
 * @section LICENSE
-* MIT
+ * Copyright (c) Alexander Sklar
+ *
+ * Licensed under the MIT license
 */
 
 /**

@@ -112,10 +112,6 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="memTemplParams" colspan="2">template&lt;typename T  = cppxaml::xaml::DependencyObject&gt; </td></tr>
-<tr class="memitem:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a0f5c28d135987dff385c3b35f3cbf7f3">FindChildByName</a> (cppxaml::xaml::DependencyObject d, std::wstring_view name)</td></tr>
-<tr class="memdesc:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a XAML element by name.  <a href="namespacecppxaml.html#a0f5c28d135987dff385c3b35f3cbf7f3">More...</a><br /></td></tr>
-<tr class="separator:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1170d3616e0e97d2c38866df264a35b5"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a1170d3616e0e97d2c38866df264a35b5"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a1170d3616e0e97d2c38866df264a35b5">MakeContentControl</a> (winrt::Windows::Foundation::IInspectable i)</td></tr>
 <tr class="memdesc:a1170d3616e0e97d2c38866df264a35b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a XAML element of a class that derives from <code>ContentControl</code>  <a href="namespacecppxaml.html#a1170d3616e0e97d2c38866df264a35b5">More...</a><br /></td></tr>
@@ -157,19 +153,29 @@ Functions</h2></td></tr>
 <tr class="memitem:a85ad9a926e3bbd15f5d1c7fd0ea9771a"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a85ad9a926e3bbd15f5d1c7fd0ea9771a">Button</a> (C c)</td></tr>
 <tr class="memdesc:a85ad9a926e3bbd15f5d1c7fd0ea9771a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Button.  <a href="namespacecppxaml.html#a85ad9a926e3bbd15f5d1c7fd0ea9771a">More...</a><br /></td></tr>
 <tr class="separator:a85ad9a926e3bbd15f5d1c7fd0ea9771a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cdaca8e58ca1468a4f57bb65badb352"><td class="memTemplParams" colspan="2">template&lt;typename TWindow &gt; </td></tr>
-<tr class="memitem:a6cdaca8e58ca1468a4f57bb65badb352"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt;!std::is_assignable_v&lt; TWindow, <a class="el" href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a> * &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a6cdaca8e58ca1468a4f57bb65badb352">InitializeWithWindow</a> (winrt::Windows::Foundation::IInspectable obj, TWindow w)</td></tr>
-<tr class="memdesc:a6cdaca8e58ca1468a4f57bb65badb352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an object with a window-like object.  <a href="namespacecppxaml.html#a6cdaca8e58ca1468a4f57bb65badb352">More...</a><br /></td></tr>
-<tr class="separator:a6cdaca8e58ca1468a4f57bb65badb352"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a158e0b496a261512874aa6a7188b0c75"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a158e0b496a261512874aa6a7188b0c75">InitializeWithWindow</a> (cppxaml::xaml::FrameworkElement obj, HWND hwnd)</td></tr>
-<tr class="memdesc:a158e0b496a261512874aa6a7188b0c75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <code>FrameworkElement</code> with an HWND.  <a href="namespacecppxaml.html#a158e0b496a261512874aa6a7188b0c75">More...</a><br /></td></tr>
-<tr class="separator:a158e0b496a261512874aa6a7188b0c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71048702101013fa7006e72c471bd314"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a71048702101013fa7006e72c471bd314">InitializeWithWindow</a> (cppxaml::xaml::FrameworkElement obj, const <a class="el" href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a> *xw)</td></tr>
-<tr class="memdesc:a71048702101013fa7006e72c471bd314"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <code>FrameworkElement</code> with the window represented by the <code><a class="el" href="structcppxaml_1_1_xaml_window.html" title="Implements an HWND based host for XAML Islands. You can create a XamlWindow from one of three overloa...">XamlWindow</a></code> or the XAML content root that the <code><a class="el" href="structcppxaml_1_1_xaml_window.html" title="Implements an HWND based host for XAML Islands. You can create a XamlWindow from one of three overloa...">XamlWindow</a></code> object is hosting.  <a href="namespacecppxaml.html#a71048702101013fa7006e72c471bd314">More...</a><br /></td></tr>
-<tr class="separator:a71048702101013fa7006e72c471bd314"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4fb029e27a18536dc26d82d5b79ae91"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#af4fb029e27a18536dc26d82d5b79ae91">MenuFlyoutItem</a> (std::wstring_view text)</td></tr>
+<tr class="memdesc:af4fb029e27a18536dc26d82d5b79ae91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a MenuFlyoutItem with the specified text.  <a href="namespacecppxaml.html#af4fb029e27a18536dc26d82d5b79ae91">More...</a><br /></td></tr>
+<tr class="separator:af4fb029e27a18536dc26d82d5b79ae91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af15706c28332d0899b7e2f9dfc283e9d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#af15706c28332d0899b7e2f9dfc283e9d">MenuFlyout</a> (std::initializer_list&lt; cppxaml::xaml::Controls::MenuFlyoutItemBase &gt; &amp;&amp;items)</td></tr>
+<tr class="memdesc:af15706c28332d0899b7e2f9dfc283e9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>MenuFlyout</code> from a list of <code>MenuFlyoutItems</code>  <a href="namespacecppxaml.html#af15706c28332d0899b7e2f9dfc283e9d">More...</a><br /></td></tr>
+<tr class="separator:af15706c28332d0899b7e2f9dfc283e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a131dcb81cd4df2a20f8ac5ed6230aa75"><td class="memTemplParams" colspan="2">template&lt;typename TWindow &gt; </td></tr>
+<tr class="memitem:a131dcb81cd4df2a20f8ac5ed6230aa75"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; !std::is_same_v&lt; TWindow, <a class="el" href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a> * &gt; &amp;&amp;!std::is_same_v&lt; TWindow, HWND &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a131dcb81cd4df2a20f8ac5ed6230aa75">InitializeWithWindow</a> (winrt::Windows::Foundation::IInspectable obj, TWindow w)</td></tr>
+<tr class="memdesc:a131dcb81cd4df2a20f8ac5ed6230aa75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an object with a window-like object.  <a href="namespacecppxaml.html#a131dcb81cd4df2a20f8ac5ed6230aa75">More...</a><br /></td></tr>
+<tr class="separator:a131dcb81cd4df2a20f8ac5ed6230aa75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8457e92994f0728f3dcf4b72fa9cd60"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ae8457e92994f0728f3dcf4b72fa9cd60">InitializeWithWindow</a> (winrt::Windows::Foundation::IInspectable obj, HWND hwnd)</td></tr>
+<tr class="memdesc:ae8457e92994f0728f3dcf4b72fa9cd60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <code>FrameworkElement</code> with an HWND.  <a href="namespacecppxaml.html#ae8457e92994f0728f3dcf4b72fa9cd60">More...</a><br /></td></tr>
+<tr class="separator:ae8457e92994f0728f3dcf4b72fa9cd60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5f570d0755cda27ea9caa163d9a967a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ac5f570d0755cda27ea9caa163d9a967a">InitializeWithWindow</a> (winrt::Windows::Foundation::IInspectable obj, const <a class="el" href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a> *xw)</td></tr>
+<tr class="memdesc:ac5f570d0755cda27ea9caa163d9a967a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <code>FrameworkElement</code> with the window represented by the <code><a class="el" href="structcppxaml_1_1_xaml_window.html" title="Implements an HWND based host for XAML Islands. You can create a XamlWindow from one of three overloa...">XamlWindow</a></code> or the XAML content root that the <code><a class="el" href="structcppxaml_1_1_xaml_window.html" title="Implements an HWND based host for XAML Islands. You can create a XamlWindow from one of three overloa...">XamlWindow</a></code> object is hosting.  <a href="namespacecppxaml.html#ac5f570d0755cda27ea9caa163d9a967a">More...</a><br /></td></tr>
+<tr class="separator:ac5f570d0755cda27ea9caa163d9a967a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeddc328e7c491232cb510b99d0eadde7"><td class="memTemplParams" colspan="2">template&lt;typename TUIElement , typename TWindow &gt; </td></tr>
 <tr class="memitem:aeddc328e7c491232cb510b99d0eadde7"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; std::is_assignable_v&lt; cppxaml::xaml::UIElement, TUIElement &gt; &amp;&amp;!std::is_same_v&lt; TWindow, const <a class="el" href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a> * &gt;, void &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#aeddc328e7c491232cb510b99d0eadde7">InitializeWithWindow</a> (cppxaml::details::Wrapper&lt; TUIElement &gt; obj, TWindow w)</td></tr>
 <tr class="separator:aeddc328e7c491232cb510b99d0eadde7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="memTemplParams" colspan="2">template&lt;typename T  = cppxaml::xaml::DependencyObject&gt; </td></tr>
+<tr class="memitem:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a0f5c28d135987dff385c3b35f3cbf7f3">FindChildByName</a> (cppxaml::xaml::DependencyObject d, std::wstring_view name)</td></tr>
+<tr class="memdesc:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a XAML element by name.  <a href="namespacecppxaml.html#a0f5c28d135987dff385c3b35f3cbf7f3">More...</a><br /></td></tr>
+<tr class="separator:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >The main CppXAML namespace. </p>
@@ -412,15 +418,15 @@ template&lt;typename TElements &gt; </div>
 <p >The row and column definitions are specified with the same syntax.<br  />
 This will be either an initializer list where each element is a height (a <code>double</code>, or the strings <code>"Auto"</code>, or <code>"N*"</code> where <code>N</code> is an integer), or a string with the corresponding format. <br  />
 <br  />
- Example usage:<br  />
+Example usage:<br  />
 </p><div class="fragment"><div class="line"><span class="keyword">auto</span> grid = <a class="code hl_function" href="namespacecppxaml.html#a16f21d9198bc20c1f09a8616edac934e">cppxaml::Grid</a>({<span class="stringliteral">&quot;40, *&quot;</span>}, {<span class="stringliteral">&quot;Auto, Auto&quot;</span>}, {</div>
 <div class="line">     {0, 0, <a class="code hl_function" href="namespacecppxaml.html#a693c4b3c45d766f8509833c3bc7bc874">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;first&quot;</span>) },</div>
 <div class="line">     {0, 1, <a class="code hl_function" href="namespacecppxaml.html#a693c4b3c45d766f8509833c3bc7bc874">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;second&quot;</span>) },</div>
 <div class="line">     {1, 0, <a class="code hl_function" href="namespacecppxaml.html#a693c4b3c45d766f8509833c3bc7bc874">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;third&quot;</span>) },</div>
 <div class="line">     {1, 1, <a class="code hl_function" href="namespacecppxaml.html#a693c4b3c45d766f8509833c3bc7bc874">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;fourth&quot;</span>) },</div>
 <div class="line">     }),</div>
-<div class="ttc" id="anamespacecppxaml_html_a16f21d9198bc20c1f09a8616edac934e"><div class="ttname"><a href="namespacecppxaml.html#a16f21d9198bc20c1f09a8616edac934e">cppxaml::Grid</a></div><div class="ttdeci">auto Grid(details::GridRows gr, cppxaml::details::GridColumns gc, TElements &amp;&amp;elems)</div><div class="ttdoc">Creates a Grid with the specified rows, columns, and children.</div><div class="ttdef"><b>Definition:</b> Controls.h:475</div></div>
-<div class="ttc" id="anamespacecppxaml_html_a693c4b3c45d766f8509833c3bc7bc874"><div class="ttname"><a href="namespacecppxaml.html#a693c4b3c45d766f8509833c3bc7bc874">cppxaml::TextBlock</a></div><div class="ttdeci">auto TextBlock(std::wstring_view text)</div><div class="ttdoc">Creates a TextBlock from its text content.</div><div class="ttdef"><b>Definition:</b> Controls.h:547</div></div>
+<div class="ttc" id="anamespacecppxaml_html_a16f21d9198bc20c1f09a8616edac934e"><div class="ttname"><a href="namespacecppxaml.html#a16f21d9198bc20c1f09a8616edac934e">cppxaml::Grid</a></div><div class="ttdeci">auto Grid(details::GridRows gr, cppxaml::details::GridColumns gc, TElements &amp;&amp;elems)</div><div class="ttdoc">Creates a Grid with the specified rows, columns, and children.</div><div class="ttdef"><b>Definition:</b> Controls.h:428</div></div>
+<div class="ttc" id="anamespacecppxaml_html_a693c4b3c45d766f8509833c3bc7bc874"><div class="ttname"><a href="namespacecppxaml.html#a693c4b3c45d766f8509833c3bc7bc874">cppxaml::TextBlock</a></div><div class="ttdeci">auto TextBlock(std::wstring_view text)</div><div class="ttdoc">Creates a TextBlock from its text content.</div><div class="ttdef"><b>Definition:</b> Controls.h:500</div></div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">gr</td><td>The set of grid row definitions. </td></tr>
@@ -478,8 +484,8 @@ template&lt;typename TUIElement , typename TWindow &gt; </div>
 
 </div>
 </div>
-<a id="a71048702101013fa7006e72c471bd314" name="a71048702101013fa7006e72c471bd314"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71048702101013fa7006e72c471bd314">&#9670;&nbsp;</a></span>InitializeWithWindow() <span class="overload">[2/4]</span></h2>
+<a id="ac5f570d0755cda27ea9caa163d9a967a" name="ac5f570d0755cda27ea9caa163d9a967a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5f570d0755cda27ea9caa163d9a967a">&#9670;&nbsp;</a></span>InitializeWithWindow() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -487,7 +493,7 @@ template&lt;typename TUIElement , typename TWindow &gt; </div>
         <tr>
           <td class="memname">void cppxaml::InitializeWithWindow </td>
           <td>(</td>
-          <td class="paramtype">cppxaml::xaml::FrameworkElement&#160;</td>
+          <td class="paramtype">winrt::Windows::Foundation::IInspectable&#160;</td>
           <td class="paramname"><em>obj</em>, </td>
         </tr>
         <tr>
@@ -515,8 +521,8 @@ template&lt;typename TUIElement , typename TWindow &gt; </div>
 
 </div>
 </div>
-<a id="a158e0b496a261512874aa6a7188b0c75" name="a158e0b496a261512874aa6a7188b0c75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a158e0b496a261512874aa6a7188b0c75">&#9670;&nbsp;</a></span>InitializeWithWindow() <span class="overload">[3/4]</span></h2>
+<a id="ae8457e92994f0728f3dcf4b72fa9cd60" name="ae8457e92994f0728f3dcf4b72fa9cd60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8457e92994f0728f3dcf4b72fa9cd60">&#9670;&nbsp;</a></span>InitializeWithWindow() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -524,7 +530,7 @@ template&lt;typename TUIElement , typename TWindow &gt; </div>
         <tr>
           <td class="memname">bool cppxaml::InitializeWithWindow </td>
           <td>(</td>
-          <td class="paramtype">cppxaml::xaml::FrameworkElement&#160;</td>
+          <td class="paramtype">winrt::Windows::Foundation::IInspectable&#160;</td>
           <td class="paramname"><em>obj</em>, </td>
         </tr>
         <tr>
@@ -553,8 +559,8 @@ template&lt;typename TUIElement , typename TWindow &gt; </div>
 
 </div>
 </div>
-<a id="a6cdaca8e58ca1468a4f57bb65badb352" name="a6cdaca8e58ca1468a4f57bb65badb352"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6cdaca8e58ca1468a4f57bb65badb352">&#9670;&nbsp;</a></span>InitializeWithWindow() <span class="overload">[4/4]</span></h2>
+<a id="a131dcb81cd4df2a20f8ac5ed6230aa75" name="a131dcb81cd4df2a20f8ac5ed6230aa75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a131dcb81cd4df2a20f8ac5ed6230aa75">&#9670;&nbsp;</a></span>InitializeWithWindow() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -562,7 +568,7 @@ template&lt;typename TUIElement , typename TWindow &gt; </div>
 template&lt;typename TWindow &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::enable_if_t&lt;!std::is_assignable_v&lt; TWindow, <a class="el" href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a> * &gt; &gt; cppxaml::InitializeWithWindow </td>
+          <td class="memname">std::enable_if_t&lt; !std::is_same_v&lt; TWindow, <a class="el" href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a> * &gt; &amp;&amp; !std::is_same_v&lt; TWindow, HWND &gt; &gt; cppxaml::InitializeWithWindow </td>
           <td>(</td>
           <td class="paramtype">winrt::Windows::Foundation::IInspectable&#160;</td>
           <td class="paramname"><em>obj</em>, </td>
@@ -658,7 +664,7 @@ template&lt;typename T &gt; </div>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The XAML type, e.g. <code>Button</code>. Defaults to <code>void</code>.<br  />
- </td></tr>
+</td></tr>
   </table>
   </dd>
 </dl>
@@ -697,7 +703,7 @@ template&lt;typename T , typename TItems &gt; </div>
     <tr><td class="paramname">TItems</td><td>The type of the collection of items that might be used as seed to construct the control.<br  />
 For example, this could be a <code>std::vector&lt;std::wstring&gt;</code> that is used to construct the <code>Items</code> collection for an <code>AutoSuggestBox</code>.<br  />
 Defaults to <code>void</code>.<br  />
- </td></tr>
+</td></tr>
   </table>
   </dd>
 </dl>
@@ -739,6 +745,60 @@ template&lt;typename T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">elems</td><td>The list of <code>UIElements</code> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="af15706c28332d0899b7e2f9dfc283e9d" name="af15706c28332d0899b7e2f9dfc283e9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af15706c28332d0899b7e2f9dfc283e9d">&#9670;&nbsp;</a></span>MenuFlyout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto cppxaml::MenuFlyout </td>
+          <td>(</td>
+          <td class="paramtype">std::initializer_list&lt; cppxaml::xaml::Controls::MenuFlyoutItemBase &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>items</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a <code>MenuFlyout</code> from a list of <code>MenuFlyoutItems</code> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">items</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="af4fb029e27a18536dc26d82d5b79ae91" name="af4fb029e27a18536dc26d82d5b79ae91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4fb029e27a18536dc26d82d5b79ae91">&#9670;&nbsp;</a></span>MenuFlyoutItem()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto cppxaml::MenuFlyoutItem </td>
+          <td>(</td>
+          <td class="paramtype">std::wstring_view&#160;</td>
+          <td class="paramname"><em>text</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a MenuFlyoutItem with the specified text. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td></td></tr>
   </table>
   </dd>
 </dl>

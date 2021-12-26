@@ -59,7 +59,7 @@ winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
     auto gr = cppxaml::details::GridRows("10, 20, *");
     auto gr2 = cppxaml::details::GridRows{ "10, 20, *, Auto" };
     auto gr3 = cppxaml::details::GridRows{ 10, 20, {"*"}, {"Auto"} };
-    
+
     auto strs = std::vector<std::wstring>{ L"first", L"second", L"third", L"fourth" };
 
     auto lambda = [](const std::wstring& t, std::vector<std::wstring>::const_iterator::difference_type index) {
@@ -70,8 +70,33 @@ winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
         };
     };
 
-    auto cd = cppxaml::ContentDialog(
-        cppxaml::MakeContentControl<cppxaml::xaml::Controls::ScrollViewer>({
+    auto button_1 = cppxaml::Button(L"my button")
+        .Set(cppxaml::xaml::Controls::Grid::RowProperty(), 1)
+        .Set(cppxaml::xaml::Controls::Grid::ColumnProperty(), 1);
+
+//    auto grid = Markup::XamlReader::Load(LR"(
+//<Grid
+//    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+//    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+//    Background="Transparent"
+//>
+//    <VisualStateManager.VisualStateGroups>
+//        <VisualStateGroup x:Name="VSG1">
+//            <VisualState x:Name="VS1">
+//                <Storyboard x:Name='SB1'>
+//                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName='Rect1' Storyboard.TargetProperty='Fill'>
+//                        <DiscreteObjectKeyFrame KeyTime='0:0:0' Value='Green' />
+//                    </ObjectAnimationUsingKeyFrames>
+//                </Storyboard>
+//            </VisualState>
+//            <VisualState x:Name="state2"/>
+//        </VisualStateGroup>
+//    </VisualStateManager.VisualStateGroups>
+//    <Rectangle x:Name='Rect1' Fill='Red' Width='100' />
+//</Grid>
+//)").as<Controls::Grid>();
+
+    auto sv = cppxaml::MakeContentControl<cppxaml::xaml::Controls::ScrollViewer>({
             cppxaml::StackPanel({
                 cppxaml::Grid(
                     {"40, *"}, {"Auto, Auto"},
@@ -89,10 +114,58 @@ winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
                     .EnableDefaultSearch()
                     .Margin(0, 16, 0, 4)
                     .Name(L"fontTB"),
-            }).Orientation(Controls::Orientation::Vertical)
-        })
-    ).PrimaryButtonText(L"Ok");
+            }).Orientation(Controls::Orientation::Vertical).Name(L"stackpanel")
+        });
 
+    auto cd = cppxaml::ContentDialog(sv).PrimaryButtonText(L"Ok");
+
+    cd->Loaded([sv](auto&...) {
+        auto stackpanel = cppxaml::FindChildByName< Controls::StackPanel>(sv, L"stackpanel");
+        stackpanel = sv->FindName(L"stackpanel").as<Controls::StackPanel>();
+
+//        auto button = Markup::XamlReader::Load(LR"(
+//<Button
+//    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+//    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+//    Content="Hello world"
+//>
+//    <Control.Template>
+//        <ControlTemplate>
+//            <VisualStateGroup x:Name="VSG1">
+//                <VisualState x:Name="VS1">
+//                </VisualState>
+//                <VisualState x:Name="state2"/>
+//            </VisualStateGroup>
+//        </ControlTemplate>
+//    </Control.Template>
+//</Button>
+//)").as<Controls::Button>();
+//
+//        stackpanel.Children().Append(button);
+//
+//        try {
+//            auto vsm = MarkupSample::CustomVSM();
+//            winrt::Windows::UI::Xaml::VisualStateManager::SetCustomVisualStateManager(button, vsm);
+//            auto vsmGroup = button.FindName(L"VSG1").as<VisualStateGroup>();
+//            auto vsmState = button.FindName(L"VS1").as<VisualState>();
+//            //auto gsc = &winrt::impl::consume_MarkupSample_ICustomVSMOverrides<winrt::MarkupSample::CustomVSM>::GoToStateCore;
+//            //(vsm.*gsc)(Controls::Button(), grid, L"VS1", vsmGroup, vsmState, true);
+//            // 
+//
+//
+//            //        vsm.GoToStateCore(Controls::Button(), grid, L"VS1", vsmGroup, vsmState, true);
+//
+//            VisualStateManager::GoToState(button, L"VS1", true);
+//            //(& vsm)->*(gsc)(Controls::Button(), grid, L"VS1", vsmGroup, vsmState, true);
+//            //VisualStateManager::GoToState(grid, L"state1", true);
+//
+//        }
+//        catch (const winrt::hresult_error& hr) {
+//            auto x = hr.message();
+//        }
+//
+//
+        });
     auto fontTB = cppxaml::FindChildByName<Controls::AutoSuggestBox>(*cd, L"fontTB");
 
     cppxaml::InitializeWithWindow(cd, xw);
@@ -185,7 +258,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());
     auto& mainWindow = cppxaml::XamlWindow::Make<MarkupSample::MainPage>(L"MarkupSample", &controller);
     auto& modalWindow = cppxaml::XamlWindow::Make<MarkupSample::ModalPage>(L"Modal", &controller);
-    
+
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT1));
     mainWindow.SetAcceleratorTable(hAccelTable);
 

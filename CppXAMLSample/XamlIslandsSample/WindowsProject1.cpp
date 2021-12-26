@@ -208,7 +208,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 EnableWindow(mainWindow.hwnd(), FALSE);
                 });
 
+            auto menuFlyout = cppxaml::MenuFlyout({
+                                cppxaml::MenuFlyoutItem(L"menu option1"),
+                                cppxaml::MenuFlyoutItem(L"menu option2")
+                                    .IconElement(cppxaml::FontIcon(L"\xe701")),
+                }).CentralizedHandler(
+                    [](Windows::Foundation::IInspectable sender, Input::TappedRoutedEventArgs args) {
+                        auto x = sender.as<cppxaml::xaml::Controls::MenuFlyoutItem>().Text();
+                    });
+
             mainPage.OkButton().Tapped([xw](Windows::Foundation::IInspectable, auto&) {
+
+                /* 
+                // The following code breaks the build inside a lambda, but works fine outside it 
+                auto menuFlyout = cppxaml::MenuFlyout({
+                    cppxaml::MenuFlyoutItem(L"menu option1"),
+                    cppxaml::MenuFlyoutItem(L"menu option2")
+                        .IconElement(cppxaml::FontIcon(L"\xe701")),
+                    }).CentralizedHandler([](Windows::Foundation::IInspectable sender, Input::TappedRoutedEventArgs args) {
+                        auto x = sender.as<cppxaml::xaml::Controls::MenuFlyoutItem>().Text();
+                        }); 
+                    cppxaml::InitializeWithWindow(menuFlyout, xw);
+                    menuFlyout->ShowAt(mainPage.OkButton());
+                            */
+
                 DestroyWindow(xw->hwnd());
                 });
         }

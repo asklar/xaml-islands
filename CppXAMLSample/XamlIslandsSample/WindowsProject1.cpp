@@ -23,6 +23,69 @@ using namespace Windows::UI::Xaml::Hosting;
 
 std::vector<std::wstring> fontNames{};
 
+namespace cppxaml::details {
+    template<>
+    struct Wrapper<cppxaml::xaml::Controls::MenuFlyoutItem> : WrapperT<cppxaml::xaml::Controls::MenuFlyoutItem> {
+        cppxaml::xaml::Controls::IconElement IconElement() const { return m_value.Icon(); }
+        auto IconElement(cppxaml::xaml::Controls::IconElement icon) const {
+            m_value.Icon(icon); return *this;
+        }
+        winrt::event_token m_tappedToken{};
+        auto Tapped() const {
+            return m_tappedToken;
+        }
+        auto Tapped(cppxaml::xaml::Input::TappedEventHandler handler) { m_tappedToken = m_value.Tapped(handler); return *this; }
+    };
+
+    template<>
+    struct Wrapper<cppxaml::xaml::Controls::MenuFlyout> : WrapperT<cppxaml::xaml::Controls::MenuFlyout> {
+        template<typename F>
+        auto CentralizedHandler(const F& f) {
+            if (m_eventHandlers.size() != 0) {
+                throw std::exception("Centralized handler already set");
+            }
+
+            for (auto i : m_value.Items()) {
+                m_eventHandlers.push_back(i.Tapped([f](winrt::Windows::Foundation::IInspectable sender, cppxaml::xaml::Input::TappedRoutedEventArgs args) {
+                    f(sender, args);
+                    }));
+            }
+            return *this;
+        }
+        std::vector<winrt::event_token> m_eventHandlers{};
+        ~Wrapper() {
+                for (auto i = 0u; i < m_value.Items().Size(); i++) {
+                    m_value.Items().GetAt(i).Tapped(m_eventHandlers[i]);
+                }
+        }
+    };
+}
+
+namespace cppxaml {
+    auto FontIcon(std::wstring_view icon) {
+        cppxaml::details::Wrapper<cppxaml::xaml::Controls::FontIcon> fi;
+        fi->Glyph(icon);
+        return fi;
+    }
+
+
+    auto MenuFlyoutItem(std::wstring_view text) {
+        cppxaml::details::Wrapper<cppxaml::xaml::Controls::MenuFlyoutItem> mfi;
+        mfi->Text(text);
+        return mfi;
+    }
+
+    auto MenuFlyout(std::initializer_list<cppxaml::xaml::Controls::MenuFlyoutItemBase>&& items) {
+        cppxaml::details::Wrapper<cppxaml::xaml::Controls::MenuFlyout> mf;
+        for (auto& mfi : items) {
+            mf->Items().Append(mfi);
+        }
+        return mf;
+    }
+
+}
+
+
 auto GetFontFamilies() {
     if (fontNames.size() == 0) {
         auto hDC = GetDC(nullptr);
@@ -70,31 +133,6 @@ winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
         };
     };
 
-    auto button_1 = cppxaml::Button(L"my button")
-        .Set(cppxaml::xaml::Controls::Grid::RowProperty(), 1)
-        .Set(cppxaml::xaml::Controls::Grid::ColumnProperty(), 1);
-
-//    auto grid = Markup::XamlReader::Load(LR"(
-//<Grid
-//    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-//    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-//    Background="Transparent"
-//>
-//    <VisualStateManager.VisualStateGroups>
-//        <VisualStateGroup x:Name="VSG1">
-//            <VisualState x:Name="VS1">
-//                <Storyboard x:Name='SB1'>
-//                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName='Rect1' Storyboard.TargetProperty='Fill'>
-//                        <DiscreteObjectKeyFrame KeyTime='0:0:0' Value='Green' />
-//                    </ObjectAnimationUsingKeyFrames>
-//                </Storyboard>
-//            </VisualState>
-//            <VisualState x:Name="state2"/>
-//        </VisualStateGroup>
-//    </VisualStateManager.VisualStateGroups>
-//    <Rectangle x:Name='Rect1' Fill='Red' Width='100' />
-//</Grid>
-//)").as<Controls::Grid>();
 
     auto sv = cppxaml::MakeContentControl<cppxaml::xaml::Controls::ScrollViewer>({
             cppxaml::StackPanel({
@@ -123,48 +161,6 @@ winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
         auto stackpanel = cppxaml::FindChildByName< Controls::StackPanel>(sv, L"stackpanel");
         stackpanel = sv->FindName(L"stackpanel").as<Controls::StackPanel>();
 
-//        auto button = Markup::XamlReader::Load(LR"(
-//<Button
-//    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-//    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-//    Content="Hello world"
-//>
-//    <Control.Template>
-//        <ControlTemplate>
-//            <VisualStateGroup x:Name="VSG1">
-//                <VisualState x:Name="VS1">
-//                </VisualState>
-//                <VisualState x:Name="state2"/>
-//            </VisualStateGroup>
-//        </ControlTemplate>
-//    </Control.Template>
-//</Button>
-//)").as<Controls::Button>();
-//
-//        stackpanel.Children().Append(button);
-//
-//        try {
-//            auto vsm = MarkupSample::CustomVSM();
-//            winrt::Windows::UI::Xaml::VisualStateManager::SetCustomVisualStateManager(button, vsm);
-//            auto vsmGroup = button.FindName(L"VSG1").as<VisualStateGroup>();
-//            auto vsmState = button.FindName(L"VS1").as<VisualState>();
-//            //auto gsc = &winrt::impl::consume_MarkupSample_ICustomVSMOverrides<winrt::MarkupSample::CustomVSM>::GoToStateCore;
-//            //(vsm.*gsc)(Controls::Button(), grid, L"VS1", vsmGroup, vsmState, true);
-//            // 
-//
-//
-//            //        vsm.GoToStateCore(Controls::Button(), grid, L"VS1", vsmGroup, vsmState, true);
-//
-//            VisualStateManager::GoToState(button, L"VS1", true);
-//            //(& vsm)->*(gsc)(Controls::Button(), grid, L"VS1", vsmGroup, vsmState, true);
-//            //VisualStateManager::GoToState(grid, L"state1", true);
-//
-//        }
-//        catch (const winrt::hresult_error& hr) {
-//            auto x = hr.message();
-//        }
-//
-//
         });
     auto fontTB = cppxaml::FindChildByName<Controls::AutoSuggestBox>(*cd, L"fontTB");
 
@@ -217,9 +213,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                         auto x = sender.as<cppxaml::xaml::Controls::MenuFlyoutItem>().Text();
                     });
 
-            mainPage.OkButton().Tapped([xw](Windows::Foundation::IInspectable, auto&) {
+            mainPage.OkButton().Tapped([xw, mainPage](Windows::Foundation::IInspectable, auto&) {
 
-                /* 
                 // The following code breaks the build inside a lambda, but works fine outside it 
                 auto menuFlyout = cppxaml::MenuFlyout({
                     cppxaml::MenuFlyoutItem(L"menu option1"),
@@ -228,10 +223,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                     }).CentralizedHandler([](Windows::Foundation::IInspectable sender, Input::TappedRoutedEventArgs args) {
                         auto x = sender.as<cppxaml::xaml::Controls::MenuFlyoutItem>().Text();
                         }); 
-                    cppxaml::InitializeWithWindow(menuFlyout, xw);
-                    menuFlyout->ShowAt(mainPage.OkButton());
-                            */
-
+                    
+                    
                 DestroyWindow(xw->hwnd());
                 });
         }

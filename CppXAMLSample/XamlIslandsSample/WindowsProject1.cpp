@@ -59,7 +59,7 @@ winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
     auto gr = cppxaml::details::GridRows("10, 20, *");
     auto gr2 = cppxaml::details::GridRows{ "10, 20, *, Auto" };
     auto gr3 = cppxaml::details::GridRows{ 10, 20, {"*"}, {"Auto"} };
-    
+
     auto strs = std::vector<std::wstring>{ L"first", L"second", L"third", L"fourth" };
 
     auto lambda = [](const std::wstring& t, std::vector<std::wstring>::const_iterator::difference_type index) {
@@ -70,8 +70,8 @@ winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
         };
     };
 
-    auto cd = cppxaml::ContentDialog(
-        cppxaml::MakeContentControl<cppxaml::xaml::Controls::ScrollViewer>({
+
+    auto sv = cppxaml::MakeContentControl<cppxaml::xaml::Controls::ScrollViewer>({
             cppxaml::StackPanel({
                 cppxaml::Grid(
                     {"40, *"}, {"Auto, Auto"},
@@ -89,10 +89,16 @@ winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
                     .EnableDefaultSearch()
                     .Margin(0, 16, 0, 4)
                     .Name(L"fontTB"),
-            }).Orientation(Controls::Orientation::Vertical)
-        })
-    ).PrimaryButtonText(L"Ok");
+            }).Orientation(Controls::Orientation::Vertical).Name(L"stackpanel")
+        });
 
+    auto cd = cppxaml::ContentDialog(sv).PrimaryButtonText(L"Ok");
+
+    cd->Loaded([sv](auto&...) {
+        auto stackpanel = cppxaml::FindChildByName< Controls::StackPanel>(sv, L"stackpanel");
+        stackpanel = sv->FindName(L"stackpanel").as<Controls::StackPanel>();
+
+        });
     auto fontTB = cppxaml::FindChildByName<Controls::AutoSuggestBox>(*cd, L"fontTB");
 
     cppxaml::InitializeWithWindow(cd, xw);
@@ -135,7 +141,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 EnableWindow(mainWindow.hwnd(), FALSE);
                 });
 
-            mainPage.OkButton().Tapped([xw](Windows::Foundation::IInspectable, auto&) {
+
+            mainPage.OkButton().Tapped([xw, mainPage](Windows::Foundation::IInspectable, auto&) {
+
+                // The following code breaks the build inside a lambda, but works fine outside it 
+                auto menuFlyout = cppxaml::MenuFlyout({
+                    cppxaml::MenuFlyoutItem(L"menu option1"),
+                    cppxaml::MenuFlyoutItem(L"menu option2")
+                        .IconElement(cppxaml::FontIcon(L"\xe701")),
+                    });
+                    
                 DestroyWindow(xw->hwnd());
                 });
         }
@@ -185,7 +200,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());
     auto& mainWindow = cppxaml::XamlWindow::Make<MarkupSample::MainPage>(L"MarkupSample", &controller);
     auto& modalWindow = cppxaml::XamlWindow::Make<MarkupSample::ModalPage>(L"Modal", &controller);
-    
+
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_WINDOWSPROJECT1));
     mainWindow.SetAcceleratorTable(hAccelTable);
 

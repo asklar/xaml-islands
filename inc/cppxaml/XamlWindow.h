@@ -180,9 +180,9 @@ namespace cppxaml {
          * @return 
         */
         static XamlWindow& Get(std::wstring_view id) {
-            return s_windows.at(id);
+            return s_windows.at(std::wstring(id));
         }
-        static constexpr std::wstring_view WindowClass() {
+        static constexpr wchar_t const* const WindowClass() {
             return L"XamlWindow";
         }
 
@@ -196,7 +196,7 @@ namespace cppxaml {
          * @param nCmdShow Controls how the window is shown. See [ShowWindow](https://docs.microsoft.com/windows/win32/api/winuser/nf-winuser-showwindow).
          * @return 
         */
-        HWND Create(std::wstring_view szTitle, DWORD style, HWND parent = nullptr, int width = CW_USEDEFAULT, int height = CW_USEDEFAULT, int nCmdShow = SW_NORMAL) {
+        HWND Create(wchar_t const* szTitle, DWORD style, HWND parent = nullptr, int width = CW_USEDEFAULT, int height = CW_USEDEFAULT, int nCmdShow = SW_NORMAL) {
             static std::once_flag once;
 
             std::call_once(once, [ctl = this->m_controller]() {

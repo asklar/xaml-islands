@@ -13,6 +13,7 @@
 #include <winrt/Windows.UI.Xaml.Documents.h>
 #include <winrt/windows.ui.xaml.controls.h>
 #include <cppxaml/Controls.h>
+#include <cppxaml/InitializeWithWindow.h>
 #include <functional>
 
 using namespace winrt;
@@ -141,16 +142,25 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 EnableWindow(mainWindow.hwnd(), FALSE);
                 });
 
-
             mainPage.OkButton().Tapped([xw, mainPage](Windows::Foundation::IInspectable, auto&) {
+                
+                auto menuFlyout = cppxaml::MenuFlyout(
+                    cppxaml::MenuFlyoutItem(L"Exit")
+                    .IconElement(cppxaml::FontIcon(0xe8bb))
+                    .Click([hwnd = xw->hwnd()](auto&...) {
+                        DestroyWindow(hwnd);
+                    }),
 
-                // The following code breaks the build inside a lambda, but works fine outside it 
-                auto menuFlyout = cppxaml::MenuFlyout({
-                    cppxaml::MenuFlyoutItem(L"menu option1"),
-                    cppxaml::MenuFlyoutItem(L"menu option2")
-                        .IconElement(cppxaml::FontIcon(L"\xe701")),
-                    });
-                    
+                    cppxaml::MenuFlyoutItem(L"Cancel")
+                        .IconElement(cppxaml::FontIcon(L"\xE8A7"))
+                    )
+                    .CentralizedHandler([](Windows::Foundation::IInspectable sender, auto&) {
+                        auto mfi = sender.as<Controls::MenuFlyoutItem>();
+                        auto x = mfi.Text();
+                        });
+
+                cppxaml::InitializeWithWindow(menuFlyout, mainPage);
+                // menuFlyout->ShowAt(mainPage.OkButton());
                 DestroyWindow(xw->hwnd());
                 });
         }

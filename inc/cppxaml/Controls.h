@@ -21,8 +21,10 @@
 
 #ifndef DOXY
 #define IF_ASSIGNABLE_CONTROL(XAMLTYPE)     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::XAMLTYPE, T>, cppxaml::details::Wrapper<T>>
+#define IF_ASSIGNABLE_CONTROL_TITEMS(XAMLTYPE, TITEMS)     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::XAMLTYPE, T>, cppxaml::details::Wrapper<T, TITEMS>>
 #else
 #define IF_ASSIGNABLE_CONTROL(XAMLTYPE)     cppxaml::details::Wrapper<T>
+#define IF_ASSIGNABLE_CONTROL_TITEMS(XAMLTYPE, TITEMS)     cppxaml::details::Wrapper<T, TITEMS>
 #endif
 
 /**
@@ -259,21 +261,54 @@ namespace cppxaml {
 
         };
 
+        /**
+         * @brief Fluent-style wrapper for `MenuFlyoutItem`
+        */
         template<>
         struct Wrapper<cppxaml::xaml::Controls::MenuFlyoutItem> : WrapperT<cppxaml::xaml::Controls::MenuFlyoutItem> {
+            /**
+             * @brief 
+             * @return 
+            */
             cppxaml::xaml::Controls::IconElement IconElement() const { return m_value.Icon(); }
+            /**
+             * @brief 
+             * @param icon 
+             * @return 
+            */
             auto IconElement(cppxaml::xaml::Controls::IconElement icon) const {
                 m_value.Icon(icon); return *this;
             }
-            winrt::event_token m_tappedToken{};
-            auto Tapped() const {
-                return m_tappedToken;
+            winrt::event_token m_clickToken{};
+            /**
+             * @brief 
+             * @return 
+            */
+            auto Click() const {
+                return m_clickToken;
             }
-            auto Tapped(cppxaml::xaml::Input::TappedEventHandler handler) { m_tappedToken = m_value.Tapped(handler); return *this; }
+            /**
+             * @brief 
+             * @param handler 
+             * @return 
+            */
+            auto Click(cppxaml::xaml::RoutedEventHandler handler) { 
+                m_clickToken = m_value.Click(handler);
+                return *this; 
+            }
         };
 
+        /**
+         * @brief Fluent-style wrapper for `MenuFlyout`
+        */
         template<>
         struct Wrapper<cppxaml::xaml::Controls::MenuFlyout> : WrapperT<cppxaml::xaml::Controls::MenuFlyout> {
+            /**
+             * @brief Sets up a centralized Click handler for all the MenuFlyoutItems in the MenuFlyout
+             * @tparam F 
+             * @param f the lambda to call when a MenuFlyoutItem is tapped
+             * @return 
+            */
             template<typename F>
             auto CentralizedHandler(const F& f) {
                 if (m_eventHandlers.size() != 0) {
@@ -281,17 +316,29 @@ namespace cppxaml {
                 }
 
                 for (auto i : m_value.Items()) {
-                    m_eventHandlers.push_back(i.Tapped([f](winrt::Windows::Foundation::IInspectable sender, cppxaml::xaml::Input::TappedRoutedEventArgs args) {
-                        f(sender, args);
-                        }));
+                    if (auto mfi = i.try_as<cppxaml::xaml::Controls::MenuFlyoutItem>()) {
+                        m_eventHandlers.push_back(mfi.Click([f](winrt::Windows::Foundation::IInspectable sender, cppxaml::xaml::RoutedEventArgs args) {
+                            f(sender, args);
+                            }));
+                    }
                 }
                 return *this;
             }
             std::vector<winrt::event_token> m_eventHandlers{};
             ~Wrapper() {
-                for (auto i = 0u; i < m_value.Items().Size(); i++) {
-                    m_value.Items().GetAt(i).Tapped(m_eventHandlers[i]);
+                // Wrapper goes out of scope when ShowAt is called, before the event handlers have had a chance to fire. Don't dismiss them for now.
+                /*
+                if (m_eventHandlers.size() == m_value.Items().Size()) {
+                    for (auto i = 0u; i < m_eventHandlers.size(); i++) {
+                        if (auto mfi = m_value.Items().GetAt(i).try_as<cppxaml::xaml::Controls::MenuFlyoutItem>()) {
+                            mfi.Click(m_eventHandlers[i]);
+                        }
+                        else {
+                            break; // bail, something is off
+                        }
+                    }
                 }
+                */
             }
         };
 
@@ -469,7 +516,7 @@ namespace cppxaml {
     */
 
     template<typename T, typename TItems>
-    IF_ASSIGNABLE_CONTROL(ItemsControl)
+    IF_ASSIGNABLE_CONTROL_TITEMS(ItemsControl, TItems)
         MakeItemsControl(const TItems& /*std::initializer_list<Windows::Foundation::IInspectable>*/ items) {
         cppxaml::details::Wrapper<T, TItems> t(items);
         for (auto& i : items) {
@@ -516,11 +563,29 @@ namespace cppxaml {
         return MakeContentControl<cppxaml::xaml::Controls::Button>(c);
     }
 
+    /**
+     * @brief Creates a FontIcon from a string
+     * @param icon
+     * @return
+    */
     auto FontIcon(std::wstring_view icon) {
         cppxaml::details::Wrapper<cppxaml::xaml::Controls::FontIcon> fi;
         fi->Glyph(icon);
         return fi;
     }
+
+    /**
+     * @brief Creates a FontIcon from a string
+     * @param icon
+     * @return
+    */
+    auto FontIcon(uint32_t glyph) {
+        wchar_t icon[3]{};
+        icon[0] = glyph & 0xffff;
+        icon[1] = (glyph >> 16) & 0xffff;
+        return FontIcon(icon);
+    }
+
 
     /**
      * @brief Creates a MenuFlyoutItem with the specified text
@@ -533,16 +598,28 @@ namespace cppxaml {
         return mfi;
     }
 
+    template<typename T, typename TArg>
+    void AddItems(T t, TArg&& first) {
+        t.Items().Append(first);
+    }
+
+    template<typename T, typename TArg, typename... TArgs>
+    void AddItems(T t, TArg&& first, TArgs&&... rest) {
+        t.Items().Append(first);
+        if constexpr (sizeof...(TArgs) > 0) {
+            AddItems(t, rest...);
+        }
+    }
+
     /**
      * @brief Creates a `MenuFlyout` from a list of `MenuFlyoutItems`
      * @param items 
      * @return 
     */
-    auto MenuFlyout(std::initializer_list<cppxaml::xaml::Controls::MenuFlyoutItemBase>&& items) {
+    template<typename... TMenuFlyoutItemBase>
+    auto MenuFlyout(TMenuFlyoutItemBase&&... items) {
         cppxaml::details::Wrapper<cppxaml::xaml::Controls::MenuFlyout> mf;
-        for (auto& mfi : items) {
-            mf->Items().Append(mfi);
-        }
+        AddItems(*mf, items...);
         return mf;
     }
 

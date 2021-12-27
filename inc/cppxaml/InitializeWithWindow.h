@@ -13,7 +13,18 @@
 */
 
 namespace cppxaml {
-      /**
+    
+    auto SetXamlRoot(winrt::Windows::Foundation::IInspectable obj, cppxaml::xaml::XamlRoot root) {
+        if (auto fe = obj.try_as<winrt::Windows::UI::Xaml::FrameworkElement>()) {
+            return fe.XamlRoot(root);
+        }
+        else if (auto fb = obj.try_as<winrt::Windows::UI::Xaml::Controls::Primitives::FlyoutBase>()) {
+            return fb.XamlRoot(root);
+        }
+        throw winrt::hresult_error(E_NOINTERFACE);
+    }
+    
+    /**
      * @brief Initializes an object with a window-like object
      * @tparam TWindow the window-like type. \n
      * In system XAML, it must have a XamlRoot. \n
@@ -43,7 +54,7 @@ namespace cppxaml {
         else
 #else
         {
-            obj.as<winrt::Windows::UI::Xaml::FrameworkElement>().XamlRoot(w.XamlRoot());
+            SetXamlRoot(obj, w.XamlRoot());
         }
 #endif
     }
@@ -69,9 +80,7 @@ namespace cppxaml {
     */
     void InitializeWithWindow(winrt::Windows::Foundation::IInspectable obj, const cppxaml::XamlWindow* xw) {
         if (!InitializeWithWindow(obj, xw->hwnd())) {
-            if (auto fe = obj.try_as<cppxaml::xaml::FrameworkElement>()) {
-                fe.XamlRoot(xw->GetUIElement<cppxaml::xaml::FrameworkElement>().XamlRoot());
-            }
+            SetXamlRoot(obj, xw->GetUIElement<cppxaml::xaml::FrameworkElement>().XamlRoot());
         }
     }
 

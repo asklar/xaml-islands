@@ -22,9 +22,11 @@
 #ifndef DOXY
 #define IF_ASSIGNABLE_CONTROL(XAMLTYPE)     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::XAMLTYPE, T>, cppxaml::details::Wrapper<T>>
 #define IF_ASSIGNABLE_CONTROL_TITEMS(XAMLTYPE, TITEMS)     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::XAMLTYPE, T>, cppxaml::details::Wrapper<T, TITEMS>>
+#define DOXY_RT(X) auto
 #else
 #define IF_ASSIGNABLE_CONTROL(XAMLTYPE)     cppxaml::details::Wrapper<T>
 #define IF_ASSIGNABLE_CONTROL_TITEMS(XAMLTYPE, TITEMS)     cppxaml::details::Wrapper<T, TITEMS>
+#define DOXY_RT(X) X
 #endif
 
 /**
@@ -306,7 +308,7 @@ namespace cppxaml {
             /**
              * @brief Sets up a centralized Click handler for all the MenuFlyoutItems in the MenuFlyout
              * @tparam F 
-             * @param f the lambda to call when a MenuFlyoutItem is tapped
+             * @param f the lambda to call when a MenuFlyoutItem is clicked
              * @return 
             */
             template<typename F>
@@ -440,7 +442,7 @@ namespace cppxaml {
      * @return
     */
     template<typename C>
-    auto ContentDialog(C i) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::ContentDialog>) ContentDialog(C i) {
         return MakeContentControl<cppxaml::xaml::Controls::ContentDialog>(i);
     }
 
@@ -449,7 +451,8 @@ namespace cppxaml {
      * @param elems The list of child controls.
      * @return
     */
-    auto StackPanel(const std::initializer_list<cppxaml::xaml::UIElement>& elems) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::StackPanel>) 
+        StackPanel(const std::initializer_list<cppxaml::xaml::UIElement>& elems) {
         return MakePanel<cppxaml::xaml::Controls::StackPanel>(elems);
     }
 
@@ -473,7 +476,8 @@ namespace cppxaml {
      * @return
     */
     template<typename TElements>
-    auto Grid(details::GridRows gr, cppxaml::details::GridColumns gc, TElements /*std::initializer_list<details::UIElementInGrid>& */&& elems) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::Grid>) 
+        Grid(details::GridRows gr, cppxaml::details::GridColumns gc, TElements /*std::initializer_list<details::UIElementInGrid>& */&& elems) {
         auto grid = cppxaml::details::Wrapper<cppxaml::xaml::Controls::Grid>();
         for (auto& r : gr.m_lengths) {
             auto rd = cppxaml::xaml::Controls::RowDefinition();
@@ -499,7 +503,8 @@ namespace cppxaml {
      * @param text The text to create the control from
      * @return
     */
-    auto TextBox(std::wstring_view text = L"") {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::TextBox>)
+        TextBox(std::wstring_view text = L"") {
         cppxaml::details::Wrapper<cppxaml::xaml::Controls::TextBox> tb;
         tb->Text(text);
         return tb;
@@ -537,7 +542,8 @@ namespace cppxaml {
      * @return
     */
     template<typename TItems>
-    auto AutoSuggestBox(const TItems& /*std::initializer_list<std::wstring_view>*/ svs) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::AutoSuggestBox, TItems>) 
+        AutoSuggestBox(const TItems& /*std::initializer_list<std::wstring_view>*/ svs) {
         return MakeItemsControl<cppxaml::xaml::Controls::AutoSuggestBox, TItems>(svs);
     }
 
@@ -546,7 +552,8 @@ namespace cppxaml {
      * @param text The text for the control.
      * @return
     */
-    auto TextBlock(std::wstring_view text) {
+    DOXY_RT(cppxaml::xaml::Controls::TextBlock)
+        TextBlock(std::wstring_view text) {
         cppxaml::xaml::Controls::TextBlock tb;
         tb.Text(text);
         return tb;
@@ -559,7 +566,7 @@ namespace cppxaml {
      * @return
     */
     template<typename C>
-    auto Button(C c) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::Button>) Button(C c) {
         return MakeContentControl<cppxaml::xaml::Controls::Button>(c);
     }
 
@@ -568,7 +575,8 @@ namespace cppxaml {
      * @param icon
      * @return
     */
-    auto FontIcon(std::wstring_view icon) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::FontIcon>) 
+        FontIcon(std::wstring_view icon) {
         cppxaml::details::Wrapper<cppxaml::xaml::Controls::FontIcon> fi;
         fi->Glyph(icon);
         return fi;
@@ -576,10 +584,11 @@ namespace cppxaml {
 
     /**
      * @brief Creates a FontIcon from a string
-     * @param icon
+     * @param glyph
      * @return
     */
-    auto FontIcon(uint32_t glyph) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::FontIcon>) 
+        FontIcon(uint32_t glyph) {
         wchar_t icon[3]{};
         icon[0] = glyph & 0xffff;
         icon[1] = (glyph >> 16) & 0xffff;
@@ -592,7 +601,8 @@ namespace cppxaml {
      * @param text 
      * @return 
     */
-    auto MenuFlyoutItem(std::wstring_view text) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::MenuFlyoutItem>) 
+        MenuFlyoutItem(std::wstring_view text) {
         cppxaml::details::Wrapper<cppxaml::xaml::Controls::MenuFlyoutItem> mfi;
         mfi->Text(text);
         return mfi;
@@ -617,7 +627,8 @@ namespace cppxaml {
      * @return 
     */
     template<typename... TMenuFlyoutItemBase>
-    auto MenuFlyout(TMenuFlyoutItemBase&&... items) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::MenuFlyout>) 
+        MenuFlyout(TMenuFlyoutItemBase&&... items) {
         cppxaml::details::Wrapper<cppxaml::xaml::Controls::MenuFlyout> mf;
         AddItems(*mf, items...);
         return mf;

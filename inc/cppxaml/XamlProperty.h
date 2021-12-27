@@ -1,6 +1,14 @@
 #pragma once
 #include <type_traits>
 
+/** @file
+* @author Alexander Sklar
+* @section LICENSE
+ * Copyright (c) Alexander Sklar
+ *
+ * Licensed under the MIT license
+*/
+
 namespace winrt {
     template<typename T, typename I>
     T try_as(I* i) {
@@ -11,10 +19,6 @@ namespace winrt {
         return nullptr;
     }
 }
-
-/**
- * @file
-*/
 
 /**
  * @namespace

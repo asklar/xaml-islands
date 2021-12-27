@@ -5,6 +5,14 @@
 #include <Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 #include <mutex>
 
+/** @file
+* @author Alexander Sklar
+* @section LICENSE
+ * Copyright (c) Alexander Sklar
+ *
+ * Licensed under the MIT license
+*/
+
 namespace cppxaml {
     struct XamlWindow;
 
@@ -45,7 +53,7 @@ namespace cppxaml {
     */
     struct XamlWindow {
     private:
-        XamlWindow(PCWSTR id) : m_Id(id) {}
+        XamlWindow(std::wstring_view id) : m_Id(id) {}
         winrt::Windows::UI::Xaml::UIElement(*m_getUI) (const XamlWindow& xw) { nullptr };
 
         // This DesktopWindowXamlSource is the object that enables a non-UWP desktop application 
@@ -103,7 +111,7 @@ namespace cppxaml {
          * @endcode
          */
         template<typename TUIElement>
-        static XamlWindow& Make(PCWSTR id, AppController* controller = nullptr) {
+        static XamlWindow& Make(std::wstring_view id, AppController* controller = nullptr) {
             XamlWindow xw(id);
             xw.m_controller = controller;
             xw.m_getUI = [](const XamlWindow&) { return TUIElement().as<winrt::Windows::UI::Xaml::UIElement>(); };
@@ -126,7 +134,7 @@ namespace cppxaml {
          *      </StackPanel>)", &controller);
          * @endcode
         */
-        static XamlWindow& Make(PCWSTR id, std::wstring_view markup, AppController* c = nullptr) {
+        static XamlWindow& Make(std::wstring_view id, std::wstring_view markup, AppController* c = nullptr) {
             XamlWindow xw(id);
             xw.m_controller = c;
             xw.m_markup = markup;
@@ -150,7 +158,7 @@ namespace cppxaml {
          * auto& xw = cppxaml::XamlWindow::Make(L"Foo", [](auto&...) { return winrt::Windows::UI::Xaml::Controls::Button(); });
          * @endcode
         */
-        static XamlWindow& Make(PCWSTR id, winrt::Windows::UI::Xaml::UIElement(*getUI)(const XamlWindow&), AppController* c = nullptr) {
+        static XamlWindow& Make(std::wstring_view id, winrt::Windows::UI::Xaml::UIElement(*getUI)(const XamlWindow&), AppController* c = nullptr) {
             XamlWindow xw(id);
             xw.m_controller = c;
             xw.m_getUI = getUI;
@@ -171,10 +179,10 @@ namespace cppxaml {
          * @param id 
          * @return 
         */
-        static XamlWindow& Get(PCWSTR id) {
-            return s_windows.at(id);
+        static XamlWindow& Get(std::wstring_view id) {
+            return s_windows.at(std::wstring(id));
         }
-        static constexpr PCWSTR WindowClass() {
+        static constexpr wchar_t const* const WindowClass() {
             return L"XamlWindow";
         }
 
@@ -188,7 +196,7 @@ namespace cppxaml {
          * @param nCmdShow Controls how the window is shown. See [ShowWindow](https://docs.microsoft.com/windows/win32/api/winuser/nf-winuser-showwindow).
          * @return 
         */
-        HWND Create(PCWSTR szTitle, DWORD style, HWND parent = nullptr, int width = CW_USEDEFAULT, int height = CW_USEDEFAULT, int nCmdShow = SW_NORMAL) {
+        HWND Create(wchar_t const* szTitle, DWORD style, HWND parent = nullptr, int width = CW_USEDEFAULT, int height = CW_USEDEFAULT, int nCmdShow = SW_NORMAL) {
             static std::once_flag once;
 
             std::call_once(once, [ctl = this->m_controller]() {

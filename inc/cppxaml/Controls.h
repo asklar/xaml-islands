@@ -5,7 +5,6 @@
 #include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include <type_traits>
-#include <ShObjIdl_core.h>
 
 #include <cppxaml/utils.h>
 #ifdef USE_WINUI3
@@ -15,13 +14,19 @@
 /** @file
 * @author Alexander Sklar
 * @section LICENSE
-* MIT
+ * Copyright (c) Alexander Sklar
+ *
+ * Licensed under the MIT license
 */
 
 #ifndef DOXY
 #define IF_ASSIGNABLE_CONTROL(XAMLTYPE)     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::XAMLTYPE, T>, cppxaml::details::Wrapper<T>>
+#define IF_ASSIGNABLE_CONTROL_TITEMS(XAMLTYPE, TITEMS)     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::XAMLTYPE, T>, cppxaml::details::Wrapper<T, TITEMS>>
+#define DOXY_RT(X) auto
 #else
 #define IF_ASSIGNABLE_CONTROL(XAMLTYPE)     cppxaml::details::Wrapper<T>
+#define IF_ASSIGNABLE_CONTROL_TITEMS(XAMLTYPE, TITEMS)     cppxaml::details::Wrapper<T, TITEMS>
+#define DOXY_RT(X) X
 #endif
 
 /**
@@ -258,21 +263,54 @@ namespace cppxaml {
 
         };
 
+        /**
+         * @brief Fluent-style wrapper for `MenuFlyoutItem`
+        */
         template<>
         struct Wrapper<cppxaml::xaml::Controls::MenuFlyoutItem> : WrapperT<cppxaml::xaml::Controls::MenuFlyoutItem> {
+            /**
+             * @brief 
+             * @return 
+            */
             cppxaml::xaml::Controls::IconElement IconElement() const { return m_value.Icon(); }
+            /**
+             * @brief 
+             * @param icon 
+             * @return 
+            */
             auto IconElement(cppxaml::xaml::Controls::IconElement icon) const {
                 m_value.Icon(icon); return *this;
             }
-            winrt::event_token m_tappedToken{};
-            auto Tapped() const {
-                return m_tappedToken;
+            winrt::event_token m_clickToken{};
+            /**
+             * @brief 
+             * @return 
+            */
+            auto Click() const {
+                return m_clickToken;
             }
-            auto Tapped(cppxaml::xaml::Input::TappedEventHandler handler) { m_tappedToken = m_value.Tapped(handler); return *this; }
+            /**
+             * @brief 
+             * @param handler 
+             * @return 
+            */
+            auto Click(cppxaml::xaml::RoutedEventHandler handler) { 
+                m_clickToken = m_value.Click(handler);
+                return *this; 
+            }
         };
 
+        /**
+         * @brief Fluent-style wrapper for `MenuFlyout`
+        */
         template<>
         struct Wrapper<cppxaml::xaml::Controls::MenuFlyout> : WrapperT<cppxaml::xaml::Controls::MenuFlyout> {
+            /**
+             * @brief Sets up a centralized Click handler for all the MenuFlyoutItems in the MenuFlyout
+             * @tparam F 
+             * @param f the lambda to call when a MenuFlyoutItem is clicked
+             * @return 
+            */
             template<typename F>
             auto CentralizedHandler(const F& f) {
                 if (m_eventHandlers.size() != 0) {
@@ -280,17 +318,29 @@ namespace cppxaml {
                 }
 
                 for (auto i : m_value.Items()) {
-                    m_eventHandlers.push_back(i.Tapped([f](winrt::Windows::Foundation::IInspectable sender, cppxaml::xaml::Input::TappedRoutedEventArgs args) {
-                        f(sender, args);
-                        }));
+                    if (auto mfi = i.try_as<cppxaml::xaml::Controls::MenuFlyoutItem>()) {
+                        m_eventHandlers.push_back(mfi.Click([f](winrt::Windows::Foundation::IInspectable sender, cppxaml::xaml::RoutedEventArgs args) {
+                            f(sender, args);
+                            }));
+                    }
                 }
                 return *this;
             }
             std::vector<winrt::event_token> m_eventHandlers{};
             ~Wrapper() {
-                for (auto i = 0u; i < m_value.Items().Size(); i++) {
-                    m_value.Items().GetAt(i).Tapped(m_eventHandlers[i]);
+                // Wrapper goes out of scope when ShowAt is called, before the event handlers have had a chance to fire. Don't dismiss them for now.
+                /*
+                if (m_eventHandlers.size() == m_value.Items().Size()) {
+                    for (auto i = 0u; i < m_eventHandlers.size(); i++) {
+                        if (auto mfi = m_value.Items().GetAt(i).try_as<cppxaml::xaml::Controls::MenuFlyoutItem>()) {
+                            mfi.Click(m_eventHandlers[i]);
+                        }
+                        else {
+                            break; // bail, something is off
+                        }
+                    }
                 }
+                */
             }
         };
 
@@ -376,7 +426,7 @@ namespace cppxaml {
      * @return
     */
     template<typename T>
-    std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::Panel, T>, cppxaml::details::Wrapper<T>>
+    IF_ASSIGNABLE_CONTROL(Panel)
         MakePanel(const std::initializer_list<cppxaml::xaml::UIElement>& elems) {
         cppxaml::details::Wrapper<T> panel;
         for (auto e : elems) {
@@ -392,7 +442,7 @@ namespace cppxaml {
      * @return
     */
     template<typename C>
-    auto ContentDialog(C i) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::ContentDialog>) ContentDialog(C i) {
         return MakeContentControl<cppxaml::xaml::Controls::ContentDialog>(i);
     }
 
@@ -401,7 +451,8 @@ namespace cppxaml {
      * @param elems The list of child controls.
      * @return
     */
-    auto StackPanel(const std::initializer_list<cppxaml::xaml::UIElement>& elems) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::StackPanel>) 
+        StackPanel(const std::initializer_list<cppxaml::xaml::UIElement>& elems) {
         return MakePanel<cppxaml::xaml::Controls::StackPanel>(elems);
     }
 
@@ -425,7 +476,8 @@ namespace cppxaml {
      * @return
     */
     template<typename TElements>
-    auto Grid(details::GridRows gr, cppxaml::details::GridColumns gc, TElements /*std::initializer_list<details::UIElementInGrid>& */&& elems) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::Grid>) 
+        Grid(details::GridRows gr, cppxaml::details::GridColumns gc, TElements /*std::initializer_list<details::UIElementInGrid>& */&& elems) {
         auto grid = cppxaml::details::Wrapper<cppxaml::xaml::Controls::Grid>();
         for (auto& r : gr.m_lengths) {
             auto rd = cppxaml::xaml::Controls::RowDefinition();
@@ -451,7 +503,8 @@ namespace cppxaml {
      * @param text The text to create the control from
      * @return
     */
-    auto TextBox(std::wstring_view text = L"") {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::TextBox>)
+        TextBox(std::wstring_view text = L"") {
         cppxaml::details::Wrapper<cppxaml::xaml::Controls::TextBox> tb;
         tb->Text(text);
         return tb;
@@ -466,8 +519,9 @@ namespace cppxaml {
      * @param items The list of items to initialize the control with.
      * @return
     */
+
     template<typename T, typename TItems>
-    std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::ItemsControl, T>, cppxaml::details::Wrapper<T, TItems>>
+    IF_ASSIGNABLE_CONTROL_TITEMS(ItemsControl, TItems)
         MakeItemsControl(const TItems& /*std::initializer_list<Windows::Foundation::IInspectable>*/ items) {
         cppxaml::details::Wrapper<T, TItems> t(items);
         for (auto& i : items) {
@@ -488,7 +542,8 @@ namespace cppxaml {
      * @return
     */
     template<typename TItems>
-    auto AutoSuggestBox(const TItems& /*std::initializer_list<std::wstring_view>*/ svs) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::AutoSuggestBox, TItems>) 
+        AutoSuggestBox(const TItems& /*std::initializer_list<std::wstring_view>*/ svs) {
         return MakeItemsControl<cppxaml::xaml::Controls::AutoSuggestBox, TItems>(svs);
     }
 
@@ -497,7 +552,8 @@ namespace cppxaml {
      * @param text The text for the control.
      * @return
     */
-    auto TextBlock(std::wstring_view text) {
+    DOXY_RT(cppxaml::xaml::Controls::TextBlock)
+        TextBlock(std::wstring_view text) {
         cppxaml::xaml::Controls::TextBlock tb;
         tb.Text(text);
         return tb;
@@ -510,25 +566,59 @@ namespace cppxaml {
      * @return
     */
     template<typename C>
-    auto Button(C c) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::Button>) Button(C c) {
         return MakeContentControl<cppxaml::xaml::Controls::Button>(c);
     }
 
-    auto FontIcon(std::wstring_view icon) {
+    /**
+     * @brief Creates a FontIcon from a string
+     * @param icon
+     * @return
+    */
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::FontIcon>) 
+        FontIcon(std::wstring_view icon) {
         cppxaml::details::Wrapper<cppxaml::xaml::Controls::FontIcon> fi;
         fi->Glyph(icon);
         return fi;
     }
 
     /**
+     * @brief Creates a FontIcon from a string
+     * @param glyph
+     * @return
+    */
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::FontIcon>) 
+        FontIcon(uint32_t glyph) {
+        wchar_t icon[3]{};
+        icon[0] = glyph & 0xffff;
+        icon[1] = (glyph >> 16) & 0xffff;
+        return FontIcon(icon);
+    }
+
+
+    /**
      * @brief Creates a MenuFlyoutItem with the specified text
      * @param text 
      * @return 
     */
-    auto MenuFlyoutItem(std::wstring_view text) {
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::MenuFlyoutItem>) 
+        MenuFlyoutItem(std::wstring_view text) {
         cppxaml::details::Wrapper<cppxaml::xaml::Controls::MenuFlyoutItem> mfi;
         mfi->Text(text);
         return mfi;
+    }
+
+    template<typename T, typename TArg>
+    void AddItems(T t, TArg&& first) {
+        t.Items().Append(first);
+    }
+
+    template<typename T, typename TArg, typename... TArgs>
+    void AddItems(T t, TArg&& first, TArgs&&... rest) {
+        t.Items().Append(first);
+        if constexpr (sizeof...(TArgs) > 0) {
+            AddItems(t, rest...);
+        }
     }
 
     /**
@@ -536,84 +626,12 @@ namespace cppxaml {
      * @param items 
      * @return 
     */
-    auto MenuFlyout(std::initializer_list<cppxaml::xaml::Controls::MenuFlyoutItemBase>&& items) {
+    template<typename... TMenuFlyoutItemBase>
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::MenuFlyout>) 
+        MenuFlyout(TMenuFlyoutItemBase&&... items) {
         cppxaml::details::Wrapper<cppxaml::xaml::Controls::MenuFlyout> mf;
-        for (auto& mfi : items) {
-            mf->Items().Append(mfi);
-        }
+        AddItems(*mf, items...);
         return mf;
     }
 
-    /**
-     * @brief Initializes an object with a window-like object
-     * @tparam TWindow the window-like type. \n
-     * In system XAML, it must have a XamlRoot. \n
-     * In WinUI 3, it must implement `IWindowNative` and have a Content property that exposes a XamlRoot (this will usually be Microsoft::UI::Xaml::Window).
-     * @param obj The object to attach to the window, e.g. a `ContentDialog`.
-     * @param w The window-like object.
-     * @return
-    */
-    template<typename TWindow>
-    std::enable_if_t<
-        !std::is_same_v<TWindow, cppxaml::XamlWindow*> &&
-        !std::is_same_v<TWindow, HWND>>
-        InitializeWithWindow(winrt::Windows::Foundation::IInspectable obj, TWindow /*winrt::Microsoft::UI::Xaml::Window*/ w) {
-#ifdef USE_WINUI3
-        if (auto iww = obj.try_as<IInitializeWithWindow>()) {
-            HWND hwnd{};
-            w.as<IWindowNative>()->get_WindowHandle(&hwnd);
-            iww->Initialize(hwnd);
-        }
-        else if (auto window = w.as<cppxaml::xaml::Window>()) {
-            obj.XamlRoot(window.Content().XamlRoot());
-        }
-        else
-#else
-        {
-            obj.as<winrt::Windows::UI::Xaml::FrameworkElement>().XamlRoot(w.XamlRoot());
-        }
-#endif
-    }
-
-    /**
-     * @brief Initializes a `FrameworkElement` with an HWND
-     * @param obj
-     * @param hwnd
-     * @return
-    */
-    bool InitializeWithWindow(winrt::Windows::Foundation::IInspectable obj, HWND hwnd) {
-        if (auto iww = obj.try_as<IInitializeWithWindow>()) {
-            iww->Initialize(hwnd);
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * @brief Initializes a `FrameworkElement` with the window represented by the `XamlWindow` or the XAML content root that the `XamlWindow` object is hosting
-     * @param obj
-     * @param xw
-    */
-    void InitializeWithWindow(winrt::Windows::Foundation::IInspectable obj, const cppxaml::XamlWindow* xw) {
-        if (!InitializeWithWindow(obj, xw->hwnd())) {
-            if (auto fe = obj.try_as<cppxaml::xaml::FrameworkElement>()) {
-                fe.XamlRoot(xw->GetUIElement<cppxaml::xaml::FrameworkElement>().XamlRoot());
-            }
-        }
-    }
-
-    /**
-     * @brief
-     * @tparam TUIElement
-     * @tparam TWindow
-     * @param obj
-     * @param w
-     * @return
-    */
-    template<typename TUIElement, typename TWindow>
-    std::enable_if_t<std::is_assignable_v<cppxaml::xaml::UIElement, TUIElement> &&
-        !std::is_same_v<TWindow, const cppxaml::XamlWindow*>, void>
-        InitializeWithWindow(cppxaml::details::Wrapper<TUIElement> obj, TWindow /*winrt::Microsoft::UI::Xaml::Window*/ w) {
-        return InitializeWithWindow(*obj, w);
-    }
 }

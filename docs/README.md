@@ -2,7 +2,7 @@
 
 [CppXAML](https://github.com/asklar/xaml-islands) aims to make usage of XAML and XAML islands in C++ more natural and idiomatic.
 
-[C++/WinRT](https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/) provides a projection of a Windws Runtime component's API, but one that isn’t always easy to use (esp. for XAML). It also is unopinionated w.r.t. how to implement properties. This added flexibility can be good, but is often unnecessary and results in overly-verbose code.
+[C++/WinRT](https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/) provides a projection of a Windws Runtime component's API, but one that isn’t always easy to use (esp. for XAML). It also is unopinionated about how to implement properties. This added flexibility can be good, but is often unnecessary and results in overly-verbose code.
 
 CppXAML provides several kinds of higher-level helpers. Usage information can be found below. See also [API reference](https://asklar.github.io/xaml-islands).
 

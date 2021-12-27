@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>CppXAML: inc/cppxaml/utils.h File Reference</title>
+<title>CppXAML: inc/cppxaml/InitializeWithWindow.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -70,37 +70,37 @@ $(function() {
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#func-members">Functions</a>  </div>
-  <div class="headertitle"><div class="title">utils.h File Reference</div></div>
+  <div class="headertitle"><div class="title">InitializeWithWindow.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p><a href="utils_8h_source.html">Go to the source code of this file.</a></p>
+<div class="textblock"><code>#include &lt;<a class="el" href="_controls_8h_source.html">cppxaml/Controls.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_xaml_window_8h_source.html">cppxaml/XamlWindow.h</a>&gt;</code><br />
+<code>#include &lt;type_traits&gt;</code><br />
+<code>#include &lt;ShObjIdl_core.h&gt;</code><br />
+</div>
+<p><a href="_initialize_with_window_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespacecppxaml"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html">cppxaml</a></td></tr>
 <tr class="memdesc:namespacecppxaml"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main CppXAML namespace. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacecppxaml_1_1utils"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml_1_1utils.html">cppxaml::utils</a></td></tr>
-<tr class="memdesc:namespacecppxaml_1_1utils"><td class="mdescLeft">&#160;</td><td class="mdescRight">Various utilities. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a0720610f7619d123b176aee97c46d566"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml_1_1utils.html#a0720610f7619d123b176aee97c46d566">cppxaml::utils::tolower</a> (std::wstring_view sv)</td></tr>
-<tr class="separator:a0720610f7619d123b176aee97c46d566"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2df3736cb718d2b88392a4c6105d258"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename TOutContainer = std::vector, typename TInContainer , typename UnaryOp &gt; </td></tr>
-<tr class="memitem:ad2df3736cb718d2b88392a4c6105d258"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml_1_1utils.html#ad2df3736cb718d2b88392a4c6105d258">cppxaml::utils::transform</a> (TInContainer const &amp;iterable, UnaryOp &amp;&amp;unary_op)</td></tr>
-<tr class="memdesc:ad2df3736cb718d2b88392a4c6105d258"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps each element in a container via a unary operation on each element.  <a href="namespacecppxaml_1_1utils.html#ad2df3736cb718d2b88392a4c6105d258">More...</a><br /></td></tr>
-<tr class="separator:ad2df3736cb718d2b88392a4c6105d258"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ade2530c1a3c7013fc9a488200c73029c"><td class="memTemplParams" colspan="2">template&lt;template&lt; typename... &gt; typename TOutContainer = std::vector, typename TInContainer , typename UnaryOp &gt; </td></tr>
-<tr class="memitem:ade2530c1a3c7013fc9a488200c73029c"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml_1_1utils.html#ade2530c1a3c7013fc9a488200c73029c">cppxaml::utils::transform_with_index</a> (TInContainer const &amp;iterable, UnaryOp &amp;&amp;unary_op)</td></tr>
-<tr class="memdesc:ade2530c1a3c7013fc9a488200c73029c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps each element in a container via a unary operation on each element.  <a href="namespacecppxaml_1_1utils.html#ade2530c1a3c7013fc9a488200c73029c">More...</a><br /></td></tr>
-<tr class="separator:ade2530c1a3c7013fc9a488200c73029c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="memTemplParams" colspan="2">template&lt;typename T  = cppxaml::xaml::DependencyObject&gt; </td></tr>
-<tr class="memitem:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a0f5c28d135987dff385c3b35f3cbf7f3">cppxaml::FindChildByName</a> (cppxaml::xaml::DependencyObject d, std::wstring_view name)</td></tr>
-<tr class="memdesc:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a XAML element by name.  <a href="namespacecppxaml.html#a0f5c28d135987dff385c3b35f3cbf7f3">More...</a><br /></td></tr>
-<tr class="separator:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ed8cf0ebda1cde913f65cd9656c43ea"><td class="memTemplParams" colspan="2">template&lt;typename TWindow &gt; </td></tr>
+<tr class="memitem:a3ed8cf0ebda1cde913f65cd9656c43ea"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a3ed8cf0ebda1cde913f65cd9656c43ea">cppxaml::InitializeWithWindow</a> (winrt::Windows::Foundation::IInspectable obj, TWindow w)</td></tr>
+<tr class="memdesc:a3ed8cf0ebda1cde913f65cd9656c43ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an object with a window-like object.  <a href="namespacecppxaml.html#a3ed8cf0ebda1cde913f65cd9656c43ea">More...</a><br /></td></tr>
+<tr class="separator:a3ed8cf0ebda1cde913f65cd9656c43ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8457e92994f0728f3dcf4b72fa9cd60"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ae8457e92994f0728f3dcf4b72fa9cd60">cppxaml::InitializeWithWindow</a> (winrt::Windows::Foundation::IInspectable obj, HWND hwnd)</td></tr>
+<tr class="memdesc:ae8457e92994f0728f3dcf4b72fa9cd60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <code>FrameworkElement</code> with an HWND.  <a href="namespacecppxaml.html#ae8457e92994f0728f3dcf4b72fa9cd60">More...</a><br /></td></tr>
+<tr class="separator:ae8457e92994f0728f3dcf4b72fa9cd60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5f570d0755cda27ea9caa163d9a967a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ac5f570d0755cda27ea9caa163d9a967a">cppxaml::InitializeWithWindow</a> (winrt::Windows::Foundation::IInspectable obj, const <a class="el" href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a> *xw)</td></tr>
+<tr class="memdesc:ac5f570d0755cda27ea9caa163d9a967a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <code>FrameworkElement</code> with the window represented by the <code><a class="el" href="structcppxaml_1_1_xaml_window.html" title="Implements an HWND based host for XAML Islands. You can create a XamlWindow from one of three overloa...">XamlWindow</a></code> or the XAML content root that the <code><a class="el" href="structcppxaml_1_1_xaml_window.html" title="Implements an HWND based host for XAML Islands. You can create a XamlWindow from one of three overloa...">XamlWindow</a></code> object is hosting.  <a href="namespacecppxaml.html#ac5f570d0755cda27ea9caa163d9a967a">More...</a><br /></td></tr>
+<tr class="separator:ac5f570d0755cda27ea9caa163d9a967a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a48d6757837d35c7619168bd4fa9b95"><td class="memTemplParams" colspan="2">template&lt;typename TUIElement , typename TWindow &gt; </td></tr>
+<tr class="memitem:a3a48d6757837d35c7619168bd4fa9b95"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a3a48d6757837d35c7619168bd4fa9b95">cppxaml::InitializeWithWindow</a> (cppxaml::details::Wrapper&lt; TUIElement &gt; obj, TWindow w)</td></tr>
+<tr class="separator:a3a48d6757837d35c7619168bd4fa9b95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Alexander Sklar </dd></dl>

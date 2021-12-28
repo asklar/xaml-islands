@@ -66,26 +66,26 @@ namespace cppxaml {
             auto Margin() const { return m_value.Margin(); }
             /**
              * @brief
-             * @param t
+             * @param t `Thickness` struct
              * @return
             */
             auto Margin(cppxaml::xaml::Thickness t) const { m_value.Margin(t); return *this; }
             /**
              * @brief
-             * @param m
+             * @param m Uniform length
              * @return
             */
             auto Margin(double m) const { m_value.Margin(cppxaml::xaml::ThicknessHelper::FromUniformLength(m)); return *this; }
             /**
              * @brief
-             * @param l
-             * @param t
-             * @param r
-             * @param b
+             * @param left
+             * @param top
+             * @param right
+             * @param bottom
              * @return
             */
-            auto Margin(double l, double t, double r, double b) const {
-                m_value.Margin(cppxaml::xaml::ThicknessHelper::FromLengths(l, t, r, b)); return *this;
+            auto Margin(double left, double top, double right, double bottom) const {
+                m_value.Margin(cppxaml::xaml::ThicknessHelper::FromLengths(left, top, right, bottom)); return *this;
             }
 
             /**
@@ -95,26 +95,26 @@ namespace cppxaml {
             auto Padding() const { return m_value.Padding(); }
             /**
              * @brief
-             * @param t
+             * @param t `Thickness` struct
              * @return
             */
             auto Padding(cppxaml::xaml::Thickness t) const { m_value.Padding(t); return *this; }
             /**
              * @brief
-             * @param m
+             * @param m Uniform length
              * @return
             */
             auto Padding(double m) const { m_value.Padding(cppxaml::xaml::ThicknessHelper::FromUniformLength(m)); return *this; }
             /**
              * @brief
-             * @param l
-             * @param t
-             * @param r
-             * @param b
+             * @param left
+             * @param top
+             * @param right
+             * @param bottom
              * @return
             */
-            auto Padding(double l, double t, double r, double b) const {
-                m_value.Padding(cppxaml::xaml::ThicknessHelper::FromLengths(l, t, r, b)); return *this;
+            auto Padding(double left, double top, double right, double bottom) const {
+                m_value.Padding(cppxaml::xaml::ThicknessHelper::FromLengths(left, top, right, bottom)); return *this;
             }
 
             template<typename D, std::enable_if_t<std::is_assignable_v<D, T>, bool> = true>
@@ -165,6 +165,7 @@ namespace cppxaml {
                         } },
                     });
              * @endcode
+             * @image html VSM.gif
             */
             auto VisualStates(const std::unordered_map<std::wstring, cppxaml::xaml::VisualStateChangedEventHandler>& map) {
                 return cppxaml::VSMListener(*this, map);
@@ -610,7 +611,7 @@ namespace cppxaml {
     }
 
     /**
-     * @brief Creates a FontIcon from a string
+     * @brief Creates a FontIcon from a glyph codepoint
      * @param glyph
      * @return
     */

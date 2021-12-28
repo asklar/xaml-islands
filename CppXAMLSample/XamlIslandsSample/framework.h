@@ -3,15 +3,6 @@
 #include "targetver.h"
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
 
-#ifdef USE_MICA32
-#define GDIPVER 0x0110
-#include <unknwn.h>
-#include <gdiplus.h>
-#include <gdipluseffects.h>
-#include <uxtheme.h>
-
-#endif
-
 // Windows Header Files
 #include <windows.h>
 // C RunTime Header Files

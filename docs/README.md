@@ -2,13 +2,16 @@
 
 [CppXAML](https://github.com/asklar/xaml-islands) aims to make usage of XAML and XAML islands in C++ more natural and idiomatic.
 
-[C++/WinRT](https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/) provides a projection of a Windws Runtime component's API, but one that isn’t always easy to use (esp. for XAML). It also is unopinionated about how to implement properties. This added flexibility can be good, but is often unnecessary and results in overly-verbose code.
+[C++/WinRT](https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/) provides a projection of a Windows Runtime component's API, but one that isn’t always easy to use (esp. for XAML). It also is unopinionated about how to implement properties. This added flexibility can be useful, but is often unnecessary and results in overly-verbose code.
 
-CppXAML provides several kinds of higher-level helpers. Usage information can be found below. See also [API reference](https://asklar.github.io/xaml-islands).
+CppXAML provides several kinds of higher-level helpers. Some usage information can be found below; for more details, see the [API reference](https://asklar.github.io/xaml-islands).
+
+GitHub repo: https://github.com/asklar/xaml-islands
+
 
 ## XamlWindow
 
-XAMLWindow implements an HWND based host for XAML Islands. You can create a `XamlWindow` from one of three overloads of Make:
+`XamlWindow` implements an HWND based host for XAML Islands. You can create a `XamlWindow` from one of three overloads of Make:
 
 1. Host a build-time XAML `UIElement` (usually defined in a runtime component project, often will be a `Page`)
     API:
@@ -106,7 +109,7 @@ auto tb = cppxaml::TextBlock(L"Hello");
 ### `xaml` Namespace alias
 Since we want CppXAML to be future proof and work with WinUI 3, CppXAML creates a namespace alias `cppxaml::xaml` which points at either `Windows::UI::Xaml` or `Microsoft::UI::Xaml` for system XAML or WinUI 3, respectively.
 
-### Fluent-style programming style
+### Fluent-style ("builder") programming
 C++/WinRT enables setting properties on a type by calling a property setter method, e.g. `myTextBlock.Text(L"text");`. If you then want to set another property, then you have to make another call `myTextBlock.XYZ(...);`. This can get verbose when having to set multiple properties. CppXAML enables writing fluent-style code instead of the former imperative-style:
 ```cpp
 auto myTextBlock = cppxaml::TextBlock(L"Hello world")

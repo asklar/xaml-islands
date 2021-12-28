@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CppXAML", "CppXAML", "{942D
 		..\docs\README.md = ..\docs\README.md
 		..\Unpackaged.nuspec = ..\Unpackaged.nuspec
 		..\inc\cppxaml\utils.h = ..\inc\cppxaml\utils.h
+		..\inc\cppxaml\VisualState.h = ..\inc\cppxaml\VisualState.h
 		..\inc\cppxaml\XamlProperty.h = ..\inc\cppxaml\XamlProperty.h
 		..\inc\cppxaml\XamlWindow.h = ..\inc\cppxaml\XamlWindow.h
 	EndProjectSection

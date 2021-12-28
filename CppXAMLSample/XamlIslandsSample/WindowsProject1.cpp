@@ -5,16 +5,19 @@
 #include "WindowsProject1.h"
 #include <Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 
-#include <winrt/MarkupSample.h>
+#include <winrt/base.h>
 #include <cppxaml/XamlWindow.h>
-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+#include <cppxaml/Controls.h>
+#include <cppxaml/InitializeWithWindow.h>
+#include <cppxaml/VisualState.h>
+
 #include <dwmapi.h>
 #include <winrt/Windows.UI.Xaml.Input.h>
 #include <winrt/Windows.UI.Xaml.Documents.h>
 #include <winrt/windows.ui.xaml.controls.h>
-#include <cppxaml/Controls.h>
-#include <cppxaml/InitializeWithWindow.h>
+#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 #include <functional>
+#include <winrt/MarkupSample.h>
 
 using namespace winrt;
 using namespace Windows::UI::Xaml::Controls;
@@ -71,9 +74,23 @@ winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
         };
     };
 
+    auto button = cppxaml::Button(L"click me")
+        .VisualStates( {
+            { L"PointerOver", [](auto&sender, cppxaml::xaml::VisualStateChangedEventArgs args) {
+                auto x = args.NewState().Name();
+                auto button = sender.as<Controls::Button>();
+                button.Content(winrt::box_value(x));
+            } },
+            { L"Normal", [](auto&sender, auto&) {
+                auto button = sender.as<Controls::Button>();
+                button.Content(winrt::box_value(L"click me"));
+            } },
+        });
+
 
     auto sv = cppxaml::MakeContentControl<cppxaml::xaml::Controls::ScrollViewer>({
             cppxaml::StackPanel({
+                button,
                 cppxaml::Grid(
                     {"40, *"}, {"Auto, Auto"},
                     cppxaml::utils::transform_with_index(strs,

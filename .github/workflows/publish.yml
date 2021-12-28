@@ -13,22 +13,12 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: windows-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  docs:
+    runs-on: ubuntu-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
         with:
             submodules: true
-
-      - name: pack
-        run: |
-            nuget pack
-            nuget push Unpackaged*.nupkg -Source nuget.org -ApiKey ${{secrets.NUGET_TOKEN}}
 
       - name: Doxygen Action
         uses: mattnotmitt/doxygen-action@v1.1.0
@@ -45,3 +35,18 @@ jobs:
           # Default Doxyfile build documentation to html directory. 
           # Change the directory if changes in Doxyfile
           publish_dir: ./docs/html
+
+  nuget:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+            submodules: true
+
+      - name: pack
+        run: |
+            nuget pack
+            nuget push Unpackaged*.nupkg -Source nuget.org -ApiKey ${{secrets.NUGET_TOKEN}}
+

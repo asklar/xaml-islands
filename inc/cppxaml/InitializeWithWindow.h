@@ -3,7 +3,7 @@
 #include <cppxaml/XamlWindow.h>
 #include <type_traits>
 #include <ShObjIdl_core.h>
-
+#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
 /** @file
 * @author Alexander Sklar
 * @section LICENSE

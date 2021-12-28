@@ -4,9 +4,13 @@
 #include <winrt/windows.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
+#include <winrt/base.h>
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Foundation.h>
 #include <type_traits>
 
 #include <cppxaml/utils.h>
+#include <cppxaml/VisualState.h>
 #ifdef USE_WINUI3
 #include <microsoft.ui.xaml.window.h>
 #endif
@@ -19,15 +23,6 @@
  * Licensed under the MIT license
 */
 
-#ifndef DOXY
-#define IF_ASSIGNABLE_CONTROL(XAMLTYPE)     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::XAMLTYPE, T>, cppxaml::details::Wrapper<T>>
-#define IF_ASSIGNABLE_CONTROL_TITEMS(XAMLTYPE, TITEMS)     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::XAMLTYPE, T>, cppxaml::details::Wrapper<T, TITEMS>>
-#define DOXY_RT(X) auto
-#else
-#define IF_ASSIGNABLE_CONTROL(XAMLTYPE)     cppxaml::details::Wrapper<T>
-#define IF_ASSIGNABLE_CONTROL_TITEMS(XAMLTYPE, TITEMS)     cppxaml::details::Wrapper<T, TITEMS>
-#define DOXY_RT(X) X
-#endif
 
 /**
  * @namespace cppxaml
@@ -133,6 +128,12 @@ namespace cppxaml {
              * @param dp The DependencyProperty to set
              * @param value The value
              * @return
+             * @details Example:\n
+             * @code
+             * auto buttonInGrid = cppxaml::Button(L"Click me)
+             *                          .Set(Grid::RowProperty(), 3)
+             *                          .Set(Grid::ColumnProperty(), 2);
+             * @endcode
             */
             template<typename TValue>
             auto Set(cppxaml::xaml::DependencyProperty dp, TValue&& value) {
@@ -144,7 +145,33 @@ namespace cppxaml {
                 }
                 return *this;
             }
+
+            /**
+             * @brief Sets up a visual state change listeners
+             * @param map A map of visual state names to handlers
+             * @return 
+             * @details Example:\n
+             * @code
+             * auto button = cppxaml::Button(L"click me")
+                    .VisualStates( {
+                        { L"PointerOver", [](auto&sender, cppxaml::xaml::VisualStateChangedEventArgs args) {
+                            auto x = args.NewState().Name();
+                            auto button = sender.as<Controls::Button>();
+                            button.Content(winrt::box_value(x));
+                        } },
+                        { L"Normal", [](auto&sender, auto&) {
+                            auto button = sender.as<Controls::Button>();
+                            button.Content(winrt::box_value(L"click me"));
+                        } },
+                    });
+             * @endcode
+            */
+            auto VisualStates(const std::unordered_map<std::wstring, cppxaml::xaml::VisualStateChangedEventHandler>& map) {
+                return cppxaml::VSMListener(*this, map);
+            }
         };
+
+        using VisualStateMap = std::unordered_map<std::wstring, cppxaml::xaml::VisualStateChangedEventHandler>;
 
         template<typename T, typename TItems = void>
         struct Wrapper : WrapperT<T> {};

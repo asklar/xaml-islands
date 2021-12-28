@@ -83,6 +83,18 @@ namespace cppxaml {
          *             })
          *           );
          * @endcode
+         * Example:\n
+         * @code
+         * auto strs = std::vector<std::wstring>{ L"first", L"second", L"third", L"fourth" };
+         * auto grid = cppxaml::Grid({"40, *"}, {"Auto, Auto"},
+         *      cppxaml::utils::transform_with_index(strs, [](const std::wstring& t, auto index) {
+         *                 return cppxaml::Button(winrt::hstring(t))
+         *                          .Set(Grid::RowProperty(), (int)index / 2)
+         *                          .Set(Grid::ColumnProperty(), (int)index % 2);
+         *                 };
+         *             })
+         *           );
+         * @endcode
         */
         template<template<typename...> typename TOutContainer = std::vector, typename TInContainer, typename UnaryOp>
         auto transform_with_index(TInContainer const& iterable, UnaryOp&& unary_op) {
@@ -118,3 +130,13 @@ namespace cppxaml {
 
 
 }
+
+#ifndef DOXY
+#define IF_ASSIGNABLE_CONTROL(XAMLTYPE)     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::XAMLTYPE, T>, cppxaml::details::Wrapper<T>>
+#define IF_ASSIGNABLE_CONTROL_TITEMS(XAMLTYPE, TITEMS)     std::enable_if_t<std::is_assignable_v<cppxaml::xaml::Controls::XAMLTYPE, T>, cppxaml::details::Wrapper<T, TITEMS>>
+#define DOXY_RT(...) auto
+#else
+#define IF_ASSIGNABLE_CONTROL(XAMLTYPE)     cppxaml::details::Wrapper<T>
+#define IF_ASSIGNABLE_CONTROL_TITEMS(XAMLTYPE, TITEMS)     cppxaml::details::Wrapper<T, TITEMS>
+#define DOXY_RT(...) __VA_ARGS__
+#endif

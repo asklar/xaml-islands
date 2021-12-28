@@ -110,6 +110,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa95070f2da651e84f4fd9667ed696005"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structcppxaml_1_1details_1_1_wrapper_t.html#aa95070f2da651e84f4fd9667ed696005">Set</a> (cppxaml::xaml::DependencyProperty dp, TValue &amp;&amp;value)</td></tr>
 <tr class="memdesc:aa95070f2da651e84f4fd9667ed696005"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a property.  <a href="structcppxaml_1_1details_1_1_wrapper_t.html#aa95070f2da651e84f4fd9667ed696005">More...</a><br /></td></tr>
 <tr class="separator:aa95070f2da651e84f4fd9667ed696005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa0fc0d81770b306edd71845b2387e9d"><td class="memItemLeft" align="right" valign="top">auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcppxaml_1_1details_1_1_wrapper_t.html#afa0fc0d81770b306edd71845b2387e9d">VisualStates</a> (const std::unordered_map&lt; std::wstring, cppxaml::xaml::VisualStateChangedEventHandler &gt; &amp;map)</td></tr>
+<tr class="memdesc:afa0fc0d81770b306edd71845b2387e9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets up a visual state change listeners.  <a href="structcppxaml_1_1details_1_1_wrapper_t.html#afa0fc0d81770b306edd71845b2387e9d">More...</a><br /></td></tr>
+<tr class="separator:afa0fc0d81770b306edd71845b2387e9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
@@ -558,7 +561,61 @@ template&lt;typename TValue &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Example:<br  />
+</p><div class="fragment"><div class="line"><span class="keyword">auto</span> buttonInGrid = cppxaml::Button(L<span class="stringliteral">&quot;Click me)</span></div>
+<div class="line"><span class="stringliteral">                         .Set(Grid::RowProperty(), 3)</span></div>
+<div class="line"><span class="stringliteral">                         .Set(Grid::ColumnProperty(), 2);</span></div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="afa0fc0d81770b306edd71845b2387e9d" name="afa0fc0d81770b306edd71845b2387e9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa0fc0d81770b306edd71845b2387e9d">&#9670;&nbsp;</a></span>VisualStates()</h2>
 
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="structcppxaml_1_1details_1_1_wrapper_t.html">cppxaml::details::WrapperT</a>&lt; T &gt;::VisualStates </td>
+          <td>(</td>
+          <td class="paramtype">const std::unordered_map&lt; std::wstring, cppxaml::xaml::VisualStateChangedEventHandler &gt; &amp;&#160;</td>
+          <td class="paramname"><em>map</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets up a visual state change listeners. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>A map of visual state names to handlers </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Example:<br  />
+</p><div class="fragment"><div class="line"><span class="keyword">auto</span> button = cppxaml::Button(L<span class="stringliteral">&quot;click me&quot;</span>)</div>
+<div class="line">     .VisualStates( {</div>
+<div class="line">         { L<span class="stringliteral">&quot;PointerOver&quot;</span>, [](<span class="keyword">auto</span>&amp;sender, cppxaml::xaml::VisualStateChangedEventArgs args) {</div>
+<div class="line">             <span class="keyword">auto</span> x = args.NewState().Name();</div>
+<div class="line">             <span class="keyword">auto</span> button = sender.as&lt;Controls::Button&gt;();</div>
+<div class="line">             button.Content(winrt::box_value(x));</div>
+<div class="line">         } },</div>
+<div class="line">         { L<span class="stringliteral">&quot;Normal&quot;</span>, [](<span class="keyword">auto</span>&amp;sender, <span class="keyword">auto</span>&amp;) {</div>
+<div class="line">             <span class="keyword">auto</span> button = sender.as&lt;Controls::Button&gt;();</div>
+<div class="line">             button.Content(winrt::box_value(L<span class="stringliteral">&quot;click me&quot;</span>));</div>
+<div class="line">         } },</div>
+<div class="line">     });</div>
+</div><!-- fragment --> 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>

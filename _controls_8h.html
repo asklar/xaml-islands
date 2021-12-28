@@ -79,8 +79,12 @@ $(function() {
 <code>#include &lt;winrt/windows.UI.Xaml.Controls.h&gt;</code><br />
 <code>#include &lt;winrt/Windows.UI.Xaml.Interop.h&gt;</code><br />
 <code>#include &lt;winrt/Windows.UI.Xaml.Markup.h&gt;</code><br />
+<code>#include &lt;winrt/base.h&gt;</code><br />
+<code>#include &lt;winrt/Windows.Foundation.Collections.h&gt;</code><br />
+<code>#include &lt;winrt/Windows.Foundation.h&gt;</code><br />
 <code>#include &lt;type_traits&gt;</code><br />
 <code>#include &lt;<a class="el" href="utils_8h_source.html">cppxaml/utils.h</a>&gt;</code><br />
+<code>#include &lt;<a class="el" href="_visual_state_8h_source.html">cppxaml/VisualState.h</a>&gt;</code><br />
 </div>
 <p><a href="_controls_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -114,60 +118,60 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7296726e55955c19e37059630b46475e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a7296726e55955c19e37059630b46475e"><td class="memTemplItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a7296726e55955c19e37059630b46475e">cppxaml::MakeContentControl</a> (winrt::Windows::Foundation::IInspectable i)</td></tr>
-<tr class="memdesc:a7296726e55955c19e37059630b46475e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a XAML element of a class that derives from <code>ContentControl</code>  <a href="namespacecppxaml.html#a7296726e55955c19e37059630b46475e">More...</a><br /></td></tr>
-<tr class="separator:a7296726e55955c19e37059630b46475e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7ebf43663b1b6f86644cb783d3be670"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ab7ebf43663b1b6f86644cb783d3be670"><td class="memTemplItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ab7ebf43663b1b6f86644cb783d3be670">cppxaml::MakeContentControl</a> (winrt::hstring v)</td></tr>
-<tr class="memdesc:ab7ebf43663b1b6f86644cb783d3be670"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a XAML element of a class that derives from <code>ContentControl</code> by wrapping a string as its content.  <a href="namespacecppxaml.html#ab7ebf43663b1b6f86644cb783d3be670">More...</a><br /></td></tr>
-<tr class="separator:ab7ebf43663b1b6f86644cb783d3be670"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba091fd9d1b26f64583f8748647cc6ac"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:aba091fd9d1b26f64583f8748647cc6ac"><td class="memTemplItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; T &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#aba091fd9d1b26f64583f8748647cc6ac">cppxaml::MakePanel</a> (const std::initializer_list&lt; cppxaml::xaml::UIElement &gt; &amp;elems)</td></tr>
-<tr class="memdesc:aba091fd9d1b26f64583f8748647cc6ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a XAML element of a type that is a subclass of <code>Panel</code>.  <a href="namespacecppxaml.html#aba091fd9d1b26f64583f8748647cc6ac">More...</a><br /></td></tr>
-<tr class="separator:aba091fd9d1b26f64583f8748647cc6ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac373281684227b6f354637057cdd8d2d"><td class="memTemplParams" colspan="2">template&lt;typename C &gt; </td></tr>
-<tr class="memitem:ac373281684227b6f354637057cdd8d2d"><td class="memTemplItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; cppxaml::xaml::Controls::ContentDialog &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ac373281684227b6f354637057cdd8d2d">cppxaml::ContentDialog</a> (C i)</td></tr>
-<tr class="memdesc:ac373281684227b6f354637057cdd8d2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>ContentDialog</code>  <a href="namespacecppxaml.html#ac373281684227b6f354637057cdd8d2d">More...</a><br /></td></tr>
-<tr class="separator:ac373281684227b6f354637057cdd8d2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecf8eb0fa7ff2fb730c6cedf83597609"><td class="memItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; cppxaml::xaml::Controls::StackPanel &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#aecf8eb0fa7ff2fb730c6cedf83597609">cppxaml::StackPanel</a> (const std::initializer_list&lt; cppxaml::xaml::UIElement &gt; &amp;elems)</td></tr>
-<tr class="memdesc:aecf8eb0fa7ff2fb730c6cedf83597609"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>StackPanel</code>.  <a href="namespacecppxaml.html#aecf8eb0fa7ff2fb730c6cedf83597609">More...</a><br /></td></tr>
-<tr class="separator:aecf8eb0fa7ff2fb730c6cedf83597609"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae0b3a764dd314b2954c5eb927b538267"><td class="memTemplParams" colspan="2">template&lt;typename TElements &gt; </td></tr>
-<tr class="memitem:ae0b3a764dd314b2954c5eb927b538267"><td class="memTemplItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; cppxaml::xaml::Controls::Grid &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ae0b3a764dd314b2954c5eb927b538267">cppxaml::Grid</a> (details::GridRows gr, cppxaml::details::GridColumns gc, TElements &amp;&amp;elems)</td></tr>
-<tr class="memdesc:ae0b3a764dd314b2954c5eb927b538267"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>Grid</code> with the specified rows, columns, and children.  <a href="namespacecppxaml.html#ae0b3a764dd314b2954c5eb927b538267">More...</a><br /></td></tr>
-<tr class="separator:ae0b3a764dd314b2954c5eb927b538267"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e3584ed31c91782e559f4f3925a0214"><td class="memItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; cppxaml::xaml::Controls::TextBox &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a0e3584ed31c91782e559f4f3925a0214">cppxaml::TextBox</a> (std::wstring_view text=L&quot;&quot;)</td></tr>
-<tr class="memdesc:a0e3584ed31c91782e559f4f3925a0214"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>TextBox</code>  <a href="namespacecppxaml.html#a0e3584ed31c91782e559f4f3925a0214">More...</a><br /></td></tr>
-<tr class="separator:a0e3584ed31c91782e559f4f3925a0214"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e863a01b50a5935699cefe60f69bf0a"><td class="memTemplParams" colspan="2">template&lt;typename T , typename TItems &gt; </td></tr>
-<tr class="memitem:a1e863a01b50a5935699cefe60f69bf0a"><td class="memTemplItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; T, TItems &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a1e863a01b50a5935699cefe60f69bf0a">cppxaml::MakeItemsControl</a> (const TItems &amp;items)</td></tr>
-<tr class="memdesc:a1e863a01b50a5935699cefe60f69bf0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a XAML element of a type that derives from <code>ItemsControl</code>  <a href="namespacecppxaml.html#a1e863a01b50a5935699cefe60f69bf0a">More...</a><br /></td></tr>
-<tr class="separator:a1e863a01b50a5935699cefe60f69bf0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae9613655b67ba125a7535ff720b23ab2"><td class="memTemplParams" colspan="2">template&lt;typename TItems &gt; </td></tr>
-<tr class="memitem:ae9613655b67ba125a7535ff720b23ab2"><td class="memTemplItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; cppxaml::xaml::Controls::AutoSuggestBox TItems &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ae9613655b67ba125a7535ff720b23ab2">cppxaml::AutoSuggestBox</a> (const TItems &amp;svs)</td></tr>
-<tr class="memdesc:ae9613655b67ba125a7535ff720b23ab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an <code>AutoSuggestBox</code> from a list of items.  <a href="namespacecppxaml.html#ae9613655b67ba125a7535ff720b23ab2">More...</a><br /></td></tr>
-<tr class="separator:ae9613655b67ba125a7535ff720b23ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d75f3fb9881d7ce1c8cd72d218485ca"><td class="memItemLeft" align="right" valign="top">cppxaml::xaml::Controls::TextBlock&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a7d75f3fb9881d7ce1c8cd72d218485ca">cppxaml::TextBlock</a> (std::wstring_view text)</td></tr>
-<tr class="memdesc:a7d75f3fb9881d7ce1c8cd72d218485ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>TextBlock</code> from its text content.  <a href="namespacecppxaml.html#a7d75f3fb9881d7ce1c8cd72d218485ca">More...</a><br /></td></tr>
-<tr class="separator:a7d75f3fb9881d7ce1c8cd72d218485ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9934f32168b3f9f0f306668f671bf052"><td class="memTemplParams" colspan="2">template&lt;typename C &gt; </td></tr>
-<tr class="memitem:a9934f32168b3f9f0f306668f671bf052"><td class="memTemplItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; cppxaml::xaml::Controls::Button &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a9934f32168b3f9f0f306668f671bf052">cppxaml::Button</a> (C c)</td></tr>
-<tr class="memdesc:a9934f32168b3f9f0f306668f671bf052"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Button.  <a href="namespacecppxaml.html#a9934f32168b3f9f0f306668f671bf052">More...</a><br /></td></tr>
-<tr class="separator:a9934f32168b3f9f0f306668f671bf052"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e4c97b67fff6d4ae328e39abf5820e3"><td class="memItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; cppxaml::xaml::Controls::FontIcon &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a7e4c97b67fff6d4ae328e39abf5820e3">cppxaml::FontIcon</a> (std::wstring_view icon)</td></tr>
-<tr class="memdesc:a7e4c97b67fff6d4ae328e39abf5820e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a FontIcon from a string.  <a href="namespacecppxaml.html#a7e4c97b67fff6d4ae328e39abf5820e3">More...</a><br /></td></tr>
-<tr class="separator:a7e4c97b67fff6d4ae328e39abf5820e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab87deae4d43bbf8e6726824c885af6c0"><td class="memItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; cppxaml::xaml::Controls::FontIcon &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ab87deae4d43bbf8e6726824c885af6c0">cppxaml::FontIcon</a> (uint32_t glyph)</td></tr>
-<tr class="memdesc:ab87deae4d43bbf8e6726824c885af6c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a FontIcon from a string.  <a href="namespacecppxaml.html#ab87deae4d43bbf8e6726824c885af6c0">More...</a><br /></td></tr>
-<tr class="separator:ab87deae4d43bbf8e6726824c885af6c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9aefaf24a8f827406aaf48913581c1e4"><td class="memItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; cppxaml::xaml::Controls::MenuFlyoutItem &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a9aefaf24a8f827406aaf48913581c1e4">cppxaml::MenuFlyoutItem</a> (std::wstring_view text)</td></tr>
-<tr class="memdesc:a9aefaf24a8f827406aaf48913581c1e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a MenuFlyoutItem with the specified text.  <a href="namespacecppxaml.html#a9aefaf24a8f827406aaf48913581c1e4">More...</a><br /></td></tr>
-<tr class="separator:a9aefaf24a8f827406aaf48913581c1e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5812813a02edf4305f0ce13a0c7887f"><td class="memTemplParams" colspan="2">template&lt;typename... TMenuFlyoutItemBase&gt; </td></tr>
-<tr class="memitem:aa5812813a02edf4305f0ce13a0c7887f"><td class="memTemplItemLeft" align="right" valign="top">cppxaml::details::Wrapper&lt; cppxaml::xaml::Controls::MenuFlyout &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#aa5812813a02edf4305f0ce13a0c7887f">cppxaml::MenuFlyout</a> (TMenuFlyoutItemBase &amp;&amp;... items)</td></tr>
-<tr class="memdesc:aa5812813a02edf4305f0ce13a0c7887f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>MenuFlyout</code> from a list of <code>MenuFlyoutItems</code>  <a href="namespacecppxaml.html#aa5812813a02edf4305f0ce13a0c7887f">More...</a><br /></td></tr>
-<tr class="separator:aa5812813a02edf4305f0ce13a0c7887f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1170d3616e0e97d2c38866df264a35b5"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a1170d3616e0e97d2c38866df264a35b5"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a1170d3616e0e97d2c38866df264a35b5">cppxaml::MakeContentControl</a> (winrt::Windows::Foundation::IInspectable i)</td></tr>
+<tr class="memdesc:a1170d3616e0e97d2c38866df264a35b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a XAML element of a class that derives from <code>ContentControl</code>  <a href="namespacecppxaml.html#a1170d3616e0e97d2c38866df264a35b5">More...</a><br /></td></tr>
+<tr class="separator:a1170d3616e0e97d2c38866df264a35b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a978328d03cc19075a3881f244053dfde"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a978328d03cc19075a3881f244053dfde"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a978328d03cc19075a3881f244053dfde">cppxaml::MakeContentControl</a> (winrt::hstring v)</td></tr>
+<tr class="memdesc:a978328d03cc19075a3881f244053dfde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a XAML element of a class that derives from <code>ContentControl</code> by wrapping a string as its content.  <a href="namespacecppxaml.html#a978328d03cc19075a3881f244053dfde">More...</a><br /></td></tr>
+<tr class="separator:a978328d03cc19075a3881f244053dfde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3396f824034cd398ebef8a6967b562b"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:aa3396f824034cd398ebef8a6967b562b"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#aa3396f824034cd398ebef8a6967b562b">cppxaml::MakePanel</a> (const std::initializer_list&lt; cppxaml::xaml::UIElement &gt; &amp;elems)</td></tr>
+<tr class="memdesc:aa3396f824034cd398ebef8a6967b562b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a XAML element of a type that is a subclass of <code>Panel</code>.  <a href="namespacecppxaml.html#aa3396f824034cd398ebef8a6967b562b">More...</a><br /></td></tr>
+<tr class="separator:aa3396f824034cd398ebef8a6967b562b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad551ede23cbec9ee457c6f69a5b76de2"><td class="memTemplParams" colspan="2">template&lt;typename C &gt; </td></tr>
+<tr class="memitem:ad551ede23cbec9ee457c6f69a5b76de2"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ad551ede23cbec9ee457c6f69a5b76de2">cppxaml::DOXY_RT</a> (cppxaml::details::Wrapper&lt; cppxaml::xaml::Controls::ContentDialog &gt;) ContentDialog(C i)</td></tr>
+<tr class="memdesc:ad551ede23cbec9ee457c6f69a5b76de2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>ContentDialog</code>  <a href="namespacecppxaml.html#ad551ede23cbec9ee457c6f69a5b76de2">More...</a><br /></td></tr>
+<tr class="separator:ad551ede23cbec9ee457c6f69a5b76de2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c0504b53e6c97c7ce709d6ce127182c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a5c0504b53e6c97c7ce709d6ce127182c">cppxaml::StackPanel</a> (const std::initializer_list&lt; cppxaml::xaml::UIElement &gt; &amp;elems)</td></tr>
+<tr class="memdesc:a5c0504b53e6c97c7ce709d6ce127182c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>StackPanel</code>.  <a href="namespacecppxaml.html#a5c0504b53e6c97c7ce709d6ce127182c">More...</a><br /></td></tr>
+<tr class="separator:a5c0504b53e6c97c7ce709d6ce127182c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31308a6e8132db9b1d292159a25452e3"><td class="memTemplParams" colspan="2">template&lt;typename TElements &gt; </td></tr>
+<tr class="memitem:a31308a6e8132db9b1d292159a25452e3"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">cppxaml::Grid</a> (details::GridRows gr, cppxaml::details::GridColumns gc, TElements &amp;&amp;elems)</td></tr>
+<tr class="memdesc:a31308a6e8132db9b1d292159a25452e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>Grid</code> with the specified rows, columns, and children.  <a href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">More...</a><br /></td></tr>
+<tr class="separator:a31308a6e8132db9b1d292159a25452e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af05189f39717a22a466222d5d0526dc3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#af05189f39717a22a466222d5d0526dc3">cppxaml::TextBox</a> (std::wstring_view text=L&quot;&quot;)</td></tr>
+<tr class="memdesc:af05189f39717a22a466222d5d0526dc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>TextBox</code>  <a href="namespacecppxaml.html#af05189f39717a22a466222d5d0526dc3">More...</a><br /></td></tr>
+<tr class="separator:af05189f39717a22a466222d5d0526dc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f653c57453060e56fc01d02ee086f70"><td class="memTemplParams" colspan="2">template&lt;typename T , typename TItems &gt; </td></tr>
+<tr class="memitem:a0f653c57453060e56fc01d02ee086f70"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a0f653c57453060e56fc01d02ee086f70">cppxaml::MakeItemsControl</a> (const TItems &amp;items)</td></tr>
+<tr class="memdesc:a0f653c57453060e56fc01d02ee086f70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a XAML element of a type that derives from <code>ItemsControl</code>  <a href="namespacecppxaml.html#a0f653c57453060e56fc01d02ee086f70">More...</a><br /></td></tr>
+<tr class="separator:a0f653c57453060e56fc01d02ee086f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3405f639fb1cdb7906d24cfdd283635a"><td class="memTemplParams" colspan="2">template&lt;typename TItems &gt; </td></tr>
+<tr class="memitem:a3405f639fb1cdb7906d24cfdd283635a"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a3405f639fb1cdb7906d24cfdd283635a">cppxaml::AutoSuggestBox</a> (const TItems &amp;svs)</td></tr>
+<tr class="memdesc:a3405f639fb1cdb7906d24cfdd283635a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an <code>AutoSuggestBox</code> from a list of items.  <a href="namespacecppxaml.html#a3405f639fb1cdb7906d24cfdd283635a">More...</a><br /></td></tr>
+<tr class="separator:a3405f639fb1cdb7906d24cfdd283635a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afafed16f54ca92b64c37bff36e938a16"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a> (std::wstring_view text)</td></tr>
+<tr class="memdesc:afafed16f54ca92b64c37bff36e938a16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>TextBlock</code> from its text content.  <a href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">More...</a><br /></td></tr>
+<tr class="separator:afafed16f54ca92b64c37bff36e938a16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae00c8ee29c2c7eab1ca0971802fe67cd"><td class="memTemplParams" colspan="2">template&lt;typename C &gt; </td></tr>
+<tr class="memitem:ae00c8ee29c2c7eab1ca0971802fe67cd"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ae00c8ee29c2c7eab1ca0971802fe67cd">cppxaml::DOXY_RT</a> (cppxaml::details::Wrapper&lt; cppxaml::xaml::Controls::Button &gt;) Button(C c)</td></tr>
+<tr class="memdesc:ae00c8ee29c2c7eab1ca0971802fe67cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a Button.  <a href="namespacecppxaml.html#ae00c8ee29c2c7eab1ca0971802fe67cd">More...</a><br /></td></tr>
+<tr class="separator:ae00c8ee29c2c7eab1ca0971802fe67cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c2f53f879ff0b2706bff8984031a12f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a5c2f53f879ff0b2706bff8984031a12f">cppxaml::FontIcon</a> (std::wstring_view icon)</td></tr>
+<tr class="memdesc:a5c2f53f879ff0b2706bff8984031a12f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a FontIcon from a string.  <a href="namespacecppxaml.html#a5c2f53f879ff0b2706bff8984031a12f">More...</a><br /></td></tr>
+<tr class="separator:a5c2f53f879ff0b2706bff8984031a12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a211b1649c078fa958d7d94998bdf00ea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a211b1649c078fa958d7d94998bdf00ea">cppxaml::FontIcon</a> (uint32_t glyph)</td></tr>
+<tr class="memdesc:a211b1649c078fa958d7d94998bdf00ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a FontIcon from a string.  <a href="namespacecppxaml.html#a211b1649c078fa958d7d94998bdf00ea">More...</a><br /></td></tr>
+<tr class="separator:a211b1649c078fa958d7d94998bdf00ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1fd5b77c0f3368fe2caab173764c8ea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ab1fd5b77c0f3368fe2caab173764c8ea">cppxaml::MenuFlyoutItem</a> (std::wstring_view text)</td></tr>
+<tr class="memdesc:ab1fd5b77c0f3368fe2caab173764c8ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a MenuFlyoutItem with the specified text.  <a href="namespacecppxaml.html#ab1fd5b77c0f3368fe2caab173764c8ea">More...</a><br /></td></tr>
+<tr class="separator:ab1fd5b77c0f3368fe2caab173764c8ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68980e256ff94c9eaa1a8bdc561f030d"><td class="memTemplParams" colspan="2">template&lt;typename... TMenuFlyoutItemBase&gt; </td></tr>
+<tr class="memitem:a68980e256ff94c9eaa1a8bdc561f030d"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a68980e256ff94c9eaa1a8bdc561f030d">cppxaml::MenuFlyout</a> (TMenuFlyoutItemBase &amp;&amp;... items)</td></tr>
+<tr class="memdesc:a68980e256ff94c9eaa1a8bdc561f030d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <code>MenuFlyout</code> from a list of <code>MenuFlyoutItems</code>  <a href="namespacecppxaml.html#a68980e256ff94c9eaa1a8bdc561f030d">More...</a><br /></td></tr>
+<tr class="separator:a68980e256ff94c9eaa1a8bdc561f030d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Alexander Sklar </dd></dl>

@@ -72,6 +72,18 @@ namespace cppxaml {
         void PropertyChanged(winrt::event_token const& token) {
             m_propertyChanged.remove(token);
         }
+        Type& self() {
+            return *static_cast<Type*>(this);
+        }
+
+        /**
+         * @brief Raises a property change notification event
+         * @param name The name of the property
+         * @return 
+        */
+        auto RaisePropertyChanged(std::wstring_view name) {
+            return m_propertyChanged(self(), winrt::Windows::UI::Xaml::Data::PropertyChangedEventArgs{name});
+        }
     protected:
         winrt::event<winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
 

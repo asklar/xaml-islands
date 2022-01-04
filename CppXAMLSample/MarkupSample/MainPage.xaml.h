@@ -25,6 +25,8 @@ namespace winrt::MarkupSample::implementation
         void BuildUIProgrammatically();
         std::wstring m_EvaluationStrTemplate;
         winrt::Windows::UI::Xaml::Documents::Hyperlink m_hl{nullptr};
+    public:
+        void PickFileButton_Tapped(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs const& e);
     };
 }
 

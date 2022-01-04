@@ -17,16 +17,19 @@
                 <Setter Property="FontFamily" Value="Segoe UI Variable"/>
             </Style>
         </StackPanel.Resources>
-        <TextBlock Margin="4" FontSize="24">CppXAML island sample</TextBlock>
-        <Image Source="ms-appx:///assets/skulogo2_client.png" Height="60" Margin="4,0,4,24" 
+        <Popup IsLightDismissEnabled="False" x:Name="popup" />
+        <StackPanel x:Name="content">
+            <TextBlock Margin="4" FontSize="24">CppXAML island sample</TextBlock>
+            <Image Source="ms-appx:///assets/skulogo2_client.png" Height="60" Margin="4,0,4,24" 
                HorizontalAlignment="Left" />
-        <TextBlock Text="{x:Bind InterfaceStr}" Margin="4"/>
-        <TextBlock Text="{x:Bind ImplString}" Margin="4"/>
-        <RichTextBlock Margin="4" x:Name="rtb">
-            <Paragraph x:Name="rtbParagraph"/>
-        </RichTextBlock>
-        <Button Margin="4,12,12,0" Content="Ok" HorizontalAlignment="Right" x:Name="OkButton" />
-
+            <TextBlock Text="{x:Bind InterfaceStr}" Margin="4"/>
+            <TextBlock Text="{x:Bind ImplString}" Margin="4"/>
+            <RichTextBlock Margin="4" x:Name="rtb">
+                <Paragraph x:Name="rtbParagraph"/>
+            </RichTextBlock>
+            <Button Margin="4,12,12,0" Content="Pick file" HorizontalAlignment="Right" x:Name="PickFileButton" Tapped="PickFileButton_Tapped" />
+            <Button Margin="4,12,12,0" Content="Ok" HorizontalAlignment="Right" x:Name="OkButton" />
+        </StackPanel>
     </StackPanel>
 
 </Page>

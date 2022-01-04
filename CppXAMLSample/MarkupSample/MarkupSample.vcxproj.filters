@@ -26,6 +26,7 @@
   <ItemGroup>
     <Page Include="MainPage.xaml" />
     <Page Include="ModalPage.xaml" />
+    <Page Include="FilePicker.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\skulogo2_client.png">

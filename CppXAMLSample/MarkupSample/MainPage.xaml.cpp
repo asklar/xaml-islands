@@ -15,6 +15,8 @@
 #include <chrono>
 #undef max
 
+#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+#include "FilePicker.h"
 namespace winrt {
     using namespace Microsoft::UI::Xaml;
     using namespace Windows::UI::Xaml::Controls;
@@ -69,3 +71,15 @@ namespace winrt::MarkupSample::implementation
     }
 }
 
+
+
+void winrt::MarkupSample::implementation::MainPage::PickFileButton_Tapped(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs const& e)
+{
+    MarkupSample::FilePicker fp;
+    popup().Child(fp);
+    content().Opacity(0.01);
+    popup().IsOpen(true);
+    popup().Closed([this](auto&...) {
+        content().Opacity(1);
+        });
+}

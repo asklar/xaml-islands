@@ -194,6 +194,10 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="FilePicker.h">
+      <DependentUpon>FilePicker.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="ModalPage.h">
       <DependentUpon>ModalPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -201,6 +205,10 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="FilePicker.cpp">
+      <DependentUpon>FilePicker.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="ModalPage.cpp">
       <DependentUpon>ModalPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -216,6 +224,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="FilePicker.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="ModalPage.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -231,6 +242,10 @@
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="FilePicker.idl">
+      <DependentUpon>FilePicker.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
     <Midl Include="ModalPage.idl">
       <DependentUpon>ModalPage.xaml</DependentUpon>
       <SubType>Code</SubType>

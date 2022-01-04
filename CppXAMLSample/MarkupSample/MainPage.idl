@@ -10,7 +10,7 @@ namespace MarkupSample
         String ImplString{ get; };
         Windows.UI.Xaml.Controls.Button OkButton;
         Windows.UI.Xaml.Documents.Hyperlink Link{ get; };
-
+        Windows.UI.Xaml.Controls.Button PickFileButton;
         Int32 MyInt{ get; set; };
         
     }

@@ -1,0 +1,30 @@
+namespace MarkupSample
+{
+    [default_interface]
+    runtimeclass StorageItem2 {
+        StorageItem2();
+        StorageItem2 Parent;
+        String Name;
+        Windows.Foundation.DateTime DateModified;
+        String Type;
+        IObservableVector<StorageItem2> Children;
+        Windows.UI.Xaml.Controls.Symbol Icon;
+        StorageItem2 AddChild(StorageItem2 child);
+
+        String Path{ get; };
+    }
+
+    [default_interface]
+    runtimeclass FilePicker : Windows.UI.Xaml.Controls.UserControl, Windows.UI.Xaml.Data.INotifyPropertyChanged
+    {
+        FilePicker();
+
+        IObservableVector<StorageItem2> Items{ get; };
+        IObservableVector<StorageItem2> TreeViewItems{ get; };
+        IVector<StorageItem2> NavigationStack{ get; };
+
+        Boolean CanGoBack{ get; };
+        Boolean CanGoForward{ get; };
+        Boolean CanGoUp{ get; };
+    }
+}

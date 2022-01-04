@@ -124,7 +124,7 @@ Examples:</h3>
 <div class="line"><a class="code hl_struct" href="structcppxaml_1_1_xaml_property.html">cppxaml::XamlProperty&lt;winrt::hstring&gt;</a> InterfaceStr;</div>
 <div class="line"><a class="code hl_struct" href="structcppxaml_1_1_xaml_property.html">cppxaml::XamlProperty&lt;winrt::hstring&gt;</a> InterfaceStrWithNPC;</div>
 <div class="ttc" id="anamespacecppxaml_html_ab63381eeaaee12b90b5fa89d2bf616a8"><div class="ttname"><a href="namespacecppxaml.html#ab63381eeaaee12b90b5fa89d2bf616a8">cppxaml::XamlEvent</a></div><div class="ttdeci">XamlEvent_t&lt; winrt::Windows::Foundation::EventHandler&lt; T &gt; &gt; XamlEvent</div><div class="ttdoc">A default event handler that maps to Windows.Foundation.EventHandler.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:48</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_property_html"><div class="ttname"><a href="structcppxaml_1_1_xaml_property.html">cppxaml::XamlProperty</a></div><div class="ttdoc">Implements a simple property (without change notifications).</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:87</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_property_html"><div class="ttname"><a href="structcppxaml_1_1_xaml_property.html">cppxaml::XamlProperty</a></div><div class="ttdoc">Implements a simple property (without change notifications).</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:99</div></div>
 </div><!-- fragment --><p ><b>MainPage.cpp</b>: </p><div class="fragment"><div class="line">MainPage::MainPage() : <a class="code hl_define" href="_xaml_property_8h.html#a6f8179c8087199cdf981985f77208549">INIT_PROPERTY</a>(MyInt, 42)</div>
 <div class="line">{</div>
 <div class="line">    InitializeComponent();</div>
@@ -132,7 +132,7 @@ Examples:</h3>
 <div class="line">    ImplString = winrt::hstring{ L<span class="stringliteral">&quot;This string comes from the implementation&quot;</span> };</div>
 <div class="line">    winrt::hstring v = ImplString;</div>
 <div class="line">}</div>
-<div class="ttc" id="a_xaml_property_8h_html_a6f8179c8087199cdf981985f77208549"><div class="ttname"><a href="_xaml_property_8h.html#a6f8179c8087199cdf981985f77208549">INIT_PROPERTY</a></div><div class="ttdeci">#define INIT_PROPERTY(NAME, VALUE)</div><div class="ttdoc">use this to initialize a cppxaml::XamlPropertyWithNPC in your class constructor.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:161</div></div>
+<div class="ttc" id="a_xaml_property_8h_html_a6f8179c8087199cdf981985f77208549"><div class="ttname"><a href="_xaml_property_8h.html#a6f8179c8087199cdf981985f77208549">INIT_PROPERTY</a></div><div class="ttdeci">#define INIT_PROPERTY(NAME, VALUE)</div><div class="ttdoc">use this to initialize a cppxaml::XamlPropertyWithNPC in your class constructor.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:173</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md6"></a>
 Control helpers</h1>
 <p >CppXAML includes some primitives to make it more natural to write XAML UI in code.</p>

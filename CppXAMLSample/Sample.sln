@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CppXAML", "CppXAML", "{942DF2BD-662B-417D-88F9-AE7DFFB1A3A2}"
 	ProjectSection(SolutionItems) = preProject
 		..\inc\cppxaml\Controls.h = ..\inc\cppxaml\Controls.h
+		..\docs\xml\index.xml = ..\docs\xml\index.xml
 		..\docs\README.md = ..\docs\README.md
 		..\Unpackaged.nuspec = ..\Unpackaged.nuspec
 		..\inc\cppxaml\utils.h = ..\inc\cppxaml\utils.h

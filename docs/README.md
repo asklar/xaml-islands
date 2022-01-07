@@ -1,4 +1,4 @@
-# CppXAML
+  # CppXAML
 
 [CppXAML](https://github.com/asklar/xaml-islands) aims to make usage of XAML and XAML islands in C++ more natural and idiomatic.
 
@@ -8,7 +8,12 @@ CppXAML provides several kinds of higher-level helpers. Some usage information c
 
 GitHub repo: https://github.com/asklar/xaml-islands
 
-# Facilities for writing XAML controls
+# Table of Contents
+* [Facilities for writing XAML controls](#facilities-for-writing-xaml-controls)
+* [Facilities for using XAML controls](#facilities-for-using-xaml-controls)
+* [Facilities for using XAML islands](#facilities-for-using-xaml-islands)
+
+# Facilities for writing XAML controls      {#facilities-for-writing-xaml-controls}
 
 ## Property and event helpers
 
@@ -20,26 +25,79 @@ GitHub repo: https://github.com/asklar/xaml-islands
 
 These provide stock/simple property objects that remove the need for verbose hand-written options. 
 
-#### Examples:
-**MainPage.h**:
-```cpp
-cppxaml::XamlEvent<winrt::hstring> OkClicked;
-cppxaml::XamlProperty<winrt::hstring> InterfaceStr;
-cppxaml::XamlProperty<winrt::hstring> InterfaceStrWithNPC;
-```
+#### Example
 
-**MainPage.cpp**:
-```cpp
-MainPage::MainPage() : INIT_PROPERTY(MyInt, 42)
-{
-    InitializeComponent();
-    // Properties can be assigned to and read from with the operator= too!
-    ImplString = winrt::hstring{ L"This string comes from the implementation" };
-    winrt::hstring v = ImplString;
+Suppose you have the following Page defined in IDL:
+```csharp
+namespace Foo {
+  runtimeclass MainPage : Windows.UI.Xaml.Controls.Page, Windows.UI.Xaml.Data.INotifyPropertyChanged {
+    MainPage();
+    event Windows.Foundation.EventHandler<String> OkClicked;
+    String InterfaceStr;
+    Int32 MyInt;
+  }
 }
 ```
 
-# Facilities for using XAML controls
+**Before (plain C++/WinRT)**
+```cpp
+struct MainPage : MainPageT<MainPage> { 
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::hstring>> m_okClicked{};
+  winrt::event_token OkClicked(winrt::Windows::Foundation::EventHandler<winrt::hstring> h) {
+    return m_okClicked.add(h);
+  }
+  void OkClicked(winrt::event_token token) {
+    m_okClicked.remove(token);
+  }
+
+  winrt::hstring m_InterfaceStr;
+  winrt::hstring InterfaceStr() {
+    return m_InterfaceStr;
+  }
+  void InterfaceStr(winrt::hstring v) {
+    m_InterfaceStr = v;
+  }
+
+  winrt::event<winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
+
+  winrt::event_token PropertyChanged(winrt::Windows::Xaml::Data::PropertyChangedEventHandler const& value) {
+    return m_propertyChanged.add(value);
+  }
+  void PropertyChanged(winrt::event_token const& token) {
+    m_propertyChanged.remove(token);
+  }
+
+  int32_t m_MyInt;
+  int32_t MyInt() {
+    return m_MyInt;
+  }
+  void MyInt(int32_t v) { 
+    m_MyInt = v; 
+    m_propertyChanged(*this, { L"MyInt" });
+  }
+
+};
+
+```
+
+**After (with CppXaml)**
+```cpp
+
+struct MainPage : MainPageT<MainPage>, cppxaml::SimpleNotifyPropertyChanged<MainPage> {
+  cppxaml::XamlEvent<winrt::hstring> OkClicked;
+  cppxaml::XamlProperty<winrt::hstring> InterfaceStr;
+  cppxaml::XamlPropertyWithNPC<int32_t> MyInt;
+  MainPage() : INIT_PROPERTY(MyInt, 42) {
+    InitializeComponent();
+
+    // Properties can be assigned to and read from with the operator= too!
+    InterfaceStr = winrt::hstring{ L"This string comes from the implementation" };
+    winrt::hstring v = InterfaceStr;
+  }
+};
+```
+
+# Facilities for using XAML controls        {#facilities-for-using-xaml-controls}
 
 ## Control helpers
 CppXAML includes some primitives to make it more natural to write XAML UI in code.
@@ -201,7 +259,7 @@ You can easily compose MenuFlyoutItems into a MenuFlyout, and also have a centra
 ```
 
 
-# Facilities for using XAML Islands
+# Facilities for using XAML Islands         {#facilities-for-using-xaml-islands}
 
 ## XamlWindow
 

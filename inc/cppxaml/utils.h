@@ -31,7 +31,7 @@ namespace cppxaml {
          * @param sv
          * @return
         */
-        auto tolower(std::wstring_view sv) {
+        inline auto tolower(std::wstring_view sv) {
             std::wstring copy(sv);
             std::transform(copy.begin(), copy.end(), copy.begin(), [](wchar_t x) { return (wchar_t)::tolower(x); });
             return copy;

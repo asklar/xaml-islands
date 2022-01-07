@@ -103,7 +103,7 @@ struct MainPage : MainPageT<MainPage>, cppxaml::SimpleNotifyPropertyChanged<Main
 CppXAML includes some primitives to make it more natural to write XAML UI in code.
 
 
-### `xaml` Namespace alias
+### xaml Namespace alias
 Since we want CppXAML to be future proof and work with WinUI 3, CppXAML creates a namespace alias `cppxaml::xaml` which points at either `Windows::UI::Xaml` or `Microsoft::UI::Xaml` for system XAML or WinUI 3, respectively.
 
 ### Builder-style programming

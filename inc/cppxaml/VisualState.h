@@ -13,7 +13,7 @@
 namespace cppxaml {
     namespace details {
 
-        auto FindChildWithVSG(cppxaml::xaml::FrameworkElement fe) {
+        cppxaml::xaml::FrameworkElement FindChildWithVSG(cppxaml::xaml::FrameworkElement fe) {
             cppxaml::xaml::FrameworkElement root{ nullptr };
             for (auto i = 0; i < cppxaml::xaml::Media::VisualTreeHelper::GetChildrenCount(fe); i++) {
                 auto child = cppxaml::xaml::Media::VisualTreeHelper::GetChild(fe, i);
@@ -37,9 +37,10 @@ namespace cppxaml {
                         vsg.CurrentStateChanged([_this = this->get_strong(), fe](winrt::Windows::Foundation::IInspectable sender, cppxaml::xaml::VisualStateChangedEventArgs args) {
 
                             auto newState = args.NewState();
-                            auto newName = newState.Name().c_str();
-                            if (_this->m_map.contains(newName)) {
-                                _this->m_map[newName](fe, args);
+                            auto newName = newState.Name();
+                            const auto newNameStr = newName.c_str();
+                            if (_this->m_map.contains(newNameStr)) {
+                                _this->m_map[newNameStr](fe, args);
                             }
                         });
                     }

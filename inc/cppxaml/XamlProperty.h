@@ -1,5 +1,6 @@
 #pragma once
 #include <type_traits>
+#include <cppxaml/utils.h>
 
 /** @file
 * @author Alexander Sklar
@@ -25,48 +26,59 @@ namespace winrt {
 */
 namespace cppxaml {
 
-    template<typename T>
-    struct XamlEvent_t {
-        winrt::event_token operator()(T const& handler) {
-            return m_handler.add(handler);
-        }
-        auto operator()(const winrt::event_token& token) noexcept { return m_handler.remove(token); }
+    namespace details {
+        template<typename T>
+        struct XamlEvent_t {
+            winrt::event_token operator()(T const& handler) {
+                return m_handler.add(handler);
+            }
+            auto operator()(const winrt::event_token& token) noexcept { return m_handler.remove(token); }
 
-        template<typename... TArgs>
-        auto invoke(TArgs&&... args) {
-            return m_handler(args...);
-        }
-    private:
-        winrt::event<T> m_handler;
-    };
-
+            template<typename... TArgs>
+            auto invoke(TArgs&&... args) {
+                return m_handler(args...);
+            }
+        private:
+            winrt::event<T> m_handler;
+        };
+    }
     /**
      * @brief A default event handler that maps to [Windows.Foundation.EventHandler](https://docs.microsoft.com/uwp/api/windows.foundation.eventhandler-1).
      * @tparam T The event data type.
     */
     template<typename T>
-    using XamlEvent = XamlEvent_t<winrt::Windows::Foundation::EventHandler<T>>;
+    struct XamlEvent : cppxaml::details::XamlEvent_t<winrt::Windows::Foundation::EventHandler<T>> {};
 
     /**
      * @brief A default event handler that maps to [Windows.Foundation.TypedEventHandler](https://docs.microsoft.com/uwp/api/windows.foundation.typedeventhandler-2).
      * @tparam T The event data type.
+     * @details Usage example:
+     * @code
+     *         // In IDL, this corresponds to:
+     *         //   event Windows.Foundation.TypedEventHandler<ModalPage, String> OkClicked;
+     *         cppxaml::TypedXamlEvent<MarkupSample::ModalPage, winrt::hstring> OkClicked;
+     * @endcode
     */
     template<typename TSender, typename TArgs>
-    using TypedXamlEvent = XamlEvent_t<winrt::Windows::Foundation::TypedEventHandler<TSender, TArgs>>;
+    struct TypedXamlEvent : cppxaml::details::XamlEvent_t<winrt::Windows::Foundation::TypedEventHandler<TSender, TArgs>> {};
 
     /**
      * @brief Helper base class to inherit from to have a simple implementation of [INotifyPropertyChanged](https://docs.microsoft.com/uwp/api/windows.ui.xaml.data.inotifypropertychanged).
      * @tparam T CRTP type
      * @details When you declare your class, make this class a base class and pass your class as a template parameter:
      * @code
-     * struct MyCppWinRTType : MyCppWinRTTypeT<MyCPPWinRTType>, SimpleNotifyPropertyChanged<MyCPPWinRTType> { ... }
+     * struct MyPage : MyPageT<MyPage>, SimpleNotifyPropertyChanged<MyPage> { 
+     *      cppxaml::XamlPropertyWithNPC<int> MyInt;
+     * 
+     *      MyPage() : INIT_PROPERTY(MyInt, 42) { }
+     * };
      * @endcode
     */
     template<typename T>
     struct SimpleNotifyPropertyChanged {
     public:
         using Type = T;
-        auto PropertyChanged(winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler const& value) {
+        auto PropertyChanged(cppxaml::xaml::Data::PropertyChangedEventHandler const& value) {
             return m_propertyChanged.add(value);
         }
         void PropertyChanged(winrt::event_token const& token) {
@@ -80,12 +92,28 @@ namespace cppxaml {
          * @brief Raises a property change notification event
          * @param name The name of the property
          * @return 
+         * @details Usage example\n
+         * XAML file
+         * @code{.xml}
+         * <!-- XAML file... -->
+         * <Image Source="ms-appx:///assets/skulogo2_client.png" Height="{x:Bind MyInt, Mode=OneWay}" />
+         * @endcode
+         * C++
+         * @code
+         * void MyPage::DoSomething() {
+         *  // modify MyInt
+         *  // MyInt = ...
+         * 
+         *  // now send a notification to update the bound UI elements
+         *  RaisePropertyChanged(L"MyInt");
+         * }
+         * @endcode
         */
         auto RaisePropertyChanged(std::wstring_view name) {
-            return m_propertyChanged(self(), winrt::Windows::UI::Xaml::Data::PropertyChangedEventArgs{name});
+            return m_propertyChanged(self(), cppxaml::xaml::Data::PropertyChangedEventHandler{name});
         }
     protected:
-        winrt::event<winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
+        winrt::event<cppxaml::xaml::Data::PropertyChangedEventHandler> m_propertyChanged;
 
         template<typename TProperty>
         friend struct XamlProperty;
@@ -141,13 +169,13 @@ namespace cppxaml {
             if (value != operator()()) {
                 XamlProperty<T>::operator()(value);
                 if (m_npc) {
-                    (*m_npc)(m_sender, winrt::Windows::UI::Xaml::Data::PropertyChangedEventArgs{ m_name });
+                    (*m_npc)(m_sender, cppxaml::xaml::Data::PropertyChangedEventArgs{ m_name });
                 }
             }
         }
         template<typename... TArgs>
         XamlPropertyWithNPC(
-            winrt::event<winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler>* npc,
+            winrt::event<cppxaml::xaml::Data::PropertyChangedEventHandler>* npc,
             winrt::Windows::Foundation::IInspectable sender,
             std::wstring_view name,
             TArgs&&... args) :
@@ -161,7 +189,7 @@ namespace cppxaml {
         XamlPropertyWithNPC(XamlPropertyWithNPC&&) = default;
     private:
         std::wstring m_name;
-        winrt::event<winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler>* m_npc;
+        winrt::event<cppxaml::xaml::Data::PropertyChangedEventHandler>* m_npc;
         winrt::Windows::Foundation::IInspectable m_sender;
     };
 }

@@ -85,8 +85,15 @@ winrt::fire_and_forget CreateCppXamlUI(const cppxaml::XamlWindow* xw) {
                 auto button = sender.as<Controls::Button>();
                 button.Content(winrt::box_value(L"click me"));
             } },
+            { L"Pressed", [](auto& sender, auto&) {
+                auto button = sender.as<Controls::Button>();
+                button.Content(winrt::box_value(L"pressed"));
+            } },
         });
 
+    auto tb = cppxaml::TextBlock(L"something")
+        .Set(Controls::Grid::RowProperty(), 1)
+        .Set(Controls::Grid::ColumnSpanProperty(), 2);
 
     auto sv = cppxaml::MakeContentControl<cppxaml::xaml::Controls::ScrollViewer>({
             cppxaml::StackPanel({

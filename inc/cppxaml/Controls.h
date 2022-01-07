@@ -32,7 +32,7 @@ namespace cppxaml {
 
     namespace details {
         /**
-         * @brief Internal wrapper type that powers fluent-style programming. \n
+         * @brief Internal wrapper type that powers builder-style programming. \n
          * This type is usually constructed and destructed in a single declaration line, only serving to set properties on the underlying XAML element, or to add the element to a parent.
          * @tparam T the XAML element type to hold.
         */
@@ -178,7 +178,7 @@ namespace cppxaml {
         struct Wrapper : WrapperT<T> {};
 
         /**
-         * @brief Fluent-style wrapper for `ContentDialog`
+         * @brief builder-style wrapper for `ContentDialog`
         */
         template<>
         struct Wrapper<cppxaml::xaml::Controls::ContentDialog> : WrapperT<cppxaml::xaml::Controls::ContentDialog> {
@@ -189,7 +189,7 @@ namespace cppxaml {
         };
 
         /**
-         * @brief Fluent-style wrapper for `StackPanel`
+         * @brief builder-style wrapper for `StackPanel`
         */
         template<>
         struct Wrapper<cppxaml::xaml::Controls::StackPanel> : WrapperT<cppxaml::xaml::Controls::StackPanel> {
@@ -200,7 +200,7 @@ namespace cppxaml {
         };
 
         /**
-         * @brief Fluent-style wrapper for `AutoSuggestBox`
+         * @brief builder-style wrapper for `AutoSuggestBox`
          * @tparam TItems the type of collection from which to initialize the `AutoSuggestBox`'s `Items`.
         */
         template<typename TItems>
@@ -292,7 +292,7 @@ namespace cppxaml {
         };
 
         /**
-         * @brief Fluent-style wrapper for `MenuFlyoutItem`
+         * @brief builder-style wrapper for `MenuFlyoutItem`
         */
         template<>
         struct Wrapper<cppxaml::xaml::Controls::MenuFlyoutItem> : WrapperT<cppxaml::xaml::Controls::MenuFlyoutItem> {
@@ -329,7 +329,7 @@ namespace cppxaml {
         };
 
         /**
-         * @brief Fluent-style wrapper for `MenuFlyout`
+         * @brief builder-style wrapper for `MenuFlyout`
         */
         template<>
         struct Wrapper<cppxaml::xaml::Controls::MenuFlyout> : WrapperT<cppxaml::xaml::Controls::MenuFlyout> {
@@ -519,9 +519,14 @@ namespace cppxaml {
         }
 
         for (auto& e : elems) {
-            grid->Children().Append(e.m_element);
-            cppxaml::xaml::Controls::Grid::SetRow(e.m_element.as<cppxaml::xaml::FrameworkElement>(), e.m_row);
-            cppxaml::xaml::Controls::Grid::SetColumn(e.m_element.as<cppxaml::xaml::FrameworkElement>(), e.m_column);
+            if constexpr (std::is_assignable_v<cppxaml::details::UIElementInGrid, decltype(e)>) {
+                grid->Children().Append(e.m_element);
+                cppxaml::xaml::Controls::Grid::SetRow(e.m_element.as<cppxaml::xaml::FrameworkElement>(), e.m_row);
+                cppxaml::xaml::Controls::Grid::SetColumn(e.m_element.as<cppxaml::xaml::FrameworkElement>(), e.m_column);
+            }
+            else {
+                grid->Children().Append(e);
+            }
         }
         return grid;
     }
@@ -580,10 +585,10 @@ namespace cppxaml {
      * @param text The text for the control.
      * @return
     */
-    DOXY_RT(cppxaml::xaml::Controls::TextBlock)
+    DOXY_RT(cppxaml::details::Wrapper<cppxaml::xaml::Controls::TextBlock>)
         TextBlock(std::wstring_view text) {
-        cppxaml::xaml::Controls::TextBlock tb;
-        tb.Text(text);
+        cppxaml::details::Wrapper<cppxaml::xaml::Controls::TextBlock> tb;
+        tb->Text(text);
         return tb;
     }
 

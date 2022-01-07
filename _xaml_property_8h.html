@@ -70,17 +70,23 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle"><div class="title">XamlProperty.h File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;type_traits&gt;</code><br />
+<code>#include &lt;<a class="el" href="utils_8h_source.html">cppxaml/utils.h</a>&gt;</code><br />
 </div>
 <p><a href="_xaml_property_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcppxaml_1_1_xaml_event.html">cppxaml::XamlEvent&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A default event handler that maps to <a href="https://docs.microsoft.com/uwp/api/windows.foundation.eventhandler-1">Windows.Foundation.EventHandler</a>.  <a href="structcppxaml_1_1_xaml_event.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcppxaml_1_1_typed_xaml_event.html">cppxaml::TypedXamlEvent&lt; TSender, TArgs &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A default event handler that maps to <a href="https://docs.microsoft.com/uwp/api/windows.foundation.typedeventhandler-2">Windows.Foundation.TypedEventHandler</a>.  <a href="structcppxaml_1_1_typed_xaml_event.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcppxaml_1_1_simple_notify_property_changed.html">cppxaml::SimpleNotifyPropertyChanged&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper base class to inherit from to have a simple implementation of <a href="https://docs.microsoft.com/uwp/api/windows.ui.xaml.data.inotifypropertychanged">INotifyPropertyChanged</a>.  <a href="structcppxaml_1_1_simple_notify_property_changed.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -103,17 +109,6 @@ Macros</h2></td></tr>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>INIT_PROPERTY</b>(NAME,  VALUE)&#160;&#160;&#160;    NAME(&amp;m_propertyChanged, winrt::try_as&lt;winrt::Windows::Foundation::IInspectable&gt;(this), std::wstring_view{ L#NAME }, VALUE)</td></tr>
 <tr class="memdesc:a6f8179c8087199cdf981985f77208549"><td class="mdescLeft">&#160;</td><td class="mdescRight">use this to initialize a <a class="el" href="structcppxaml_1_1_xaml_property_with_n_p_c.html" title="Implements a property type with notifications.">cppxaml::XamlPropertyWithNPC</a> in your class constructor. <br /></td></tr>
 <tr class="separator:a6f8179c8087199cdf981985f77208549"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ab63381eeaaee12b90b5fa89d2bf616a8"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ab63381eeaaee12b90b5fa89d2bf616a8"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ab63381eeaaee12b90b5fa89d2bf616a8">cppxaml::XamlEvent</a> = XamlEvent_t&lt; winrt::Windows::Foundation::EventHandler&lt; T &gt; &gt;</td></tr>
-<tr class="memdesc:ab63381eeaaee12b90b5fa89d2bf616a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">A default event handler that maps to <a href="https://docs.microsoft.com/uwp/api/windows.foundation.eventhandler-1">Windows.Foundation.EventHandler</a>.  <a href="namespacecppxaml.html#ab63381eeaaee12b90b5fa89d2bf616a8">More...</a><br /></td></tr>
-<tr class="separator:ab63381eeaaee12b90b5fa89d2bf616a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace92150f3298d3ec8987b0097c2b8355"><td class="memTemplParams" colspan="2">template&lt;typename TSender , typename TArgs &gt; </td></tr>
-<tr class="memitem:ace92150f3298d3ec8987b0097c2b8355"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ace92150f3298d3ec8987b0097c2b8355">cppxaml::TypedXamlEvent</a> = XamlEvent_t&lt; winrt::Windows::Foundation::TypedEventHandler&lt; TSender, TArgs &gt; &gt;</td></tr>
-<tr class="memdesc:ace92150f3298d3ec8987b0097c2b8355"><td class="mdescLeft">&#160;</td><td class="mdescRight">A default event handler that maps to <a href="https://docs.microsoft.com/uwp/api/windows.foundation.typedeventhandler-2">Windows.Foundation.TypedEventHandler</a>.  <a href="namespacecppxaml.html#ace92150f3298d3ec8987b0097c2b8355">More...</a><br /></td></tr>
-<tr class="separator:ace92150f3298d3ec8987b0097c2b8355"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Alexander Sklar </dd></dl>

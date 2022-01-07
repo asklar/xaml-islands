@@ -66,7 +66,6 @@ $(function() {
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">cppxaml Namespace Reference</div></div>
 </div><!--header-->
@@ -89,6 +88,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcppxaml_1_1_simple_notify_property_changed.html">SimpleNotifyPropertyChanged</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper base class to inherit from to have a simple implementation of <a href="https://docs.microsoft.com/uwp/api/windows.ui.xaml.data.inotifypropertychanged">INotifyPropertyChanged</a>.  <a href="structcppxaml_1_1_simple_notify_property_changed.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcppxaml_1_1_typed_xaml_event.html">TypedXamlEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A default event handler that maps to <a href="https://docs.microsoft.com/uwp/api/windows.foundation.typedeventhandler-2">Windows.Foundation.TypedEventHandler</a>.  <a href="structcppxaml_1_1_typed_xaml_event.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcppxaml_1_1_xaml_event.html">XamlEvent</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A default event handler that maps to <a href="https://docs.microsoft.com/uwp/api/windows.foundation.eventhandler-1">Windows.Foundation.EventHandler</a>.  <a href="structcppxaml_1_1_xaml_event.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcppxaml_1_1_xaml_property.html">XamlProperty</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements a simple property (without change notifications).  <a href="structcppxaml_1_1_xaml_property.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -98,17 +103,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements an HWND based host for XAML Islands. You can create a <code><a class="el" href="structcppxaml_1_1_xaml_window.html" title="Implements an HWND based host for XAML Islands. You can create a XamlWindow from one of three overloa...">XamlWindow</a></code> from one of three overloads of <a class="el" href="structcppxaml_1_1_xaml_window.html#a3cbafba7e86d51772aef97103987bf40" title="Creates a window that hosts a XAML UI element.">XamlWindow::Make</a>.  <a href="structcppxaml_1_1_xaml_window.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:ab63381eeaaee12b90b5fa89d2bf616a8"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:ab63381eeaaee12b90b5fa89d2bf616a8"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ab63381eeaaee12b90b5fa89d2bf616a8">XamlEvent</a> = XamlEvent_t&lt; winrt::Windows::Foundation::EventHandler&lt; T &gt; &gt;</td></tr>
-<tr class="memdesc:ab63381eeaaee12b90b5fa89d2bf616a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">A default event handler that maps to <a href="https://docs.microsoft.com/uwp/api/windows.foundation.eventhandler-1">Windows.Foundation.EventHandler</a>.  <a href="namespacecppxaml.html#ab63381eeaaee12b90b5fa89d2bf616a8">More...</a><br /></td></tr>
-<tr class="separator:ab63381eeaaee12b90b5fa89d2bf616a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace92150f3298d3ec8987b0097c2b8355"><td class="memTemplParams" colspan="2">template&lt;typename TSender , typename TArgs &gt; </td></tr>
-<tr class="memitem:ace92150f3298d3ec8987b0097c2b8355"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#ace92150f3298d3ec8987b0097c2b8355">TypedXamlEvent</a> = XamlEvent_t&lt; winrt::Windows::Foundation::TypedEventHandler&lt; TSender, TArgs &gt; &gt;</td></tr>
-<tr class="memdesc:ace92150f3298d3ec8987b0097c2b8355"><td class="mdescLeft">&#160;</td><td class="mdescRight">A default event handler that maps to <a href="https://docs.microsoft.com/uwp/api/windows.foundation.typedeventhandler-2">Windows.Foundation.TypedEventHandler</a>.  <a href="namespacecppxaml.html#ace92150f3298d3ec8987b0097c2b8355">More...</a><br /></td></tr>
-<tr class="separator:ace92150f3298d3ec8987b0097c2b8355"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -186,56 +180,7 @@ Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >The main CppXAML namespace. </p>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="ace92150f3298d3ec8987b0097c2b8355" name="ace92150f3298d3ec8987b0097c2b8355"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace92150f3298d3ec8987b0097c2b8355">&#9670;&nbsp;</a></span>TypedXamlEvent</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename TSender , typename TArgs &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="namespacecppxaml.html#ace92150f3298d3ec8987b0097c2b8355">cppxaml::TypedXamlEvent</a> = typedef XamlEvent_t&lt;winrt::Windows::Foundation::TypedEventHandler&lt;TSender, TArgs&gt; &gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A default event handler that maps to <a href="https://docs.microsoft.com/uwp/api/windows.foundation.typedeventhandler-2">Windows.Foundation.TypedEventHandler</a>. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>The event data type. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ab63381eeaaee12b90b5fa89d2bf616a8" name="ab63381eeaaee12b90b5fa89d2bf616a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab63381eeaaee12b90b5fa89d2bf616a8">&#9670;&nbsp;</a></span>XamlEvent</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="namespacecppxaml.html#ab63381eeaaee12b90b5fa89d2bf616a8">cppxaml::XamlEvent</a> = typedef XamlEvent_t&lt;winrt::Windows::Foundation::EventHandler&lt;T&gt; &gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A default event handler that maps to <a href="https://docs.microsoft.com/uwp/api/windows.foundation.eventhandler-1">Windows.Foundation.EventHandler</a>. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>The event data type. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a3405f639fb1cdb7906d24cfdd283635a" name="a3405f639fb1cdb7906d24cfdd283635a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3405f639fb1cdb7906d24cfdd283635a">&#9670;&nbsp;</a></span>AutoSuggestBox()</h2>
 
@@ -487,7 +432,7 @@ Example usage:<br  />
 <div class="line">     {1, 1, <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;fourth&quot;</span>) },</div>
 <div class="line">     }),</div>
 <div class="ttc" id="anamespacecppxaml_html_a31308a6e8132db9b1d292159a25452e3"><div class="ttname"><a href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">cppxaml::Grid</a></div><div class="ttdeci">Grid(details::GridRows gr, cppxaml::details::GridColumns gc, TElements &amp;&amp;elems)</div><div class="ttdoc">Creates a Grid with the specified rows, columns, and children.</div><div class="ttdef"><b>Definition:</b> Controls.h:508</div></div>
-<div class="ttc" id="anamespacecppxaml_html_afafed16f54ca92b64c37bff36e938a16"><div class="ttname"><a href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a></div><div class="ttdeci">TextBlock(std::wstring_view text)</div><div class="ttdoc">Creates a TextBlock from its text content.</div><div class="ttdef"><b>Definition:</b> Controls.h:584</div></div>
+<div class="ttc" id="anamespacecppxaml_html_afafed16f54ca92b64c37bff36e938a16"><div class="ttname"><a href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a></div><div class="ttdeci">TextBlock(std::wstring_view text)</div><div class="ttdoc">Creates a TextBlock from its text content.</div><div class="ttdef"><b>Definition:</b> Controls.h:589</div></div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">gr</td><td>The set of grid row definitions. </td></tr>

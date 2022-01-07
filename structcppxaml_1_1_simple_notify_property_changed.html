@@ -94,7 +94,13 @@ struct cppxaml::SimpleNotifyPropertyChanged&lt; T &gt;</div><p >Helper base clas
   </table>
   </dd>
 </dl>
-<p>When you declare your class, make this class a base class and pass your class as a template parameter: </p><div class="fragment"><div class="line"><span class="keyword">struct </span>MyCppWinRTType : MyCppWinRTTypeT&lt;MyCPPWinRTType&gt;, SimpleNotifyPropertyChanged&lt;MyCPPWinRTType&gt; { ... }</div>
+<p>When you declare your class, make this class a base class and pass your class as a template parameter: </p><div class="fragment"><div class="line"><span class="keyword">struct </span>MyPage : MyPageT&lt;MyPage&gt;, SimpleNotifyPropertyChanged&lt;MyPage&gt; { </div>
+<div class="line">     <a class="code hl_struct" href="structcppxaml_1_1_xaml_property_with_n_p_c.html">cppxaml::XamlPropertyWithNPC&lt;int&gt;</a> MyInt;</div>
+<div class="line"> </div>
+<div class="line">     MyPage() : <a class="code hl_define" href="_xaml_property_8h.html#a6f8179c8087199cdf981985f77208549">INIT_PROPERTY</a>(MyInt, 42) { }</div>
+<div class="line">};</div>
+<div class="ttc" id="a_xaml_property_8h_html_a6f8179c8087199cdf981985f77208549"><div class="ttname"><a href="_xaml_property_8h.html#a6f8179c8087199cdf981985f77208549">INIT_PROPERTY</a></div><div class="ttdeci">#define INIT_PROPERTY(NAME, VALUE)</div><div class="ttdoc">use this to initialize a cppxaml::XamlPropertyWithNPC in your class constructor.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:201</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_property_with_n_p_c_html"><div class="ttname"><a href="structcppxaml_1_1_xaml_property_with_n_p_c.html">cppxaml::XamlPropertyWithNPC</a></div><div class="ttdoc">Implements a property type with notifications.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:161</div></div>
 </div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ade150fab4ab5498eafec1d11984d06c8" name="ade150fab4ab5498eafec1d11984d06c8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ade150fab4ab5498eafec1d11984d06c8">&#9670;&nbsp;</a></span>RaisePropertyChanged()</h2>
@@ -130,7 +136,18 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
+<p>Usage example<br  />
+XAML file </p><div class="fragment"><div class="line"><span class="comment">&lt;!-- XAML file... --&gt;</span></div>
+<div class="line">&lt;<span class="keywordtype">Image</span> <span class="keyword">Source</span>=<span class="stringliteral">&quot;ms-appx:///assets/skulogo2_client.png&quot;</span> <span class="keyword">Height</span>=<span class="stringliteral">&quot;{x:Bind MyInt, Mode=OneWay}&quot;</span> /&gt;</div>
+</div><!-- fragment --><p> C++ </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> MyPage::DoSomething() {</div>
+<div class="line"> <span class="comment">// modify MyInt</span></div>
+<div class="line"> <span class="comment">// MyInt = ...</span></div>
+<div class="line"> </div>
+<div class="line"> <span class="comment">// now send a notification to update the bound UI elements</span></div>
+<div class="line"> <a class="code hl_function" href="structcppxaml_1_1_simple_notify_property_changed.html#ade150fab4ab5498eafec1d11984d06c8">RaisePropertyChanged</a>(L<span class="stringliteral">&quot;MyInt&quot;</span>);</div>
+<div class="line">}</div>
+<div class="ttc" id="astructcppxaml_1_1_simple_notify_property_changed_html_ade150fab4ab5498eafec1d11984d06c8"><div class="ttname"><a href="structcppxaml_1_1_simple_notify_property_changed.html#ade150fab4ab5498eafec1d11984d06c8">cppxaml::SimpleNotifyPropertyChanged::RaisePropertyChanged</a></div><div class="ttdeci">auto RaisePropertyChanged(std::wstring_view name)</div><div class="ttdoc">Raises a property change notification event.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:112</div></div>
+</div><!-- fragment --> 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>

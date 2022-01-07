@@ -227,17 +227,18 @@ Here we can define a Grid with Buttons, each of whose content is sourced from a 
 <div class="line">                <span class="keywordflow">return</span> cppxaml::details::UIElementInGrid{</div>
 <div class="line">                    (int)index / 2,</div>
 <div class="line">                    (<span class="keywordtype">int</span>)index % 2,</div>
-<div class="line">                    cppxaml::Button(winrt::hstring(t))</div>
+<div class="line">                    <a class="code hl_function" href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">cppxaml::Button</a>(winrt::hstring(t))</div>
 <div class="line">                };</div>
 <div class="line">            })</div>
 <div class="line">          );</div>
 <div class="ttc" id="anamespacecppxaml_1_1utils_html_ade2530c1a3c7013fc9a488200c73029c"><div class="ttname"><a href="namespacecppxaml_1_1utils.html#ade2530c1a3c7013fc9a488200c73029c">cppxaml::utils::transform_with_index</a></div><div class="ttdeci">auto transform_with_index(TInContainer const &amp;iterable, UnaryOp &amp;&amp;unary_op)</div><div class="ttdoc">Maps each element in a container via a unary operation on each element.</div><div class="ttdef"><b>Definition:</b> utils.h:100</div></div>
+<div class="ttc" id="anamespacecppxaml_html_a200ac8a2b9983470d2f7f1c060f59fda"><div class="ttname"><a href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">cppxaml::Button</a></div><div class="ttdeci">auto Button(C c)</div><div class="ttdoc">Creates a Button.</div><div class="ttdef"><b>Definition:</b> Controls.h:602</div></div>
 <div class="ttc" id="anamespacecppxaml_html_a31308a6e8132db9b1d292159a25452e3"><div class="ttname"><a href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">cppxaml::Grid</a></div><div class="ttdeci">Grid(details::GridRows gr, cppxaml::details::GridColumns gc, TElements &amp;&amp;elems)</div><div class="ttdoc">Creates a Grid with the specified rows, columns, and children.</div><div class="ttdef"><b>Definition:</b> Controls.h:508</div></div>
 </div><!-- fragment --><p> Example:<br  />
 </p><div class="fragment"><div class="line"><span class="keyword">auto</span> strs = std::vector&lt;std::wstring&gt;{ L<span class="stringliteral">&quot;first&quot;</span>, L<span class="stringliteral">&quot;second&quot;</span>, L<span class="stringliteral">&quot;third&quot;</span>, L<span class="stringliteral">&quot;fourth&quot;</span> };</div>
 <div class="line"><span class="keyword">auto</span> grid = <a class="code hl_function" href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">cppxaml::Grid</a>({<span class="stringliteral">&quot;40, *&quot;</span>}, {<span class="stringliteral">&quot;Auto, Auto&quot;</span>},</div>
 <div class="line">     <a class="code hl_function" href="namespacecppxaml_1_1utils.html#ade2530c1a3c7013fc9a488200c73029c">cppxaml::utils::transform_with_index</a>(strs, [](<span class="keyword">const</span> std::wstring&amp; t, <span class="keyword">auto</span> index) {</div>
-<div class="line">                <span class="keywordflow">return</span> cppxaml::Button(winrt::hstring(t))</div>
+<div class="line">                <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">cppxaml::Button</a>(winrt::hstring(t))</div>
 <div class="line">                         .Set(Grid::RowProperty(), (<span class="keywordtype">int</span>)index / 2)</div>
 <div class="line">                         .Set(Grid::ColumnProperty(), (<span class="keywordtype">int</span>)index % 2);</div>
 <div class="line">                };</div>

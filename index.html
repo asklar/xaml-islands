@@ -113,7 +113,7 @@ Builder-style programming</h3>
 <div class="line">myTextBlock.Margin(winrt::Windows::UI::Xaml::ThicknessHelper::FromUniformLength(4));</div>
 <div class="line">myTextBlock.Padding(winrt::Windows::UI::Xaml::ThicknessHelper::FromUniformLength(6));</div>
 <div class="line">myTextBlock.Name(L<span class="stringliteral">&quot;myTB&quot;</span>);</div>
-<div class="ttc" id="anamespacecppxaml_html_afafed16f54ca92b64c37bff36e938a16"><div class="ttname"><a href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a></div><div class="ttdeci">TextBlock(std::wstring_view text)</div><div class="ttdoc">Creates a TextBlock from its text content.</div><div class="ttdef"><b>Definition:</b> Controls.h:589</div></div>
+<div class="ttc" id="anamespacecppxaml_html_afafed16f54ca92b64c37bff36e938a16"><div class="ttname"><a href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a></div><div class="ttdeci">TextBlock(std::wstring_view text)</div><div class="ttdoc">Creates a TextBlock from its text content.</div><div class="ttdef"><b>Definition:</b> Controls.h:588</div></div>
 </div><!-- fragment --><p ><b>After (with CppXAML)</b> </p><div class="fragment"><div class="line"><span class="keyword">auto</span> myTextBlock = <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;Hello world&quot;</span>)</div>
 <div class="line">                    .Margin(4)</div>
 <div class="line">                    .Padding(6)</div>
@@ -123,19 +123,19 @@ TextBlock</h3>
 <p >Most commonly, you will want to construct a <code>TextBlock</code> from a string of text. This can be a bit cumbersome if you are using C++/WinRT directly. With cppxaml, as you've seen above, you can just write: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> tb = <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;Hello&quot;</span>);</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md9"></a>
 StackPanel</h3>
-<p >Panels in XAML can have zero or more children. CppXAML makes it easy to naturally describe a panel's children with an initializer list. For example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> sp = <a class="code hl_function" href="namespacecppxaml.html#a5c0504b53e6c97c7ce709d6ce127182c">cppxaml::StackPanel</a>({</div>
+<p >Panels in XAML can have zero or more children. CppXAML makes it easy to naturally describe a panel's children with an initializer list. For example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> sp = <a class="code hl_function" href="namespacecppxaml.html#a4f19238f531dcc396954a81f0dbc75b1">cppxaml::StackPanel</a>({</div>
 <div class="line">  <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;Hello&quot;</span>),</div>
 <div class="line">  <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;world!&quot;</span>)</div>
 <div class="line">  });</div>
-<div class="ttc" id="anamespacecppxaml_html_a5c0504b53e6c97c7ce709d6ce127182c"><div class="ttname"><a href="namespacecppxaml.html#a5c0504b53e6c97c7ce709d6ce127182c">cppxaml::StackPanel</a></div><div class="ttdeci">StackPanel(const std::initializer_list&lt; cppxaml::xaml::UIElement &gt; &amp;elems)</div><div class="ttdoc">Creates a StackPanel.</div><div class="ttdef"><b>Definition:</b> Controls.h:483</div></div>
-</div><!-- fragment --><p >You can also set its <code>Orientation</code>: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> sp <a class="code hl_function" href="namespacecppxaml.html#a5c0504b53e6c97c7ce709d6ce127182c">cppxaml::StackPanel</a>({</div>
+<div class="ttc" id="anamespacecppxaml_html_a4f19238f531dcc396954a81f0dbc75b1"><div class="ttname"><a href="namespacecppxaml.html#a4f19238f531dcc396954a81f0dbc75b1">cppxaml::StackPanel</a></div><div class="ttdeci">auto StackPanel(const std::initializer_list&lt; cppxaml::xaml::UIElement &gt; &amp;elems)</div><div class="ttdoc">Creates a StackPanel.</div><div class="ttdef"><b>Definition:</b> Controls.h:483</div></div>
+</div><!-- fragment --><p >You can also set its <code>Orientation</code>: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> sp <a class="code hl_function" href="namespacecppxaml.html#a4f19238f531dcc396954a81f0dbc75b1">cppxaml::StackPanel</a>({</div>
 <div class="line">    <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;Hello&quot;</span>),</div>
 <div class="line">    <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;world!&quot;</span>).Name(L<span class="stringliteral">&quot;worldTB&quot;</span>)</div>
 <div class="line">  }).Orientation(cppxaml::xaml::Controls::Orientation::Horizontal);</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md10"></a>
 ContentControl (Button, etc.)</h3>
 <p >Sub-classes of XAML's <code>ContentControl</code> enable nesting one control into another via the <code>Content</code> property. CppXAML makes this easier: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> scrollViewer = cppxaml::MakeContentControl&lt;cppxaml::xaml::Controls::ScrollViewer&gt;({</div>
-<div class="line">  <a class="code hl_function" href="namespacecppxaml.html#a5c0504b53e6c97c7ce709d6ce127182c">cppxaml::StackPanel</a>({</div>
+<div class="line">  <a class="code hl_function" href="namespacecppxaml.html#a4f19238f531dcc396954a81f0dbc75b1">cppxaml::StackPanel</a>({</div>
 <div class="line">    <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;Hello&quot;</span>),</div>
 <div class="line">    <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;world!&quot;</span>).Name(L<span class="stringliteral">&quot;worldTB&quot;</span>)</div>
 <div class="line">  })</div>
@@ -169,51 +169,52 @@ Attached properties</h3>
 AutoSuggestBox</h3>
 <p >You can easily create an <code>AutoSuggestBox</code> from a <code>std::vector&lt;std::wstring&gt;</code>; make sure the vector's lifetime extends for at least as long as the XAML UI is up.</p>
 <p ><code>EnableDefaultSearch()</code> will provide a reasonable default search experience (filters the list of items down to those that contain the search string). This behavior is case insensitive by default, but can be made case sensitive by passing <code>false</code>.</p>
-<div class="fragment"><div class="line"><span class="keyword">auto</span> asb = <a class="code hl_function" href="namespacecppxaml.html#a3405f639fb1cdb7906d24cfdd283635a">cppxaml::AutoSuggestBox</a>(GetFontFamilies())</div>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> asb = <a class="code hl_function" href="namespacecppxaml.html#ab6d018d7f1260bc38e9535c27094a490">cppxaml::AutoSuggestBox</a>(GetFontFamilies())</div>
 <div class="line">                    .EnableDefaultSearch()</div>
 <div class="line">                    .Margin(0, 16, 0, 4)</div>
 <div class="line">                    .Name(L<span class="stringliteral">&quot;fontTB&quot;</span>);</div>
-<div class="ttc" id="anamespacecppxaml_html_a3405f639fb1cdb7906d24cfdd283635a"><div class="ttname"><a href="namespacecppxaml.html#a3405f639fb1cdb7906d24cfdd283635a">cppxaml::AutoSuggestBox</a></div><div class="ttdeci">AutoSuggestBox(const TItems &amp;svs)</div><div class="ttdoc">Creates an AutoSuggestBox from a list of items.</div><div class="ttdef"><b>Definition:</b> Controls.h:579</div></div>
+<div class="ttc" id="anamespacecppxaml_html_ab6d018d7f1260bc38e9535c27094a490"><div class="ttname"><a href="namespacecppxaml.html#ab6d018d7f1260bc38e9535c27094a490">cppxaml::AutoSuggestBox</a></div><div class="ttdeci">auto AutoSuggestBox(const TItems &amp;svs)</div><div class="ttdoc">Creates an AutoSuggestBox from a list of items.</div><div class="ttdef"><b>Definition:</b> Controls.h:578</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md15"></a>
 Visual State change notifications</h3>
 <p >You can easily set up visual state change notifications:</p>
-<div class="fragment"><div class="line"><span class="keyword">auto</span> button = cppxaml::Button(L<span class="stringliteral">&quot;click me&quot;</span>)</div>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> button = <a class="code hl_function" href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">cppxaml::Button</a>(L<span class="stringliteral">&quot;click me&quot;</span>)</div>
 <div class="line">    .VisualStates( {</div>
 <div class="line">        { L<span class="stringliteral">&quot;PointerOver&quot;</span>, [](<span class="keyword">auto</span>&amp;sender, cppxaml::xaml::VisualStateChangedEventArgs args) {</div>
 <div class="line">            <span class="keyword">auto</span> x = args.NewState().Name();</div>
-<div class="line">            <span class="keyword">auto</span> button = sender.as&lt;Controls::Button&gt;();</div>
+<div class="line">            <span class="keyword">auto</span> button = sender.as&lt;<a class="code hl_function" href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">Controls::Button</a>&gt;();</div>
 <div class="line">            button.Content(winrt::box_value(x));</div>
 <div class="line">        } },</div>
 <div class="line">        { L<span class="stringliteral">&quot;Normal&quot;</span>, [](<span class="keyword">auto</span>&amp;sender, <span class="keyword">auto</span>&amp;) {</div>
-<div class="line">            <span class="keyword">auto</span> button = sender.as&lt;Controls::Button&gt;();</div>
+<div class="line">            <span class="keyword">auto</span> button = sender.as&lt;<a class="code hl_function" href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">Controls::Button</a>&gt;();</div>
 <div class="line">            button.Content(winrt::box_value(L<span class="stringliteral">&quot;click me&quot;</span>));</div>
 <div class="line">        } },</div>
 <div class="line">        { L<span class="stringliteral">&quot;Pressed&quot;</span>, [](<span class="keyword">auto</span>&amp; sender, <span class="keyword">auto</span>&amp;) {</div>
-<div class="line">            <span class="keyword">auto</span> button = sender.as&lt;Controls::Button&gt;();</div>
+<div class="line">            <span class="keyword">auto</span> button = sender.as&lt;<a class="code hl_function" href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">Controls::Button</a>&gt;();</div>
 <div class="line">            button.Content(winrt::box_value(L<span class="stringliteral">&quot;pressed&quot;</span>));</div>
 <div class="line">        } },</div>
 <div class="line">    });</div>
+<div class="ttc" id="anamespacecppxaml_html_a200ac8a2b9983470d2f7f1c060f59fda"><div class="ttname"><a href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">cppxaml::Button</a></div><div class="ttdeci">auto Button(C c)</div><div class="ttdoc">Creates a Button.</div><div class="ttdef"><b>Definition:</b> Controls.h:602</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md16"></a>
 Initializing Panels from collections</h3>
 <p >As we saw earlier, you can initialize a panel from its children. You can also use transforms, to map elements from a data model into its corresponding view. For more details see <code>cppxaml::transform</code> and <code>cppxaml::transform_with_index</code> in <a href="./namespacecppxaml_1_1utils.html">utils.h</a>.</p>
 <h3><a class="anchor" id="autotoc_md17"></a>
 Menus and icons</h3>
-<p >You can easily compose MenuFlyoutItems into a MenuFlyout, and also have a centralized menu handler callback: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> menuFlyout = <a class="code hl_function" href="namespacecppxaml.html#a68980e256ff94c9eaa1a8bdc561f030d">cppxaml::MenuFlyout</a>(</div>
-<div class="line">                    <a class="code hl_function" href="namespacecppxaml.html#ab1fd5b77c0f3368fe2caab173764c8ea">cppxaml::MenuFlyoutItem</a>(L<span class="stringliteral">&quot;Exit&quot;</span>)</div>
-<div class="line">                        .IconElement(<a class="code hl_function" href="namespacecppxaml.html#a5c2f53f879ff0b2706bff8984031a12f">cppxaml::FontIcon</a>(0xe8bb))</div>
+<p >You can easily compose MenuFlyoutItems into a MenuFlyout, and also have a centralized menu handler callback: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> menuFlyout = <a class="code hl_function" href="namespacecppxaml.html#a9e90daf79a70dbec5ad9370a8d4c841b">cppxaml::MenuFlyout</a>(</div>
+<div class="line">                    <a class="code hl_function" href="namespacecppxaml.html#af4fb029e27a18536dc26d82d5b79ae91">cppxaml::MenuFlyoutItem</a>(L<span class="stringliteral">&quot;Exit&quot;</span>)</div>
+<div class="line">                        .IconElement(<a class="code hl_function" href="namespacecppxaml.html#aae0f96500de5fef24821331713f3cf1f">cppxaml::FontIcon</a>(0xe8bb))</div>
 <div class="line">                        .Click([hwnd = xw-&gt;hwnd()](<span class="keyword">auto</span>&amp;...) {</div>
 <div class="line">                            DestroyWindow(hwnd);</div>
 <div class="line">                        }),</div>
-<div class="line">                    <a class="code hl_function" href="namespacecppxaml.html#ab1fd5b77c0f3368fe2caab173764c8ea">cppxaml::MenuFlyoutItem</a>(L<span class="stringliteral">&quot;Cancel&quot;</span>)</div>
-<div class="line">                        .IconElement(<a class="code hl_function" href="namespacecppxaml.html#a5c2f53f879ff0b2706bff8984031a12f">cppxaml::FontIcon</a>(L<span class="stringliteral">&quot;\xE8A7&quot;</span>))</div>
+<div class="line">                    <a class="code hl_function" href="namespacecppxaml.html#af4fb029e27a18536dc26d82d5b79ae91">cppxaml::MenuFlyoutItem</a>(L<span class="stringliteral">&quot;Cancel&quot;</span>)</div>
+<div class="line">                        .IconElement(<a class="code hl_function" href="namespacecppxaml.html#aae0f96500de5fef24821331713f3cf1f">cppxaml::FontIcon</a>(L<span class="stringliteral">&quot;\xE8A7&quot;</span>))</div>
 <div class="line">                    )</div>
 <div class="line">                .CentralizedHandler([](Windows::Foundation::IInspectable sender, <span class="keyword">auto</span>&amp;) {</div>
-<div class="line">                    <span class="keyword">auto</span> mfi = sender.as&lt;<a class="code hl_function" href="namespacecppxaml.html#ab1fd5b77c0f3368fe2caab173764c8ea">Controls::MenuFlyoutItem</a>&gt;();</div>
+<div class="line">                    <span class="keyword">auto</span> mfi = sender.as&lt;<a class="code hl_function" href="namespacecppxaml.html#af4fb029e27a18536dc26d82d5b79ae91">Controls::MenuFlyoutItem</a>&gt;();</div>
 <div class="line">                    <span class="keyword">auto</span> x = mfi.Text();</div>
 <div class="line">                    });</div>
-<div class="ttc" id="anamespacecppxaml_html_a5c2f53f879ff0b2706bff8984031a12f"><div class="ttname"><a href="namespacecppxaml.html#a5c2f53f879ff0b2706bff8984031a12f">cppxaml::FontIcon</a></div><div class="ttdeci">FontIcon(std::wstring_view icon)</div><div class="ttdoc">Creates a FontIcon from a string.</div><div class="ttdef"><b>Definition:</b> Controls.h:612</div></div>
-<div class="ttc" id="anamespacecppxaml_html_a68980e256ff94c9eaa1a8bdc561f030d"><div class="ttname"><a href="namespacecppxaml.html#a68980e256ff94c9eaa1a8bdc561f030d">cppxaml::MenuFlyout</a></div><div class="ttdeci">MenuFlyout(TMenuFlyoutItemBase &amp;&amp;... items)</div><div class="ttdoc">Creates a MenuFlyout from a list of MenuFlyoutItems</div><div class="ttdef"><b>Definition:</b> Controls.h:664</div></div>
-<div class="ttc" id="anamespacecppxaml_html_ab1fd5b77c0f3368fe2caab173764c8ea"><div class="ttname"><a href="namespacecppxaml.html#ab1fd5b77c0f3368fe2caab173764c8ea">cppxaml::MenuFlyoutItem</a></div><div class="ttdeci">MenuFlyoutItem(std::wstring_view text)</div><div class="ttdoc">Creates a MenuFlyoutItem with the specified text.</div><div class="ttdef"><b>Definition:</b> Controls.h:638</div></div>
+<div class="ttc" id="anamespacecppxaml_html_a9e90daf79a70dbec5ad9370a8d4c841b"><div class="ttname"><a href="namespacecppxaml.html#a9e90daf79a70dbec5ad9370a8d4c841b">cppxaml::MenuFlyout</a></div><div class="ttdeci">auto MenuFlyout(TMenuFlyoutItemBase &amp;&amp;... items)</div><div class="ttdoc">Creates a MenuFlyout from a list of MenuFlyoutItems</div><div class="ttdef"><b>Definition:</b> Controls.h:660</div></div>
+<div class="ttc" id="anamespacecppxaml_html_aae0f96500de5fef24821331713f3cf1f"><div class="ttname"><a href="namespacecppxaml.html#aae0f96500de5fef24821331713f3cf1f">cppxaml::FontIcon</a></div><div class="ttdeci">auto FontIcon(std::wstring_view icon)</div><div class="ttdoc">Creates a FontIcon from a string.</div><div class="ttdef"><b>Definition:</b> Controls.h:611</div></div>
+<div class="ttc" id="anamespacecppxaml_html_af4fb029e27a18536dc26d82d5b79ae91"><div class="ttname"><a href="namespacecppxaml.html#af4fb029e27a18536dc26d82d5b79ae91">cppxaml::MenuFlyoutItem</a></div><div class="ttdeci">auto MenuFlyoutItem(std::wstring_view text)</div><div class="ttdoc">Creates a MenuFlyoutItem with the specified text.</div><div class="ttdef"><b>Definition:</b> Controls.h:635</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md18"></a>
 Facilities for using XAML Islands</h1>
 <h2><a class="anchor" id="autotoc_md19"></a>
@@ -233,7 +234,7 @@ XamlWindow</h2>
 </div><!-- fragment --></li>
 <li>Host UI created programmatically at runtime: API: <div class="fragment"><div class="line"><span class="keyword">static</span> XamlWindow&amp; Make(PCWSTR <span class="keywordtype">id</span>, winrt::Windows::UI::Xaml::UIElement(*getUI)(<span class="keyword">const</span> XamlWindow&amp;), AppController* c = <span class="keyword">nullptr</span>);</div>
 </div><!-- fragment --> Usage: <div class="fragment"><div class="line"><span class="keyword">auto</span>&amp; xw = <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a3cbafba7e86d51772aef97103987bf40">cppxaml::XamlWindow::Make</a>(L<span class="stringliteral">&quot;Foo&quot;</span>, [](<span class="keyword">auto</span>&amp;...) { </div>
-<div class="line">  <span class="keywordflow">return</span> winrt::Windows::UI::Xaml::Controls::Button(); </div>
+<div class="line">  <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">winrt::Windows::UI::Xaml::Controls::Button</a>(); </div>
 <div class="line">});</div>
 </div><!-- fragment --></li>
 </ol>

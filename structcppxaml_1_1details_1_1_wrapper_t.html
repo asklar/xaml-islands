@@ -562,9 +562,10 @@ template&lt;typename TValue &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 <p>Example:<br  />
-</p><div class="fragment"><div class="line"><span class="keyword">auto</span> buttonInGrid = cppxaml::Button(L<span class="stringliteral">&quot;Click me)</span></div>
+</p><div class="fragment"><div class="line"><span class="keyword">auto</span> buttonInGrid = <a class="code hl_function" href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">cppxaml::Button</a>(L<span class="stringliteral">&quot;Click me)</span></div>
 <div class="line"><span class="stringliteral">                         .Set(Grid::RowProperty(), 3)</span></div>
 <div class="line"><span class="stringliteral">                         .Set(Grid::ColumnProperty(), 2);</span></div>
+<div class="ttc" id="anamespacecppxaml_html_a200ac8a2b9983470d2f7f1c060f59fda"><div class="ttname"><a href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">cppxaml::Button</a></div><div class="ttdeci">auto Button(C c)</div><div class="ttdoc">Creates a Button.</div><div class="ttdef"><b>Definition:</b> Controls.h:602</div></div>
 </div><!-- fragment --> 
 </div>
 </div>
@@ -603,15 +604,15 @@ template&lt;typename T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 <p>Example:<br  />
-</p><div class="fragment"><div class="line"><span class="keyword">auto</span> button = cppxaml::Button(L<span class="stringliteral">&quot;click me&quot;</span>)</div>
+</p><div class="fragment"><div class="line"><span class="keyword">auto</span> button = <a class="code hl_function" href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">cppxaml::Button</a>(L<span class="stringliteral">&quot;click me&quot;</span>)</div>
 <div class="line">     .VisualStates( {</div>
 <div class="line">         { L<span class="stringliteral">&quot;PointerOver&quot;</span>, [](<span class="keyword">auto</span>&amp;sender, cppxaml::xaml::VisualStateChangedEventArgs args) {</div>
 <div class="line">             <span class="keyword">auto</span> x = args.NewState().Name();</div>
-<div class="line">             <span class="keyword">auto</span> button = sender.as&lt;Controls::Button&gt;();</div>
+<div class="line">             <span class="keyword">auto</span> button = sender.as&lt;<a class="code hl_function" href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">Controls::Button</a>&gt;();</div>
 <div class="line">             button.Content(winrt::box_value(x));</div>
 <div class="line">         } },</div>
 <div class="line">         { L<span class="stringliteral">&quot;Normal&quot;</span>, [](<span class="keyword">auto</span>&amp;sender, <span class="keyword">auto</span>&amp;) {</div>
-<div class="line">             <span class="keyword">auto</span> button = sender.as&lt;Controls::Button&gt;();</div>
+<div class="line">             <span class="keyword">auto</span> button = sender.as&lt;<a class="code hl_function" href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">Controls::Button</a>&gt;();</div>
 <div class="line">             button.Content(winrt::box_value(L<span class="stringliteral">&quot;click me&quot;</span>));</div>
 <div class="line">         } },</div>
 <div class="line">     });</div>

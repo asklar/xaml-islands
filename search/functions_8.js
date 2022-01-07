@@ -5,6 +5,6 @@ var searchData=
   ['makeitemscontrol_2',['MakeItemsControl',['../namespacecppxaml.html#a0f653c57453060e56fc01d02ee086f70',1,'cppxaml']]],
   ['makepanel_3',['MakePanel',['../namespacecppxaml.html#aa3396f824034cd398ebef8a6967b562b',1,'cppxaml']]],
   ['margin_4',['Margin',['../structcppxaml_1_1details_1_1_wrapper_t.html#a20351e38ffd1923040a86d13071de28b',1,'cppxaml::details::WrapperT::Margin() const'],['../structcppxaml_1_1details_1_1_wrapper_t.html#abfe7c3dcbb126f7cd2b88363f93f77d0',1,'cppxaml::details::WrapperT::Margin(cppxaml::xaml::Thickness t) const'],['../structcppxaml_1_1details_1_1_wrapper_t.html#a2a7721d1f0b672c5cf320988138b88e6',1,'cppxaml::details::WrapperT::Margin(double m) const'],['../structcppxaml_1_1details_1_1_wrapper_t.html#a3a46bfe628329e868dd2c5a0bb56a338',1,'cppxaml::details::WrapperT::Margin(double left, double top, double right, double bottom) const']]],
-  ['menuflyout_5',['MenuFlyout',['../namespacecppxaml.html#a68980e256ff94c9eaa1a8bdc561f030d',1,'cppxaml']]],
-  ['menuflyoutitem_6',['MenuFlyoutItem',['../namespacecppxaml.html#ab1fd5b77c0f3368fe2caab173764c8ea',1,'cppxaml']]]
+  ['menuflyout_5',['MenuFlyout',['../namespacecppxaml.html#a9e90daf79a70dbec5ad9370a8d4c841b',1,'cppxaml']]],
+  ['menuflyoutitem_6',['MenuFlyoutItem',['../namespacecppxaml.html#af4fb029e27a18536dc26d82d5b79ae91',1,'cppxaml']]]
 ];

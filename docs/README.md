@@ -137,7 +137,7 @@ auto grid = cppxaml::Grid({40, {"*"}}, {{"Auto"}, {"Auto"}}, {
 ### Attached properties
 You can set arbitrary dependency properties, including attached properties, on a cppxaml wrapper:
 
-```
+```cpp
 auto tb = cppxaml::TextBlock(L"something")
                     .Set(Grid::RowProperty(), 1)
                     .Set(Grid::ColumnSpanProperty(), 2);

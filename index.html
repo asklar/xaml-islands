@@ -71,6 +71,13 @@ $(function() {
 <p >CppXAML provides several kinds of higher-level helpers. Some usage information can be found below; for more details, see the <a href="https://asklar.github.io/xaml-islands">API reference</a>.</p>
 <p >GitHub repo: <a href="https://github.com/asklar/xaml-islands">https://github.com/asklar/xaml-islands</a></p>
 <h1><a class="anchor" id="autotoc_md1"></a>
+Table of Contents</h1>
+<ul>
+<li><a href="#facilities-for-writing-xaml-controls">Facilities for writing XAML controls</a></li>
+<li><a href="#facilities-for-using-xaml-controls">Facilities for using XAML controls</a></li>
+<li><a href="#facilities-for-using-xaml-islands">Facilities for using XAML islands</a></li>
+</ul>
+<h1><a class="anchor" id="facilities-for-writing-xaml-controls"></a>
 Facilities for writing XAML controls</h1>
 <h2><a class="anchor" id="autotoc_md2"></a>
 Property and event helpers</h2>
@@ -83,29 +90,77 @@ Property and event helpers</h2>
 </ul>
 <p >These provide stock/simple property objects that remove the need for verbose hand-written options.</p>
 <h4><a class="anchor" id="autotoc_md3"></a>
-Examples:</h4>
-<p ><b>MainPage.h</b>: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="structcppxaml_1_1_xaml_event.html">cppxaml::XamlEvent&lt;winrt::hstring&gt;</a> OkClicked;</div>
-<div class="line"><a class="code hl_struct" href="structcppxaml_1_1_xaml_property.html">cppxaml::XamlProperty&lt;winrt::hstring&gt;</a> InterfaceStr;</div>
-<div class="line"><a class="code hl_struct" href="structcppxaml_1_1_xaml_property.html">cppxaml::XamlProperty&lt;winrt::hstring&gt;</a> InterfaceStrWithNPC;</div>
+Example</h4>
+<p >Suppose you have the following Page defined in IDL: </p><div class="fragment"><div class="line"><span class="keyword">namespace </span>Foo {</div>
+<div class="line">  runtimeclass MainPage : Windows.UI.Xaml.Controls.Page, Windows.UI.Xaml.Data.INotifyPropertyChanged {</div>
+<div class="line">    MainPage();</div>
+<div class="line">    <span class="keyword">event</span> Windows.Foundation.EventHandler&lt;String&gt; OkClicked;</div>
+<div class="line">    String InterfaceStr;</div>
+<div class="line">    Int32 MyInt;</div>
+<div class="line">  }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p ><b>Before (plain C++/WinRT)</b> </p><div class="fragment"><div class="line"><span class="keyword">struct </span>MainPage : MainPageT&lt;MainPage&gt; { </div>
+<div class="line">  winrt::event&lt;winrt::Windows::Foundation::EventHandler&lt;winrt::hstring&gt;&gt; m_okClicked{};</div>
+<div class="line">  winrt::event_token OkClicked(winrt::Windows::Foundation::EventHandler&lt;winrt::hstring&gt; h) {</div>
+<div class="line">    <span class="keywordflow">return</span> m_okClicked.add(h);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordtype">void</span> OkClicked(winrt::event_token token) {</div>
+<div class="line">    m_okClicked.remove(token);</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  winrt::hstring m_InterfaceStr;</div>
+<div class="line">  winrt::hstring InterfaceStr() {</div>
+<div class="line">    <span class="keywordflow">return</span> m_InterfaceStr;</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordtype">void</span> InterfaceStr(winrt::hstring v) {</div>
+<div class="line">    m_InterfaceStr = v;</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  winrt::event&lt;winrt::Windows::UI::Xaml::Data::PropertyChangedEventHandler&gt; m_propertyChanged;</div>
+<div class="line"> </div>
+<div class="line">  winrt::event_token PropertyChanged(winrt::Windows::Xaml::Data::PropertyChangedEventHandler <span class="keyword">const</span>&amp; value) {</div>
+<div class="line">    <span class="keywordflow">return</span> m_propertyChanged.add(value);</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordtype">void</span> PropertyChanged(winrt::event_token <span class="keyword">const</span>&amp; token) {</div>
+<div class="line">    m_propertyChanged.remove(token);</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  int32_t m_MyInt;</div>
+<div class="line">  int32_t MyInt() {</div>
+<div class="line">    <span class="keywordflow">return</span> m_MyInt;</div>
+<div class="line">  }</div>
+<div class="line">  <span class="keywordtype">void</span> MyInt(int32_t v) { </div>
+<div class="line">    m_MyInt = v; </div>
+<div class="line">    m_propertyChanged(*<span class="keyword">this</span>, { L<span class="stringliteral">&quot;MyInt&quot;</span> });</div>
+<div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">};</div>
+</div><!-- fragment --><p ><b>After (with CppXaml)</b> </p><div class="fragment"><div class="line"><span class="keyword">struct </span>MainPage : MainPageT&lt;MainPage&gt;, <a class="code hl_struct" href="structcppxaml_1_1_simple_notify_property_changed.html">cppxaml::SimpleNotifyPropertyChanged</a>&lt;MainPage&gt; {</div>
+<div class="line">  <a class="code hl_struct" href="structcppxaml_1_1_xaml_event.html">cppxaml::XamlEvent&lt;winrt::hstring&gt;</a> OkClicked;</div>
+<div class="line">  <a class="code hl_struct" href="structcppxaml_1_1_xaml_property.html">cppxaml::XamlProperty&lt;winrt::hstring&gt;</a> InterfaceStr;</div>
+<div class="line">  <a class="code hl_struct" href="structcppxaml_1_1_xaml_property_with_n_p_c.html">cppxaml::XamlPropertyWithNPC&lt;int32_t&gt;</a> MyInt;</div>
+<div class="line">  MainPage() : <a class="code hl_define" href="_xaml_property_8h.html#a6f8179c8087199cdf981985f77208549">INIT_PROPERTY</a>(MyInt, 42) {</div>
+<div class="line">    InitializeComponent();</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Properties can be assigned to and read from with the operator= too!</span></div>
+<div class="line">    InterfaceStr = winrt::hstring{ L<span class="stringliteral">&quot;This string comes from the implementation&quot;</span> };</div>
+<div class="line">    winrt::hstring v = InterfaceStr;</div>
+<div class="line">  }</div>
+<div class="line">};</div>
+<div class="ttc" id="a_xaml_property_8h_html_a6f8179c8087199cdf981985f77208549"><div class="ttname"><a href="_xaml_property_8h.html#a6f8179c8087199cdf981985f77208549">INIT_PROPERTY</a></div><div class="ttdeci">#define INIT_PROPERTY(NAME, VALUE)</div><div class="ttdoc">use this to initialize a cppxaml::XamlPropertyWithNPC in your class constructor.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:201</div></div>
+<div class="ttc" id="astructcppxaml_1_1_simple_notify_property_changed_html"><div class="ttname"><a href="structcppxaml_1_1_simple_notify_property_changed.html">cppxaml::SimpleNotifyPropertyChanged</a></div><div class="ttdoc">Helper base class to inherit from to have a simple implementation of INotifyPropertyChanged.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:78</div></div>
 <div class="ttc" id="astructcppxaml_1_1_xaml_event_html"><div class="ttname"><a href="structcppxaml_1_1_xaml_event.html">cppxaml::XamlEvent</a></div><div class="ttdoc">A default event handler that maps to Windows.Foundation.EventHandler.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:50</div></div>
 <div class="ttc" id="astructcppxaml_1_1_xaml_property_html"><div class="ttname"><a href="structcppxaml_1_1_xaml_property.html">cppxaml::XamlProperty</a></div><div class="ttdoc">Implements a simple property (without change notifications).</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:127</div></div>
-</div><!-- fragment --><p ><b>MainPage.cpp</b>: </p><div class="fragment"><div class="line">MainPage::MainPage() : <a class="code hl_define" href="_xaml_property_8h.html#a6f8179c8087199cdf981985f77208549">INIT_PROPERTY</a>(MyInt, 42)</div>
-<div class="line">{</div>
-<div class="line">    InitializeComponent();</div>
-<div class="line">    <span class="comment">// Properties can be assigned to and read from with the operator= too!</span></div>
-<div class="line">    ImplString = winrt::hstring{ L<span class="stringliteral">&quot;This string comes from the implementation&quot;</span> };</div>
-<div class="line">    winrt::hstring v = ImplString;</div>
-<div class="line">}</div>
-<div class="ttc" id="a_xaml_property_8h_html_a6f8179c8087199cdf981985f77208549"><div class="ttname"><a href="_xaml_property_8h.html#a6f8179c8087199cdf981985f77208549">INIT_PROPERTY</a></div><div class="ttdeci">#define INIT_PROPERTY(NAME, VALUE)</div><div class="ttdoc">use this to initialize a cppxaml::XamlPropertyWithNPC in your class constructor.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:201</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md4"></a>
+<div class="ttc" id="astructcppxaml_1_1_xaml_property_with_n_p_c_html"><div class="ttname"><a href="structcppxaml_1_1_xaml_property_with_n_p_c.html">cppxaml::XamlPropertyWithNPC</a></div><div class="ttdoc">Implements a property type with notifications.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:161</div></div>
+</div><!-- fragment --><h1><a class="anchor" id="facilities-for-using-xaml-controls"></a>
 Facilities for using XAML controls</h1>
-<h2><a class="anchor" id="autotoc_md5"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Control helpers</h2>
 <p >CppXAML includes some primitives to make it more natural to write XAML UI in code.</p>
-<h3><a class="anchor" id="autotoc_md6"></a>
+<h3><a class="anchor" id="autotoc_md5"></a>
 &lt;tt&gt;xaml&lt;/tt&gt; Namespace alias</h3>
 <p >Since we want CppXAML to be future proof and work with WinUI 3, CppXAML creates a namespace alias <code>cppxaml::xaml</code> which points at either <code>Windows::UI::Xaml</code> or <code>Microsoft::UI::Xaml</code> for system XAML or WinUI 3, respectively.</p>
-<h3><a class="anchor" id="autotoc_md7"></a>
+<h3><a class="anchor" id="autotoc_md6"></a>
 Builder-style programming</h3>
 <p >C++/WinRT enables setting properties on a type by calling a property setter method, e.g. <code>myTextBlock.Text(L"text");</code>. If you then want to set another property, then you have to make another call <code>myTextBlock.XYZ(...);</code>. This can get verbose when having to set multiple properties. CppXAML enables writing builder-style code instead of the former imperative-style:</p>
 <p ><b>Before (plain C++/WinRT)</b> </p><div class="fragment"><div class="line"><span class="keyword">auto</span> myTextBlock = <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">winrt::Windows::UI::Xaml::Controls::TextBlock</a>{};</div>
@@ -118,10 +173,10 @@ Builder-style programming</h3>
 <div class="line">                    .Margin(4)</div>
 <div class="line">                    .Padding(6)</div>
 <div class="line">                    .Name(L<span class="stringliteral">&quot;myTB&quot;</span>);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md8"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md7"></a>
 TextBlock</h3>
 <p >Most commonly, you will want to construct a <code>TextBlock</code> from a string of text. This can be a bit cumbersome if you are using C++/WinRT directly. With cppxaml, as you've seen above, you can just write: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> tb = <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;Hello&quot;</span>);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md9"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md8"></a>
 StackPanel</h3>
 <p >Panels in XAML can have zero or more children. CppXAML makes it easy to naturally describe a panel's children with an initializer list. For example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> sp = <a class="code hl_function" href="namespacecppxaml.html#a4f19238f531dcc396954a81f0dbc75b1">cppxaml::StackPanel</a>({</div>
 <div class="line">  <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;Hello&quot;</span>),</div>
@@ -132,7 +187,7 @@ StackPanel</h3>
 <div class="line">    <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;Hello&quot;</span>),</div>
 <div class="line">    <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;world!&quot;</span>).Name(L<span class="stringliteral">&quot;worldTB&quot;</span>)</div>
 <div class="line">  }).Orientation(cppxaml::xaml::Controls::Orientation::Horizontal);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md10"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md9"></a>
 ContentControl (Button, etc.)</h3>
 <p >Sub-classes of XAML's <code>ContentControl</code> enable nesting one control into another via the <code>Content</code> property. CppXAML makes this easier: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> scrollViewer = cppxaml::MakeContentControl&lt;cppxaml::xaml::Controls::ScrollViewer&gt;({</div>
 <div class="line">  <a class="code hl_function" href="namespacecppxaml.html#a4f19238f531dcc396954a81f0dbc75b1">cppxaml::StackPanel</a>({</div>
@@ -140,10 +195,10 @@ ContentControl (Button, etc.)</h3>
 <div class="line">    <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;world!&quot;</span>).Name(L<span class="stringliteral">&quot;worldTB&quot;</span>)</div>
 <div class="line">  })</div>
 <div class="line">});</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md11"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md10"></a>
 Locating elements by name</h3>
 <p >Sometimes you will need to perform some operation on an element that is deeply nested in a builder-style declaration. You can use <code>FindChildByName</code> to find an element in a XAML tree with a given name: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> worldTB = cppxaml::FindChildByName&lt;Controls::TextBlock&gt;(*scrollViewer, L<span class="stringliteral">&quot;worldTB&quot;</span>);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md12"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md11"></a>
 Grid</h3>
 <p >Declaring a <code>Grid</code> in XAML via code is cumbersome as one has to create and set its <code>RowDefinitions</code> and <code>ColumnDefinitions</code>. CppXAML makes this a lot more straightforward: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> grid = <a class="code hl_function" href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">cppxaml::Grid</a>({<span class="stringliteral">&quot;40, *&quot;</span>}, {<span class="stringliteral">&quot;Auto, Auto&quot;</span>}, {</div>
 <div class="line">                {0, 0, <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;first&quot;</span>) },</div>
@@ -159,13 +214,13 @@ Grid</h3>
 <div class="line">                {1, 0, <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;third&quot;</span>) },</div>
 <div class="line">                {1, 1, <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;fourth&quot;</span>) },</div>
 <div class="line">                }),</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md13"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md12"></a>
 Attached properties</h3>
 <p >You can set arbitrary dependency properties, including attached properties, on a cppxaml wrapper:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> tb = <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;something&quot;</span>)</div>
 <div class="line">                    .Set(Grid::RowProperty(), 1)</div>
 <div class="line">                    .Set(Grid::ColumnSpanProperty(), 2);</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md14"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md13"></a>
 AutoSuggestBox</h3>
 <p >You can easily create an <code>AutoSuggestBox</code> from a <code>std::vector&lt;std::wstring&gt;</code>; make sure the vector's lifetime extends for at least as long as the XAML UI is up.</p>
 <p ><code>EnableDefaultSearch()</code> will provide a reasonable default search experience (filters the list of items down to those that contain the search string). This behavior is case insensitive by default, but can be made case sensitive by passing <code>false</code>.</p>
@@ -174,7 +229,7 @@ AutoSuggestBox</h3>
 <div class="line">                    .Margin(0, 16, 0, 4)</div>
 <div class="line">                    .Name(L<span class="stringliteral">&quot;fontTB&quot;</span>);</div>
 <div class="ttc" id="anamespacecppxaml_html_ab6d018d7f1260bc38e9535c27094a490"><div class="ttname"><a href="namespacecppxaml.html#ab6d018d7f1260bc38e9535c27094a490">cppxaml::AutoSuggestBox</a></div><div class="ttdeci">auto AutoSuggestBox(const TItems &amp;svs)</div><div class="ttdoc">Creates an AutoSuggestBox from a list of items.</div><div class="ttdef"><b>Definition:</b> Controls.h:578</div></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md15"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md14"></a>
 Visual State change notifications</h3>
 <p >You can easily set up visual state change notifications:</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> button = <a class="code hl_function" href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">cppxaml::Button</a>(L<span class="stringliteral">&quot;click me&quot;</span>)</div>
@@ -194,10 +249,10 @@ Visual State change notifications</h3>
 <div class="line">        } },</div>
 <div class="line">    });</div>
 <div class="ttc" id="anamespacecppxaml_html_a200ac8a2b9983470d2f7f1c060f59fda"><div class="ttname"><a href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">cppxaml::Button</a></div><div class="ttdeci">auto Button(C c)</div><div class="ttdoc">Creates a Button.</div><div class="ttdef"><b>Definition:</b> Controls.h:602</div></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md16"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md15"></a>
 Initializing Panels from collections</h3>
 <p >As we saw earlier, you can initialize a panel from its children. You can also use transforms, to map elements from a data model into its corresponding view. For more details see <code>cppxaml::transform</code> and <code>cppxaml::transform_with_index</code> in <a href="./namespacecppxaml_1_1utils.html">utils.h</a>.</p>
-<h3><a class="anchor" id="autotoc_md17"></a>
+<h3><a class="anchor" id="autotoc_md16"></a>
 Menus and icons</h3>
 <p >You can easily compose MenuFlyoutItems into a MenuFlyout, and also have a centralized menu handler callback: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> menuFlyout = <a class="code hl_function" href="namespacecppxaml.html#a9e90daf79a70dbec5ad9370a8d4c841b">cppxaml::MenuFlyout</a>(</div>
 <div class="line">                    <a class="code hl_function" href="namespacecppxaml.html#af4fb029e27a18536dc26d82d5b79ae91">cppxaml::MenuFlyoutItem</a>(L<span class="stringliteral">&quot;Exit&quot;</span>)</div>
@@ -215,9 +270,9 @@ Menus and icons</h3>
 <div class="ttc" id="anamespacecppxaml_html_a9e90daf79a70dbec5ad9370a8d4c841b"><div class="ttname"><a href="namespacecppxaml.html#a9e90daf79a70dbec5ad9370a8d4c841b">cppxaml::MenuFlyout</a></div><div class="ttdeci">auto MenuFlyout(TMenuFlyoutItemBase &amp;&amp;... items)</div><div class="ttdoc">Creates a MenuFlyout from a list of MenuFlyoutItems</div><div class="ttdef"><b>Definition:</b> Controls.h:660</div></div>
 <div class="ttc" id="anamespacecppxaml_html_aae0f96500de5fef24821331713f3cf1f"><div class="ttname"><a href="namespacecppxaml.html#aae0f96500de5fef24821331713f3cf1f">cppxaml::FontIcon</a></div><div class="ttdeci">auto FontIcon(std::wstring_view icon)</div><div class="ttdoc">Creates a FontIcon from a string.</div><div class="ttdef"><b>Definition:</b> Controls.h:611</div></div>
 <div class="ttc" id="anamespacecppxaml_html_af4fb029e27a18536dc26d82d5b79ae91"><div class="ttname"><a href="namespacecppxaml.html#af4fb029e27a18536dc26d82d5b79ae91">cppxaml::MenuFlyoutItem</a></div><div class="ttdeci">auto MenuFlyoutItem(std::wstring_view text)</div><div class="ttdoc">Creates a MenuFlyoutItem with the specified text.</div><div class="ttdef"><b>Definition:</b> Controls.h:635</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md18"></a>
+</div><!-- fragment --><h1><a class="anchor" id="facilities-for-using-xaml-islands"></a>
 Facilities for using XAML Islands</h1>
-<h2><a class="anchor" id="autotoc_md19"></a>
+<h2><a class="anchor" id="autotoc_md17"></a>
 XamlWindow</h2>
 <p ><code>XamlWindow</code> implements an HWND based host for XAML Islands. You can create a <code>XamlWindow</code> from one of three overloads of Make:</p>
 <ol type="1">
@@ -238,7 +293,7 @@ XamlWindow</h2>
 <div class="line">});</div>
 </div><!-- fragment --></li>
 </ol>
-<h3><a class="anchor" id="autotoc_md20"></a>
+<h3><a class="anchor" id="autotoc_md18"></a>
 Parenting flyouts</h3>
 <p >To parent a flyout or context menu, you may use one of the <code>InitializeWithWindow</code> methods:</p>
 <ul>
@@ -252,7 +307,7 @@ Parenting flyouts</h3>
 <div class="ttc" id="astructcppxaml_1_1_xaml_window_html"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a></div><div class="ttdoc">Implements an HWND based host for XAML Islands. You can create a XamlWindow from one of three overloa...</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:54</div></div>
 </div><!-- fragment --></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md21"></a>
+<h2><a class="anchor" id="autotoc_md19"></a>
 AppController</h2>
 <p ><code>AppController</code> is responsible for coordinating XamlWindow instances, can extend their wndproc, and provides an opportunity to hook up event handlers once a XAML UI becomes live </p>
 </div></div><!-- PageDoc -->

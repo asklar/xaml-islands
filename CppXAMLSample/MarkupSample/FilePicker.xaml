@@ -45,7 +45,8 @@
                           IsEnabled="{x:Bind CanGoForward,Mode=OneWay}"
                           Tapped="forward_Tapped"
                           />
-            <AppBarButton Grid.Column="2" x:Name="up" Icon="Up" />
+            <AppBarButton Grid.Column="2" x:Name="up" Icon="Up"
+                          Tapped="up_Tapped"/>
 
             <TextBox Grid.Column="3" x:Name="AddressBar" Margin="8" Height="30" FontSize="12" VerticalAlignment="Top" HorizontalAlignment="Stretch" />
             <TextBox Grid.Column="4" x:Name="Search" MinWidth="180" Margin="8" Height="30" FontSize="12" VerticalAlignment="Top" PlaceholderText="Search" HorizontalAlignment="Right"/>
@@ -55,7 +56,10 @@
                 <ColumnDefinition Width="250"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <muxc:TreeView x:Name="treeview" Grid.Column="0" ItemsSource="{x:Bind TreeViewItems}" SelectionMode="Single">
+            <muxc:TreeView x:Name="treeview" Grid.Column="0" 
+                           ItemsSource="{x:Bind TreeViewItems}" 
+                           SelectionMode="Single"
+                           MaxHeight="400">
                 <muxc:TreeView.ItemTemplate>
                     <DataTemplate x:DataType="local:StorageItem2">
                         <muxc:TreeViewItem  Content="{x:Bind Name}" ItemsSource="{x:Bind Children}" Tapped="TreeViewItem_Tapped" />
@@ -67,16 +71,17 @@
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="300"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Background="{ThemeResource SystemAccentColor}" Padding="12,0,0,0" Margin="4">
+                <Grid Grid.Row="0" Background="{ThemeResource SystemAccentColor}" 
+                      Padding="12,0,0,0" Margin="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="32"/>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="150"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="1">File name</TextBlock>
-                    <TextBlock Grid.Column="2">Date modified</TextBlock>
-                    <TextBlock Grid.Column="3">File type</TextBlock>
+                    <TextBlock Grid.Column="1" VerticalAlignment="Center">File name</TextBlock>
+                    <TextBlock Grid.Column="2" VerticalAlignment="Center">Date modified</TextBlock>
+                    <TextBlock Grid.Column="3" VerticalAlignment="Center">File type</TextBlock>
                 </Grid>
 
                 <ListView x:Name="itemsview" ItemsSource="{x:Bind Items}" Grid.Row="1" 
@@ -90,7 +95,7 @@
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:StorageItem2">
                             <StackPanel Orientation="Horizontal">
-                                <SymbolIcon Symbol="{x:Bind Icon}" Width="32"/>
+                                <Image Source="{x:Bind ImageSource}" Width="32"/>
                                 <TextBlock Text="{x:Bind Name}" Width="200"/>
                                 <TextBlock Text="{x:Bind DateModified}" Width="200"/>
                                 <TextBlock Text="{x:Bind Type}" Width="150" />

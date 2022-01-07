@@ -8,6 +8,15 @@
 #include "StorageItem2.g.cpp"
 #endif
 
+#include <winrt/Windows.UI.Xaml.Media.h>
+#include <winrt/Windows.UI.Xaml.Media.Imaging.h>
+#include <winrt/Windows.Storage.Streams.h>
+
+#include <shellapi.h>
+#include <shobjidl_core.h>
+#include <shlobj_core.h>
+#include <chrono>
+
 using namespace winrt;
 using namespace Windows::UI::Xaml;
 
@@ -20,7 +29,7 @@ namespace winrt::MarkupSample::implementation
         InitializeComponent();
 
         MarkupSample::StorageItem2 root;
-        root.Name(L"");
+        root.Name(L"C:");
         root.Type(L"Directory");
         NavigateToFolder(root);
     }
@@ -49,31 +58,93 @@ namespace winrt::MarkupSample::implementation
         return si;
     }
 
+    auto GetIconBitmapBits(HICON icon) {
+        std::array<uint8_t, 32 * 32 * 4> bytes;
+
+        if (HDC hdc = GetDC(nullptr)) {
+            if (HDC memdc = CreateCompatibleDC(hdc)) {
+
+                if (auto bitmap = CreateCompatibleBitmap(hdc, 32, 32)) {
+
+                    auto hOldBitmap = SelectObject(memdc, bitmap);
+
+                    DrawIconEx(memdc, 0, 0, icon, 32, 32, 0, nullptr, DI_NORMAL);
+                    SelectObject(memdc, hOldBitmap);
+
+                    BITMAPINFO bmi{};
+                    bmi.bmiHeader.biSize = sizeof(bmi.bmiHeader);
+                    bmi.bmiHeader.biWidth = 32;
+                    bmi.bmiHeader.biHeight = -32;
+                    bmi.bmiHeader.biBitCount = 32;
+                    
+                    GetDIBits(memdc, bitmap, 0, 0, nullptr, &bmi, DIB_RGB_COLORS);
+
+                    auto lines = GetDIBits(memdc, bitmap, 0, 32, &bytes, &bmi, DIB_RGB_COLORS);
+
+                    DeleteObject(bitmap);
+                }
+                DeleteDC(memdc);
+            }
+            ReleaseDC(nullptr, hdc);
+        }
+        DestroyIcon(icon);
+        return bytes;
+    }
+
+    auto WriteableBitmapFromBits(const std::array<uint8_t, 32*32*4>& bits) {
+        Media::Imaging::WriteableBitmap wb(32, 32);
+        auto data = wb.PixelBuffer().data();
+        memcpy(data, &bits, bits.size());
+
+        return wb;
+    }
 
     void FilePicker::FetchFolder() {
         Items().Clear();
-        Items().Append(MakeDir(L"folder 1", CurrentFolder())
-            .AddChild(MakeDir(L"folder 1.1"))
-            .AddChild(MakeDir(L"folder 1.2")));
-        Items().Append(MakeDir(L"folder 2", CurrentFolder()));
-        Items().Append(MakeDir(L"folder 3", CurrentFolder()));
-
-        for (int i = 1; i < 100; i++)
-        {
-            auto item = MarkupSample::StorageItem2{};
-            item.Name(L"test" + std::to_wstring(i) + L".txt");
-            item.DateModified(Windows::Foundation::DateTime());
-            item.Type(L"Text file");
-            item.Parent(CurrentFolder());
-            Items().Append(item);
-        }
 
         TreeViewItems().Clear();
-        for (const auto& f : Items()) {
-            if (f.Type() == L"Directory") {
-                TreeViewItems().Append(f);
+        auto path = CurrentFolder().Path() + LR"(\*)";
+        WIN32_FIND_DATA fd{};
+        auto file = FindFirstFile(path.c_str(), &fd);
+        do {
+            if (wcscmp(fd.cFileName, L".") == 0 ||
+                wcscmp(fd.cFileName, L"..") == 0) continue;
+
+            auto si = MarkupSample::StorageItem2{};
+            si.Name(fd.cFileName);
+            si.Parent(CurrentFolder());
+            SHFILEINFO sfi{};
+            SHGetFileInfoW(si.Path().c_str(), fd.dwFileAttributes, &sfi, sizeof(sfi), SHGFI_TYPENAME | SHGFI_USEFILEATTRIBUTES);
+            
+            si.DateModified(winrt::clock::from_FILETIME(fd.ftLastWriteTime));
+            
+            if (fd.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN) continue;
+            if (fd.dwFileAttributes & FILE_ATTRIBUTE_SYSTEM) continue;
+            si.Type(sfi.szTypeName);
+
+            HICON icon{nullptr};
+
+            winrt::com_ptr<IExtractIcon> extractIcon;
+            winrt::check_hresult(SHCreateFileExtractIcon(si.Path().c_str(), fd.dwFileAttributes, IID_IExtractIconW, extractIcon.put_void()));
+
+            int index{};
+            uint32_t flags{};
+            wchar_t location[MAX_PATH]{};
+            extractIcon->GetIconLocation(GIL_FORSHELL, location, (uint32_t)std::size(location), &index, &flags);
+
+            extractIcon->Extract(location, index, nullptr, &icon, 32);
+
+            auto bitmap = GetIconBitmapBits(icon);
+            auto wb = WriteableBitmapFromBits(bitmap);
+
+            si.ImageSource(wb);
+            Items().Append(si);
+
+            if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+                TreeViewItems().Append(si);
             }
-        }
+        } while (FindNextFileW(file, &fd) != 0);
+        FindClose(file);
 
         RaisePropertyChanged(L"TreeViewItems");
         RaisePropertyChanged(L"Items");
@@ -106,4 +177,11 @@ void winrt::MarkupSample::implementation::FilePicker::forward_Tapped(winrt::Wind
     FetchFolder();
 
     AddressBar().Text(CurrentFolder().Path());
+}
+
+
+void winrt::MarkupSample::implementation::FilePicker::up_Tapped(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs const& e)
+{
+    assert(CurrentFolder().Parent() != nullptr);
+    NavigateToFolder(CurrentFolder().Parent());
 }

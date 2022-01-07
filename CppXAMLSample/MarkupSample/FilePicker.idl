@@ -8,7 +8,7 @@ namespace MarkupSample
         Windows.Foundation.DateTime DateModified;
         String Type;
         IObservableVector<StorageItem2> Children;
-        Windows.UI.Xaml.Controls.Symbol Icon;
+        Windows.UI.Xaml.Media.ImageSource ImageSource;
         StorageItem2 AddChild(StorageItem2 child);
 
         String Path{ get; };

@@ -27,7 +27,7 @@ namespace winrt::MarkupSample::implementation
         cppxaml::XamlProperty<winrt::Windows::Foundation::DateTime> DateModified;
         cppxaml::XamlProperty<winrt::hstring> Type;
         cppxaml::XamlProperty<obsListOfItems_t> Children = winrt::single_threaded_observable_vector<MarkupSample::StorageItem2>();
-        cppxaml::XamlProperty<winrt::Windows::UI::Xaml::Controls::Symbol> Icon;
+        cppxaml::XamlProperty<winrt::Windows::UI::Xaml::Media::ImageSource> ImageSource{nullptr};
         MarkupSample::StorageItem2 AddChild(MarkupSample::StorageItem2 child) { 
             Children().Append(child);
             return *this; 
@@ -35,7 +35,7 @@ namespace winrt::MarkupSample::implementation
 
         hstring Path() {
             if (Parent() != nullptr && Parent().Name() != L"") {
-                return Parent().Path() + L"/" + Name();
+                return Parent().Path() + L"\\" + Name();
             }
             else {
                 return Name();
@@ -89,6 +89,7 @@ namespace winrt::MarkupSample::implementation
         }
         void back_Tapped(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs const& e);
         void forward_Tapped(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs const& e);
+        void up_Tapped(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Input::TappedRoutedEventArgs const& e);
     };
 }
 

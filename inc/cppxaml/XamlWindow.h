@@ -1,6 +1,5 @@
 #pragma once
 #include <winrt/base.h>
-#include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
 #include <winrt/Windows.UI.Xaml.h>
 #include <Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 #include <mutex>

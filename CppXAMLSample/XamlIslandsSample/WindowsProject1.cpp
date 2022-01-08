@@ -19,6 +19,8 @@
 #include <functional>
 #include <winrt/MarkupSample.h>
 
+#include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
+
 using namespace winrt;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml;

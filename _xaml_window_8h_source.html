@@ -73,250 +73,251 @@ $(function() {
 <a href="_xaml_window_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;winrt/base.h&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;winrt/Windows.UI.Xaml.h&gt;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;mutex&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacecppxaml.html">cppxaml</a> {</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">struct </span>XamlWindow;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_app_controller.html">   21</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structcppxaml_1_1_app_controller.html">AppController</a> {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_app_controller.html#afc7a379f4d53238f155ee85564b7f6c9">   26</a></span>        void (*<a class="code hl_variable" href="structcppxaml_1_1_app_controller.html#afc7a379f4d53238f155ee85564b7f6c9">OnUICreated</a>)(winrt::Windows::UI::Xaml::UIElement content, <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>* xw) { <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        LRESULT(*WndProc)(HWND, INT, WPARAM, LPARAM, <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>*) { <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_app_controller.html#a8d63e275a8a3862c5cadb1fb03ec9ee4">   34</a></span>        <a class="code hl_function" href="structcppxaml_1_1_app_controller.html#a8d63e275a8a3862c5cadb1fb03ec9ee4">AppController</a>(HINSTANCE hInst, winrt::Windows::UI::Xaml::Application xapp) {</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            m_hInstance = hInst;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            m_xapp = xapp;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            m_winxamlmanager = winrt::Windows::UI::Xaml::Hosting::WindowsXamlManager::InitializeForCurrentThread();</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        }</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        HINSTANCE HInstance()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordflow">return</span> m_hInstance;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        }</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        winrt::Windows::UI::Xaml::Application m_xapp{ <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        HINSTANCE m_hInstance{ <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        winrt::Windows::UI::Xaml::Hosting::WindowsXamlManager m_winxamlmanager{ <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    };</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html">   53</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a> {</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>(std::wstring_view <span class="keywordtype">id</span>) : m_Id(<span class="keywordtype">id</span>) {}</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        winrt::Windows::UI::Xaml::UIElement(*m_getUI) (<span class="keyword">const</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp; xw) { <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="comment">// This DesktopWindowXamlSource is the object that enables a non-UWP desktop application </span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="comment">// to host WinRT XAML controls in any UI element that is associated with a window handle (HWND).</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        winrt::Windows::UI::Xaml::Hosting::DesktopWindowXamlSource m_desktopXamlSource{ <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        HWND m_hWnd{ <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        HACCEL m_hAccelTable{ <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <a class="code hl_struct" href="structcppxaml_1_1_app_controller.html">AppController</a>* m_controller{ <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        std::wstring m_Id;</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        std::wstring m_markup;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        winrt::Windows::UI::Xaml::UIElement m_ui{ <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keyword">static</span> <span class="keyword">inline</span> std::unordered_map&lt;std::wstring, XamlWindow&gt; s_windows{};</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>(<a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp;&amp; other) noexcept :</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            m_Id(std::move(other.m_Id)),</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            m_getUI(std::move(other.m_getUI)),</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            m_markup(std::move(other.m_markup)),</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            m_desktopXamlSource(std::move(other.m_desktopXamlSource)),</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            m_hWnd(std::move(other.m_hWnd)),</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            m_hAccelTable(std::move(m_hAccelTable)),</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            m_controller(std::move(other.m_controller))</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        {}</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">   86</a></span>        HWND <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">hwnd</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            <span class="keywordflow">return</span> m_hWnd;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        }</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T = winrt::Windows::UI::Xaml::UIElement&gt;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#a88e72ce8b26661cdd7d28c4deccc4e22">   96</a></span>        T <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a88e72ce8b26661cdd7d28c4deccc4e22">GetUIElement</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            <span class="keywordflow">return</span> m_ui.as&lt;T&gt;();</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        }</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;winrt/Windows.UI.Xaml.Hosting.h&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;mutex&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacecppxaml.html">cppxaml</a> {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">struct </span>XamlWindow;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_app_controller.html">   22</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structcppxaml_1_1_app_controller.html">AppController</a> {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_app_controller.html#afc7a379f4d53238f155ee85564b7f6c9">   27</a></span>        void (*<a class="code hl_variable" href="structcppxaml_1_1_app_controller.html#afc7a379f4d53238f155ee85564b7f6c9">OnUICreated</a>)(winrt::Windows::UI::Xaml::UIElement content, <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>* xw) { <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        LRESULT(*WndProc)(HWND, INT, WPARAM, LPARAM, <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>*) { <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_app_controller.html#a8d63e275a8a3862c5cadb1fb03ec9ee4">   35</a></span>        <a class="code hl_function" href="structcppxaml_1_1_app_controller.html#a8d63e275a8a3862c5cadb1fb03ec9ee4">AppController</a>(HINSTANCE hInst, winrt::Windows::UI::Xaml::Application xapp) {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            m_hInstance = hInst;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            m_xapp = xapp;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            m_winxamlmanager = winrt::Windows::UI::Xaml::Hosting::WindowsXamlManager::InitializeForCurrentThread();</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        }</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        HINSTANCE HInstance()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            <span class="keywordflow">return</span> m_hInstance;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        }</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        winrt::Windows::UI::Xaml::Application m_xapp{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        HINSTANCE m_hInstance{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        winrt::Windows::UI::Xaml::Hosting::WindowsXamlManager m_winxamlmanager{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    };</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html">   54</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a> {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>(std::wstring_view <span class="keywordtype">id</span>) : m_Id(<span class="keywordtype">id</span>) {}</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        winrt::Windows::UI::Xaml::UIElement(*m_getUI) (<span class="keyword">const</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp; xw) { <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="comment">// This DesktopWindowXamlSource is the object that enables a non-UWP desktop application </span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="comment">// to host WinRT XAML controls in any UI element that is associated with a window handle (HWND).</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        winrt::Windows::UI::Xaml::Hosting::DesktopWindowXamlSource m_desktopXamlSource{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        HWND m_hWnd{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        HACCEL m_hAccelTable{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <a class="code hl_struct" href="structcppxaml_1_1_app_controller.html">AppController</a>* m_controller{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        std::wstring m_Id;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        std::wstring m_markup;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        winrt::Windows::UI::Xaml::UIElement m_ui{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keyword">static</span> <span class="keyword">inline</span> std::unordered_map&lt;std::wstring, XamlWindow&gt; s_windows{};</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>(<a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp;&amp; other) noexcept :</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            m_Id(std::move(other.m_Id)),</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            m_getUI(std::move(other.m_getUI)),</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            m_markup(std::move(other.m_markup)),</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            m_desktopXamlSource(std::move(other.m_desktopXamlSource)),</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            m_hWnd(std::move(other.m_hWnd)),</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            m_hAccelTable(std::move(m_hAccelTable)),</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            m_controller(std::move(other.m_controller))</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        {}</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">   87</a></span>        HWND <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">hwnd</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            <span class="keywordflow">return</span> m_hWnd;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        }</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T = winrt::Windows::UI::Xaml::UIElement&gt;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#a88e72ce8b26661cdd7d28c4deccc4e22">   97</a></span>        T <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a88e72ce8b26661cdd7d28c4deccc4e22">GetUIElement</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            <span class="keywordflow">return</span> m_ui.as&lt;T&gt;();</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        }</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TUIElement&gt;</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#a3cbafba7e86d51772aef97103987bf40">  113</a></span>        <span class="keyword">static</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp; <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a3cbafba7e86d51772aef97103987bf40">Make</a>(std::wstring_view <span class="keywordtype">id</span>, <a class="code hl_struct" href="structcppxaml_1_1_app_controller.html">AppController</a>* controller = <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a> xw(<span class="keywordtype">id</span>);</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            xw.m_controller = controller;</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            xw.m_getUI = [](<span class="keyword">const</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp;) { <span class="keywordflow">return</span> TUIElement().as&lt;winrt::Windows::UI::Xaml::UIElement&gt;(); };</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry = s_windows.emplace(<span class="keywordtype">id</span>, std::move(xw));</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <span class="keywordflow">return</span> entry.first-&gt;second;</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        }</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#a79254433bd2c5f0ccec9453df3e3d984">  136</a></span>        <span class="keyword">static</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp; <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a79254433bd2c5f0ccec9453df3e3d984">Make</a>(std::wstring_view <span class="keywordtype">id</span>, std::wstring_view markup, <a class="code hl_struct" href="structcppxaml_1_1_app_controller.html">AppController</a>* c = <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a> xw(<span class="keywordtype">id</span>);</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            xw.m_controller = c;</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            xw.m_markup = markup;</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            xw.m_getUI = [](<span class="keyword">const</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp; xw) {</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                <span class="keywordflow">return</span> winrt::Windows::UI::Xaml::Markup::XamlReader::Load(xw.m_markup)</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                    .as&lt;winrt::Windows::UI::Xaml::UIElement&gt;();</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            };</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry = s_windows.emplace(<span class="keywordtype">id</span>, std::move(xw));</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            <span class="keywordflow">return</span> entry.first-&gt;second;</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        }</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#afb998c7522ed1222d83aa2168d958dc3">  160</a></span>        <span class="keyword">static</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp; <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#afb998c7522ed1222d83aa2168d958dc3">Make</a>(std::wstring_view <span class="keywordtype">id</span>, winrt::Windows::UI::Xaml::UIElement(*getUI)(<span class="keyword">const</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp;), <a class="code hl_struct" href="structcppxaml_1_1_app_controller.html">AppController</a>* c = <span class="keyword">nullptr</span>) {</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a> xw(<span class="keywordtype">id</span>);</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            xw.m_controller = c;</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            xw.m_getUI = getUI;</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry = s_windows.emplace(<span class="keywordtype">id</span>, std::move(xw));</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            <span class="keywordflow">return</span> entry.first-&gt;second;</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        }</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#ae55f5139bc9435384daccb298da3e7db">  172</a></span>        std::wstring_view <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#ae55f5139bc9435384daccb298da3e7db">Id</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>            <span class="keywordflow">return</span> m_Id;</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        }</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        </div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#a56a71466e23da48887a45cec9830898a">  181</a></span>        <span class="keyword">static</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp; <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a56a71466e23da48887a45cec9830898a">Get</a>(std::wstring_view <span class="keywordtype">id</span>) {</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>            <span class="keywordflow">return</span> s_windows.at(std::wstring(<span class="keywordtype">id</span>));</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        }</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">wchar_t</span> <span class="keyword">const</span>* <span class="keyword">const</span> WindowClass() {</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            <span class="keywordflow">return</span> L<span class="stringliteral">&quot;XamlWindow&quot;</span>;</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        }</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#ac1fd17c69a8d9e256b9509db458b7660">  198</a></span>        HWND <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#ac1fd17c69a8d9e256b9509db458b7660">Create</a>(<span class="keywordtype">wchar_t</span> <span class="keyword">const</span>* szTitle, DWORD style, HWND parent = <span class="keyword">nullptr</span>, <span class="keywordtype">int</span> width = CW_USEDEFAULT, <span class="keywordtype">int</span> height = CW_USEDEFAULT, <span class="keywordtype">int</span> nCmdShow = SW_NORMAL) {</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            <span class="keyword">static</span> std::once_flag once;</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>            std::call_once(once, [ctl = this-&gt;m_controller]() {</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>                WNDCLASSEXW wcex{};</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                wcex.cbSize = <span class="keyword">sizeof</span>(wcex);</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                wcex.style = CS_HREDRAW | CS_VREDRAW;</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                wcex.lpfnWndProc = [](HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) -&gt; LRESULT</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                {</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                    <span class="comment">// Get handle to the core window.</span></div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>                    <span class="keyword">auto</span> xw = <span class="keyword">reinterpret_cast&lt;</span><a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>*<span class="keyword">&gt;</span>(GetWindowLongPtr(hWnd, GWLP_USERDATA));</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                    <span class="keywordflow">if</span> (xw == <span class="keyword">nullptr</span> &amp;&amp; message == WM_CREATE) {</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>                        <span class="keyword">auto</span> createStruct = <span class="keyword">reinterpret_cast&lt;</span>LPCREATESTRUCT<span class="keyword">&gt;</span>(lParam);</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>                        xw = <span class="keyword">reinterpret_cast&lt;</span><a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>*<span class="keyword">&gt;</span>(createStruct-&gt;lpCreateParams);</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                        SetWindowLongPtr(hWnd, GWLP_USERDATA, <span class="keyword">reinterpret_cast&lt;</span>LONG_PTR<span class="keyword">&gt;</span>(xw));</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                    }</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TUIElement&gt;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#a3cbafba7e86d51772aef97103987bf40">  114</a></span>        <span class="keyword">static</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp; <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a3cbafba7e86d51772aef97103987bf40">Make</a>(std::wstring_view <span class="keywordtype">id</span>, <a class="code hl_struct" href="structcppxaml_1_1_app_controller.html">AppController</a>* controller = <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a> xw(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            xw.m_controller = controller;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            xw.m_getUI = [](<span class="keyword">const</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp;) { <span class="keywordflow">return</span> TUIElement().as&lt;winrt::Windows::UI::Xaml::UIElement&gt;(); };</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry = s_windows.emplace(<span class="keywordtype">id</span>, std::move(xw));</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            <span class="keywordflow">return</span> entry.first-&gt;second;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        }</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#a79254433bd2c5f0ccec9453df3e3d984">  137</a></span>        <span class="keyword">static</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp; <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a79254433bd2c5f0ccec9453df3e3d984">Make</a>(std::wstring_view <span class="keywordtype">id</span>, std::wstring_view markup, <a class="code hl_struct" href="structcppxaml_1_1_app_controller.html">AppController</a>* c = <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a> xw(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            xw.m_controller = c;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            xw.m_markup = markup;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>            xw.m_getUI = [](<span class="keyword">const</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp; xw) {</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                <span class="keywordflow">return</span> winrt::Windows::UI::Xaml::Markup::XamlReader::Load(xw.m_markup)</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                    .as&lt;winrt::Windows::UI::Xaml::UIElement&gt;();</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>            };</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry = s_windows.emplace(<span class="keywordtype">id</span>, std::move(xw));</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            <span class="keywordflow">return</span> entry.first-&gt;second;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        }</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#afb998c7522ed1222d83aa2168d958dc3">  161</a></span>        <span class="keyword">static</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp; <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#afb998c7522ed1222d83aa2168d958dc3">Make</a>(std::wstring_view <span class="keywordtype">id</span>, winrt::Windows::UI::Xaml::UIElement(*getUI)(<span class="keyword">const</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp;), <a class="code hl_struct" href="structcppxaml_1_1_app_controller.html">AppController</a>* c = <span class="keyword">nullptr</span>) {</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a> xw(<span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            xw.m_controller = c;</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            xw.m_getUI = getUI;</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            <span class="keyword">const</span> <span class="keyword">auto</span>&amp; entry = s_windows.emplace(<span class="keywordtype">id</span>, std::move(xw));</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            <span class="keywordflow">return</span> entry.first-&gt;second;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        }</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#ae55f5139bc9435384daccb298da3e7db">  173</a></span>        std::wstring_view <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#ae55f5139bc9435384daccb298da3e7db">Id</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>            <span class="keywordflow">return</span> m_Id;</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        }</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        </div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#a56a71466e23da48887a45cec9830898a">  182</a></span>        <span class="keyword">static</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>&amp; <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a56a71466e23da48887a45cec9830898a">Get</a>(std::wstring_view <span class="keywordtype">id</span>) {</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>            <span class="keywordflow">return</span> s_windows.at(std::wstring(<span class="keywordtype">id</span>));</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        }</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">wchar_t</span> <span class="keyword">const</span>* <span class="keyword">const</span> WindowClass() {</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>            <span class="keywordflow">return</span> L<span class="stringliteral">&quot;XamlWindow&quot;</span>;</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        }</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#ac1fd17c69a8d9e256b9509db458b7660">  199</a></span>        HWND <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#ac1fd17c69a8d9e256b9509db458b7660">Create</a>(<span class="keywordtype">wchar_t</span> <span class="keyword">const</span>* szTitle, DWORD style, HWND parent = <span class="keyword">nullptr</span>, <span class="keywordtype">int</span> width = CW_USEDEFAULT, <span class="keywordtype">int</span> height = CW_USEDEFAULT, <span class="keywordtype">int</span> nCmdShow = SW_NORMAL) {</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>            <span class="keyword">static</span> std::once_flag once;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>            std::call_once(once, [ctl = this-&gt;m_controller]() {</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                WNDCLASSEXW wcex{};</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>                wcex.cbSize = <span class="keyword">sizeof</span>(wcex);</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>                wcex.style = CS_HREDRAW | CS_VREDRAW;</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>                wcex.lpfnWndProc = [](HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) -&gt; LRESULT</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>                {</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>                    <span class="comment">// Get handle to the core window.</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                    <span class="keyword">auto</span> xw = <span class="keyword">reinterpret_cast&lt;</span><a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>*<span class="keyword">&gt;</span>(GetWindowLongPtr(hWnd, GWLP_USERDATA));</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>                    <span class="keywordflow">if</span> (xw == <span class="keyword">nullptr</span> &amp;&amp; message == WM_CREATE) {</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>                        <span class="keyword">auto</span> createStruct = <span class="keyword">reinterpret_cast&lt;</span>LPCREATESTRUCT<span class="keyword">&gt;</span>(lParam);</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                        xw = <span class="keyword">reinterpret_cast&lt;</span><a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>*<span class="keyword">&gt;</span>(createStruct-&gt;lpCreateParams);</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                        SetWindowLongPtr(hWnd, GWLP_USERDATA, <span class="keyword">reinterpret_cast&lt;</span>LONG_PTR<span class="keyword">&gt;</span>(xw));</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                    }</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>                    <span class="keywordflow">return</span> xw ? xw-&gt;WndProc(hWnd, message, wParam, lParam) : DefWindowProc(hWnd, message, wParam, lParam);</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                };</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>                wcex.cbWndExtra = <span class="keyword">sizeof</span>(<a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>*);</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                wcex.hInstance = ctl-&gt;HInstance();</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>                wcex.hCursor = LoadCursor(<span class="keyword">nullptr</span>, IDC_ARROW);</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>                wcex.lpszClassName = WindowClass();</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                winrt::check_bool(RegisterClassExW(&amp;wcex) != 0);</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>            });</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>            m_desktopXamlSource = winrt::Windows::UI::Xaml::Hosting::DesktopWindowXamlSource();</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>            <span class="keyword">auto</span> hWnd = CreateWindowW(WindowClass(), szTitle, style,</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>                CW_USEDEFAULT, CW_USEDEFAULT, width, height, parent, <span class="keyword">nullptr</span>, m_controller-&gt;HInstance(), <span class="keyword">this</span>);</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>            <span class="keywordflow">if</span> (hWnd) {</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>                ShowWindow(hWnd, nCmdShow);</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                UpdateWindow(hWnd);</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>            }</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>            <span class="keywordflow">return</span> hWnd;</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        }</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#ad08d63a1371710cfe3185cbd4ce8f3d6">  242</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#ad08d63a1371710cfe3185cbd4ce8f3d6">SetAcceleratorTable</a>(HACCEL acc) {</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>            m_hAccelTable = acc;</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        }</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#a5e8d3c0aabcab72feebf3a6dd63b4082">  250</a></span>        <a class="code hl_struct" href="structcppxaml_1_1_app_controller.html">AppController</a>* <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a5e8d3c0aabcab72feebf3a6dd63b4082">Controller</a>()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>            <span class="keywordflow">return</span> m_controller;</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        }</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#ab744fd56f45f6e30ebb02d178f9e6161">  258</a></span>        <span class="keywordtype">int</span> <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#ab744fd56f45f6e30ebb02d178f9e6161">RunLoop</a>() {</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>            MSG msg;</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>            <span class="comment">// Main message loop:</span></div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>            <span class="keywordflow">while</span> (GetMessage(&amp;msg, <span class="keyword">nullptr</span>, 0, 0))</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>            {</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                <span class="keywordflow">if</span> (<span class="keyword">auto</span> xamlSourceNative2 = m_desktopXamlSource.as&lt;IDesktopWindowXamlSourceNative2&gt;()) {</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                    BOOL xamlSourceProcessedMessage = FALSE;</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                    winrt::check_hresult(xamlSourceNative2-&gt;PreTranslateMessage(&amp;msg, &amp;xamlSourceProcessedMessage));</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                    <span class="keywordflow">if</span> (xamlSourceProcessedMessage) {</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                        <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                    }</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                }</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>                <span class="keywordflow">if</span> (!TranslateAccelerator(msg.hwnd, m_hAccelTable, &amp;msg))</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                {</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                    TranslateMessage(&amp;msg);</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                    DispatchMessage(&amp;msg);</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                }</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>            }</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>            <span class="keywordflow">return</span> (<span class="keywordtype">int</span>)msg.wParam;</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        }</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        HWND GetBridgeWindow()<span class="keyword"> const </span>{</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>            <span class="keyword">static</span> HWND hWndXamlIsland = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>            <span class="keywordflow">if</span> (!hWndXamlIsland) {</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>                <span class="keyword">auto</span> interop = m_desktopXamlSource.as&lt;IDesktopWindowXamlSourceNative&gt;();</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                winrt::check_hresult(interop-&gt;get_WindowHandle(&amp;hWndXamlIsland));</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>            }</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>            <span class="keywordflow">return</span> hWndXamlIsland;</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        }</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span> </div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        LRESULT WndProc(HWND <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">hwnd</a>, UINT message, WPARAM wParam, LPARAM lParam) {</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>            <span class="keyword">auto</span> interop = m_desktopXamlSource.as&lt;IDesktopWindowXamlSourceNative&gt;();</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> </div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>            <span class="keywordflow">switch</span> (message)</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>            {</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>            <span class="keywordflow">case</span> WM_CREATE: {</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>                this-&gt;m_hWnd = <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">hwnd</a>;</div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                <span class="keyword">auto</span> createStruct = <span class="keyword">reinterpret_cast&lt;</span>LPCREATESTRUCT<span class="keyword">&gt;</span>(lParam);</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> </div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>                <span class="comment">// Parent the DesktopWindowXamlSource object to the current window.</span></div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                winrt::check_hresult(interop-&gt;AttachToWindow(m_hWnd));  <span class="comment">// This fails due to access violation!</span></div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> </div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>                this-&gt;m_ui = this-&gt;m_getUI(*<span class="keyword">this</span>);</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                <span class="keywordflow">if</span> (m_controller &amp;&amp; m_controller-&gt;<a class="code hl_variable" href="structcppxaml_1_1_app_controller.html#afc7a379f4d53238f155ee85564b7f6c9">OnUICreated</a>) {</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                    m_controller-&gt;<a class="code hl_variable" href="structcppxaml_1_1_app_controller.html#afc7a379f4d53238f155ee85564b7f6c9">OnUICreated</a>(m_ui, <span class="keyword">this</span>);</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>                }</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>                m_desktopXamlSource.Content(m_ui);</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>            }</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>            <span class="keywordflow">case</span> WM_SIZE:</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>            {</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                HWND hWndXamlIsland = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>                winrt::check_hresult(interop-&gt;get_WindowHandle(&amp;hWndXamlIsland));</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span> </div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>                SetWindowPos(hWndXamlIsland, <span class="keyword">nullptr</span>, 0, 0, LOWORD(lParam), HIWORD(lParam), SWP_SHOWWINDOW);</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span> </div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>            }</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>            <span class="keywordflow">case</span> WM_NCDESTROY:</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>            {</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>                SetWindowLongPtr(<a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">hwnd</a>, GWLP_USERDATA, (LONG_PTR)<span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>            }</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                    <span class="keywordflow">return</span> xw ? xw-&gt;WndProc(hWnd, message, wParam, lParam) : DefWindowProc(hWnd, message, wParam, lParam);</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>                };</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>                wcex.cbWndExtra = <span class="keyword">sizeof</span>(<a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">XamlWindow</a>*);</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>                wcex.hInstance = ctl-&gt;HInstance();</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>                wcex.hCursor = LoadCursor(<span class="keyword">nullptr</span>, IDC_ARROW);</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>                wcex.lpszClassName = WindowClass();</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                winrt::check_bool(RegisterClassExW(&amp;wcex) != 0);</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>            });</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>            m_desktopXamlSource = winrt::Windows::UI::Xaml::Hosting::DesktopWindowXamlSource();</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>            <span class="keyword">auto</span> hWnd = CreateWindowW(WindowClass(), szTitle, style,</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>                CW_USEDEFAULT, CW_USEDEFAULT, width, height, parent, <span class="keyword">nullptr</span>, m_controller-&gt;HInstance(), <span class="keyword">this</span>);</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>            <span class="keywordflow">if</span> (hWnd) {</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                ShowWindow(hWnd, nCmdShow);</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>                UpdateWindow(hWnd);</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>            }</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>            <span class="keywordflow">return</span> hWnd;</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        }</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#ad08d63a1371710cfe3185cbd4ce8f3d6">  243</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#ad08d63a1371710cfe3185cbd4ce8f3d6">SetAcceleratorTable</a>(HACCEL acc) {</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>            m_hAccelTable = acc;</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        }</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#a5e8d3c0aabcab72feebf3a6dd63b4082">  251</a></span>        <a class="code hl_struct" href="structcppxaml_1_1_app_controller.html">AppController</a>* <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a5e8d3c0aabcab72feebf3a6dd63b4082">Controller</a>()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>            <span class="keywordflow">return</span> m_controller;</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        }</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno"><a class="line" href="structcppxaml_1_1_xaml_window.html#ab744fd56f45f6e30ebb02d178f9e6161">  259</a></span>        <span class="keywordtype">int</span> <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#ab744fd56f45f6e30ebb02d178f9e6161">RunLoop</a>() {</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>            MSG msg;</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>            <span class="comment">// Main message loop:</span></div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>            <span class="keywordflow">while</span> (GetMessage(&amp;msg, <span class="keyword">nullptr</span>, 0, 0))</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>            {</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>                <span class="keywordflow">if</span> (<span class="keyword">auto</span> xamlSourceNative2 = m_desktopXamlSource.as&lt;IDesktopWindowXamlSourceNative2&gt;()) {</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>                    BOOL xamlSourceProcessedMessage = FALSE;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>                    winrt::check_hresult(xamlSourceNative2-&gt;PreTranslateMessage(&amp;msg, &amp;xamlSourceProcessedMessage));</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>                    <span class="keywordflow">if</span> (xamlSourceProcessedMessage) {</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>                        <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                    }</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>                }</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                <span class="keywordflow">if</span> (!TranslateAccelerator(msg.hwnd, m_hAccelTable, &amp;msg))</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>                {</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                    TranslateMessage(&amp;msg);</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                    DispatchMessage(&amp;msg);</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                }</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>            }</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>            <span class="keywordflow">return</span> (<span class="keywordtype">int</span>)msg.wParam;</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        }</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        HWND GetBridgeWindow()<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>            <span class="keyword">static</span> HWND hWndXamlIsland = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>            <span class="keywordflow">if</span> (!hWndXamlIsland) {</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                <span class="keyword">auto</span> interop = m_desktopXamlSource.as&lt;IDesktopWindowXamlSourceNative&gt;();</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>                winrt::check_hresult(interop-&gt;get_WindowHandle(&amp;hWndXamlIsland));</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>            }</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>            <span class="keywordflow">return</span> hWndXamlIsland;</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        }</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> </div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        LRESULT WndProc(HWND <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">hwnd</a>, UINT message, WPARAM wParam, LPARAM lParam) {</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>            <span class="keyword">auto</span> interop = m_desktopXamlSource.as&lt;IDesktopWindowXamlSourceNative&gt;();</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>            <span class="keywordflow">switch</span> (message)</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>            {</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>            <span class="keywordflow">case</span> WM_CREATE: {</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                this-&gt;m_hWnd = <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">hwnd</a>;</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>                <span class="keyword">auto</span> createStruct = <span class="keyword">reinterpret_cast&lt;</span>LPCREATESTRUCT<span class="keyword">&gt;</span>(lParam);</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> </div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>                <span class="comment">// Parent the DesktopWindowXamlSource object to the current window.</span></div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>                winrt::check_hresult(interop-&gt;AttachToWindow(m_hWnd));  <span class="comment">// This fails due to access violation!</span></div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>                this-&gt;m_ui = this-&gt;m_getUI(*<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>                <span class="keywordflow">if</span> (m_controller &amp;&amp; m_controller-&gt;<a class="code hl_variable" href="structcppxaml_1_1_app_controller.html#afc7a379f4d53238f155ee85564b7f6c9">OnUICreated</a>) {</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>                    m_controller-&gt;<a class="code hl_variable" href="structcppxaml_1_1_app_controller.html#afc7a379f4d53238f155ee85564b7f6c9">OnUICreated</a>(m_ui, <span class="keyword">this</span>);</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>                }</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>                m_desktopXamlSource.Content(m_ui);</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>            }</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>            <span class="keywordflow">case</span> WM_SIZE:</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>            {</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>                HWND hWndXamlIsland = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>                winrt::check_hresult(interop-&gt;get_WindowHandle(&amp;hWndXamlIsland));</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span> </div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>                SetWindowPos(hWndXamlIsland, <span class="keyword">nullptr</span>, 0, 0, LOWORD(lParam), HIWORD(lParam), SWP_SHOWWINDOW);</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> </div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>            }</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>            <span class="keywordflow">case</span> WM_NCDESTROY:</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>            {</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>                SetWindowLongPtr(<a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">hwnd</a>, GWLP_USERDATA, (LONG_PTR)<span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>                <span class="keywordflow">break</span>;</div>
 <div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>            }</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>            <span class="keywordflow">if</span> (m_controller &amp;&amp; m_controller-&gt;WndProc) {</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>                <span class="keywordflow">return</span> m_controller-&gt;WndProc(<a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">hwnd</a>, message, wParam, lParam, <span class="keyword">this</span>);</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>            }</div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>            <span class="keywordflow">else</span> <span class="keywordflow">return</span> DefWindowProc(<a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">hwnd</a>, message, wParam, lParam);</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span> </div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>        }</div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    };</div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>}</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>            }</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>            <span class="keywordflow">if</span> (m_controller &amp;&amp; m_controller-&gt;WndProc) {</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>                <span class="keywordflow">return</span> m_controller-&gt;WndProc(<a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">hwnd</a>, message, wParam, lParam, <span class="keyword">this</span>);</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>            }</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>            <span class="keywordflow">else</span> <span class="keywordflow">return</span> DefWindowProc(<a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">hwnd</a>, message, wParam, lParam);</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span> </div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>        }</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    };</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>}</div>
 <div class="ttc" id="anamespacecppxaml_html"><div class="ttname"><a href="namespacecppxaml.html">cppxaml</a></div><div class="ttdoc">The main CppXAML namespace.</div></div>
-<div class="ttc" id="astructcppxaml_1_1_app_controller_html"><div class="ttname"><a href="structcppxaml_1_1_app_controller.html">cppxaml::AppController</a></div><div class="ttdoc">AppController is responsible for coordinating XamlWindow instances, can extend their wndproc,...</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:21</div></div>
-<div class="ttc" id="astructcppxaml_1_1_app_controller_html_a8d63e275a8a3862c5cadb1fb03ec9ee4"><div class="ttname"><a href="structcppxaml_1_1_app_controller.html#a8d63e275a8a3862c5cadb1fb03ec9ee4">cppxaml::AppController::AppController</a></div><div class="ttdeci">AppController(HINSTANCE hInst, winrt::Windows::UI::Xaml::Application xapp)</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:34</div></div>
-<div class="ttc" id="astructcppxaml_1_1_app_controller_html_afc7a379f4d53238f155ee85564b7f6c9"><div class="ttname"><a href="structcppxaml_1_1_app_controller.html#afc7a379f4d53238f155ee85564b7f6c9">cppxaml::AppController::OnUICreated</a></div><div class="ttdeci">void(* OnUICreated)(winrt::Windows::UI::Xaml::UIElement content, XamlWindow *xw)</div><div class="ttdoc">App-provided callback to be called when any of this controller's windows create their UI (usually Pag...</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:26</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a></div><div class="ttdoc">Implements an HWND based host for XAML Islands. You can create a XamlWindow from one of three overloa...</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:53</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a3cbafba7e86d51772aef97103987bf40"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a3cbafba7e86d51772aef97103987bf40">cppxaml::XamlWindow::Make</a></div><div class="ttdeci">static XamlWindow &amp; Make(std::wstring_view id, AppController *controller=nullptr)</div><div class="ttdoc">Creates a window that hosts a XAML UI element.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:113</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a56a71466e23da48887a45cec9830898a"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a56a71466e23da48887a45cec9830898a">cppxaml::XamlWindow::Get</a></div><div class="ttdeci">static XamlWindow &amp; Get(std::wstring_view id)</div><div class="ttdoc">returns the XamlWindow corresponding to the id.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:181</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a5e8d3c0aabcab72feebf3a6dd63b4082"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a5e8d3c0aabcab72feebf3a6dd63b4082">cppxaml::XamlWindow::Controller</a></div><div class="ttdeci">AppController * Controller() const</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:250</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a79254433bd2c5f0ccec9453df3e3d984"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a79254433bd2c5f0ccec9453df3e3d984">cppxaml::XamlWindow::Make</a></div><div class="ttdeci">static XamlWindow &amp; Make(std::wstring_view id, std::wstring_view markup, AppController *c=nullptr)</div><div class="ttdoc">Creates a window that hosts XAML UI, based on some markup provided as an input parameter.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:136</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a798b22fc622e603120275242c7b70866"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">cppxaml::XamlWindow::hwnd</a></div><div class="ttdeci">HWND hwnd() const</div><div class="ttdoc">returns the HWND backing the XamlWindow.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:86</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a88e72ce8b26661cdd7d28c4deccc4e22"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a88e72ce8b26661cdd7d28c4deccc4e22">cppxaml::XamlWindow::GetUIElement</a></div><div class="ttdeci">T GetUIElement() const</div><div class="ttdoc">returns the XAML UI that the XamlWindow was created with.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:96</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_ab744fd56f45f6e30ebb02d178f9e6161"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#ab744fd56f45f6e30ebb02d178f9e6161">cppxaml::XamlWindow::RunLoop</a></div><div class="ttdeci">int RunLoop()</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:258</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_ac1fd17c69a8d9e256b9509db458b7660"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#ac1fd17c69a8d9e256b9509db458b7660">cppxaml::XamlWindow::Create</a></div><div class="ttdeci">HWND Create(wchar_t const *szTitle, DWORD style, HWND parent=nullptr, int width=CW_USEDEFAULT, int height=CW_USEDEFAULT, int nCmdShow=SW_NORMAL)</div><div class="ttdoc">Call this function to create the actual window. Afterwards, you will call XamlWindow::RunLoop to proc...</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:198</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_ad08d63a1371710cfe3185cbd4ce8f3d6"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#ad08d63a1371710cfe3185cbd4ce8f3d6">cppxaml::XamlWindow::SetAcceleratorTable</a></div><div class="ttdeci">void SetAcceleratorTable(HACCEL acc)</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:242</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_ae55f5139bc9435384daccb298da3e7db"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#ae55f5139bc9435384daccb298da3e7db">cppxaml::XamlWindow::Id</a></div><div class="ttdeci">std::wstring_view Id() const</div><div class="ttdoc">returns the window's id</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:172</div></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_afb998c7522ed1222d83aa2168d958dc3"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#afb998c7522ed1222d83aa2168d958dc3">cppxaml::XamlWindow::Make</a></div><div class="ttdeci">static XamlWindow &amp; Make(std::wstring_view id, winrt::Windows::UI::Xaml::UIElement(*getUI)(const XamlWindow &amp;), AppController *c=nullptr)</div><div class="ttdoc">Creates a window that hosts XAML UI. The UI will be provided by the app.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:160</div></div>
+<div class="ttc" id="astructcppxaml_1_1_app_controller_html"><div class="ttname"><a href="structcppxaml_1_1_app_controller.html">cppxaml::AppController</a></div><div class="ttdoc">AppController is responsible for coordinating XamlWindow instances, can extend their wndproc,...</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:22</div></div>
+<div class="ttc" id="astructcppxaml_1_1_app_controller_html_a8d63e275a8a3862c5cadb1fb03ec9ee4"><div class="ttname"><a href="structcppxaml_1_1_app_controller.html#a8d63e275a8a3862c5cadb1fb03ec9ee4">cppxaml::AppController::AppController</a></div><div class="ttdeci">AppController(HINSTANCE hInst, winrt::Windows::UI::Xaml::Application xapp)</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:35</div></div>
+<div class="ttc" id="astructcppxaml_1_1_app_controller_html_afc7a379f4d53238f155ee85564b7f6c9"><div class="ttname"><a href="structcppxaml_1_1_app_controller.html#afc7a379f4d53238f155ee85564b7f6c9">cppxaml::AppController::OnUICreated</a></div><div class="ttdeci">void(* OnUICreated)(winrt::Windows::UI::Xaml::UIElement content, XamlWindow *xw)</div><div class="ttdoc">App-provided callback to be called when any of this controller's windows create their UI (usually Pag...</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:27</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a></div><div class="ttdoc">Implements an HWND based host for XAML Islands. You can create a XamlWindow from one of three overloa...</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:54</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a3cbafba7e86d51772aef97103987bf40"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a3cbafba7e86d51772aef97103987bf40">cppxaml::XamlWindow::Make</a></div><div class="ttdeci">static XamlWindow &amp; Make(std::wstring_view id, AppController *controller=nullptr)</div><div class="ttdoc">Creates a window that hosts a XAML UI element.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:114</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a56a71466e23da48887a45cec9830898a"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a56a71466e23da48887a45cec9830898a">cppxaml::XamlWindow::Get</a></div><div class="ttdeci">static XamlWindow &amp; Get(std::wstring_view id)</div><div class="ttdoc">returns the XamlWindow corresponding to the id.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:182</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a5e8d3c0aabcab72feebf3a6dd63b4082"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a5e8d3c0aabcab72feebf3a6dd63b4082">cppxaml::XamlWindow::Controller</a></div><div class="ttdeci">AppController * Controller() const</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:251</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a79254433bd2c5f0ccec9453df3e3d984"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a79254433bd2c5f0ccec9453df3e3d984">cppxaml::XamlWindow::Make</a></div><div class="ttdeci">static XamlWindow &amp; Make(std::wstring_view id, std::wstring_view markup, AppController *c=nullptr)</div><div class="ttdoc">Creates a window that hosts XAML UI, based on some markup provided as an input parameter.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:137</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a798b22fc622e603120275242c7b70866"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a798b22fc622e603120275242c7b70866">cppxaml::XamlWindow::hwnd</a></div><div class="ttdeci">HWND hwnd() const</div><div class="ttdoc">returns the HWND backing the XamlWindow.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:87</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a88e72ce8b26661cdd7d28c4deccc4e22"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a88e72ce8b26661cdd7d28c4deccc4e22">cppxaml::XamlWindow::GetUIElement</a></div><div class="ttdeci">T GetUIElement() const</div><div class="ttdoc">returns the XAML UI that the XamlWindow was created with.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:97</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_ab744fd56f45f6e30ebb02d178f9e6161"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#ab744fd56f45f6e30ebb02d178f9e6161">cppxaml::XamlWindow::RunLoop</a></div><div class="ttdeci">int RunLoop()</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:259</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_ac1fd17c69a8d9e256b9509db458b7660"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#ac1fd17c69a8d9e256b9509db458b7660">cppxaml::XamlWindow::Create</a></div><div class="ttdeci">HWND Create(wchar_t const *szTitle, DWORD style, HWND parent=nullptr, int width=CW_USEDEFAULT, int height=CW_USEDEFAULT, int nCmdShow=SW_NORMAL)</div><div class="ttdoc">Call this function to create the actual window. Afterwards, you will call XamlWindow::RunLoop to proc...</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:199</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_ad08d63a1371710cfe3185cbd4ce8f3d6"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#ad08d63a1371710cfe3185cbd4ce8f3d6">cppxaml::XamlWindow::SetAcceleratorTable</a></div><div class="ttdeci">void SetAcceleratorTable(HACCEL acc)</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:243</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_ae55f5139bc9435384daccb298da3e7db"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#ae55f5139bc9435384daccb298da3e7db">cppxaml::XamlWindow::Id</a></div><div class="ttdeci">std::wstring_view Id() const</div><div class="ttdoc">returns the window's id</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:173</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_afb998c7522ed1222d83aa2168d958dc3"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#afb998c7522ed1222d83aa2168d958dc3">cppxaml::XamlWindow::Make</a></div><div class="ttdeci">static XamlWindow &amp; Make(std::wstring_view id, winrt::Windows::UI::Xaml::UIElement(*getUI)(const XamlWindow &amp;), AppController *c=nullptr)</div><div class="ttdoc">Creates a window that hosts XAML UI. The UI will be provided by the app.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:161</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

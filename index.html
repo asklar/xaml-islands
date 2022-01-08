@@ -285,7 +285,7 @@ XamlWindow</h2>
 <div class="line"><span class="stringliteral">  &lt;StackPanel&gt;</span></div>
 <div class="line"><span class="stringliteral">    &lt;TextBlock&gt;Hello&lt;/TextBlock&gt;</span></div>
 <div class="line"><span class="stringliteral">  &lt;/StackPanel&gt;)&quot;, &amp;controller);</span></div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a3cbafba7e86d51772aef97103987bf40"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a3cbafba7e86d51772aef97103987bf40">cppxaml::XamlWindow::Make</a></div><div class="ttdeci">static XamlWindow &amp; Make(std::wstring_view id, AppController *controller=nullptr)</div><div class="ttdoc">Creates a window that hosts a XAML UI element.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:113</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html_a3cbafba7e86d51772aef97103987bf40"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html#a3cbafba7e86d51772aef97103987bf40">cppxaml::XamlWindow::Make</a></div><div class="ttdeci">static XamlWindow &amp; Make(std::wstring_view id, AppController *controller=nullptr)</div><div class="ttdoc">Creates a window that hosts a XAML UI element.</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:114</div></div>
 </div><!-- fragment --></li>
 <li>Host UI created programmatically at runtime: API: <div class="fragment"><div class="line"><span class="keyword">static</span> XamlWindow&amp; Make(PCWSTR <span class="keywordtype">id</span>, winrt::Windows::UI::Xaml::UIElement(*getUI)(<span class="keyword">const</span> XamlWindow&amp;), AppController* c = <span class="keyword">nullptr</span>);</div>
 </div><!-- fragment --> Usage: <div class="fragment"><div class="line"><span class="keyword">auto</span>&amp; xw = <a class="code hl_function" href="structcppxaml_1_1_xaml_window.html#a3cbafba7e86d51772aef97103987bf40">cppxaml::XamlWindow::Make</a>(L<span class="stringliteral">&quot;Foo&quot;</span>, [](<span class="keyword">auto</span>&amp;...) { </div>
@@ -304,7 +304,7 @@ Parenting flyouts</h3>
 <li>Initialize with an <code>HWND</code>: <div class="fragment"><div class="line"><span class="keywordtype">bool</span> <a class="code hl_function" href="namespacecppxaml.html#a3ed8cf0ebda1cde913f65cd9656c43ea">InitializeWithWindow</a>(cppxaml::xaml::FrameworkElement obj, HWND hwnd)</div>
 </div><!-- fragment --></li>
 <li>Initialize with a <code>XamlWindow</code>: <div class="fragment"><div class="line"><span class="keywordtype">void</span> <a class="code hl_function" href="namespacecppxaml.html#a3ed8cf0ebda1cde913f65cd9656c43ea">InitializeWithWindow</a>(cppxaml::xaml::FrameworkElement obj, <span class="keyword">const</span> <a class="code hl_struct" href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a>* xw)</div>
-<div class="ttc" id="astructcppxaml_1_1_xaml_window_html"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a></div><div class="ttdoc">Implements an HWND based host for XAML Islands. You can create a XamlWindow from one of three overloa...</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:53</div></div>
+<div class="ttc" id="astructcppxaml_1_1_xaml_window_html"><div class="ttname"><a href="structcppxaml_1_1_xaml_window.html">cppxaml::XamlWindow</a></div><div class="ttdoc">Implements an HWND based host for XAML Islands. You can create a XamlWindow from one of three overloa...</div><div class="ttdef"><b>Definition:</b> XamlWindow.h:54</div></div>
 </div><!-- fragment --></li>
 </ul>
 <h2><a class="anchor" id="autotoc_md19"></a>

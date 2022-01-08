@@ -103,7 +103,7 @@ $(function() {
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                            <span class="keyword">auto</span> newState = args.NewState();</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                            <span class="keyword">auto</span> newName = newState.Name();</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                            <span class="keyword">const</span> <span class="keyword">auto</span> newNameStr = newName.c_str();</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                            <span class="keywordflow">if</span> (_this-&gt;m_map.contains(newNameStr)) {</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                            <span class="keywordflow">if</span> (_this-&gt;m_map.find(newNameStr) != _this-&gt;m_map.end()) {</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                                _this-&gt;m_map[newNameStr](fe, args);</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                            }</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                        });</div>

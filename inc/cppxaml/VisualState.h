@@ -39,7 +39,7 @@ namespace cppxaml {
                             auto newState = args.NewState();
                             auto newName = newState.Name();
                             const auto newNameStr = newName.c_str();
-                            if (_this->m_map.contains(newNameStr)) {
+                            if (_this->m_map.find(newNameStr) != _this->m_map.end()) {
                                 _this->m_map[newNameStr](fe, args);
                             }
                         });

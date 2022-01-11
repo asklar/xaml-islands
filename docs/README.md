@@ -94,6 +94,14 @@ struct MainPage : MainPageT<MainPage>, cppxaml::SimpleNotifyPropertyChanged<Main
     InterfaceStr = winrt::hstring{ L"This string comes from the implementation" };
     winrt::hstring v = InterfaceStr;
   }
+
+  void MyPage::DoSomething() {
+    // when MyInt is modified, it automatically sends NPC!
+    MyInt = 39; 
+
+    // if we want to manually send a notification:
+    RaisePropertyChanged(L"MyInt");
+  }
 };
 ```
 
@@ -135,6 +143,19 @@ auto tb = cppxaml::TextBlock(L"Hello");
 
 ### StackPanel
 Panels in XAML can have zero or more children. CppXAML makes it easy to naturally describe a panel's children with an initializer list. For example:
+
+**Before (plain C++/WinRT)**
+```cpp
+auto sp = winrt::Windows::UI::Xaml::Controls::StackPanel();
+auto tb1 = winrt::Windows::UI::Xaml::Controls::TextBlock();
+tb1.Text(L"Hello");
+auto tb2 = winrt::Windows::UI::Xaml::Controls::TextBlock();
+tb2.Text(L"world!");
+sp.Children().Append(tb1);
+sp.Children().Append(tb2);
+```
+
+**After (with CppXaml)**
 ```cpp
 auto sp = cppxaml::StackPanel({
   cppxaml::TextBlock(L"Hello"),
@@ -170,7 +191,34 @@ auto worldTB = cppxaml::FindChildByName<Controls::TextBlock>(*scrollViewer, L"wo
 
 ### Grid
 Declaring a `Grid` in XAML via code is cumbersome as one has to create and set its `RowDefinitions` and `ColumnDefinitions`. 
-CppXAML makes this a lot more straightforward:
+
+**Before (plain C++/WinRT)**
+```cpp
+winrt::Windows::UI::Xaml::Controls::Grid g;
+auto rd1 = winrt::Windows::UI::Xaml::Controls::RowDefinition();
+rd1.Height(winrt::Windows::UI::Xaml::GridLengthHelper::FromPixels(40));
+auto rd2 = winrt::Windows::UI::Xaml::Controls::RowDefinition();
+rd2.Height(winrt::Windows::UI::Xaml::GridLengthHelper::FromValueAndType(1, 
+    winrt::Windows::UI::Xaml::GridUnitType::Star));
+g.RowDefinitions().Append(rd1);
+g.RowDefinitions().Append(rd2);
+
+auto cd1 = winrt::Windows::UI::Xaml::Controls::ColumnDefinition();
+cd1.Width(winrt::Windows::UI::Xaml::GridLengthHelper::Auto());
+auto cd2 = winrt::Windows::UI::Xaml::Controls::ColumnDefinition();
+cd2.Width(winrt::Windows::UI::Xaml::GridLengthHelper::Auto());
+g.ColumnDefinitions().Append(cd1);
+g.ColumnDefinitions().Append(cd2);
+
+auto tb1 = winrt::Windows::UI::Xaml::Controls::TextBlock();
+tb1.Text(L"first");
+tb1.SetValue(winrt::Windows::UI::Xaml::Controls::Grid::RowProperty(), winrt::box_value(0));
+tb1.SetValue(winrt::Windows::UI::Xaml::Controls::Grid::ColumnProperty(), winrt::box_value(0));
+g.Children().Append(tb1);
+// repeat 3 more times...   :-(
+```
+
+**After (with CppXaml)**
 ```cpp
 auto grid = cppxaml::Grid({"40, *"}, {"Auto, Auto"}, {
                 {0, 0, cppxaml::TextBlock(L"first") },
@@ -238,6 +286,20 @@ You can easily set up visual state change notifications:
 ### Initializing Panels from collections
 As we saw earlier, you can initialize a panel from its children. 
 You can also use transforms, to map elements from a data model into its corresponding view.
+
+For example:
+```cpp
+auto strs = std::vector<std::wstring>{ L"first", L"second", L"third", L"fourth" };
+auto grid = cppxaml::Grid({"40, *"}, {"Auto, Auto"},
+     cppxaml::utils::transform_with_index(strs, [](const std::wstring& t, auto index) {
+                return cppxaml::TextBlock(t)
+                         .Set(Grid::RowProperty(), (int)index / 2)
+                         .Set(Grid::ColumnProperty(), (int)index % 2);
+                };
+            })
+          );
+```
+
 For more details see `cppxaml::transform` and `cppxaml::transform_with_index` in [utils.h](./namespacecppxaml_1_1utils.html).
 
 ### Menus and icons

@@ -146,6 +146,14 @@ Example</h4>
 <div class="line">    InterfaceStr = winrt::hstring{ L<span class="stringliteral">&quot;This string comes from the implementation&quot;</span> };</div>
 <div class="line">    winrt::hstring v = InterfaceStr;</div>
 <div class="line">  }</div>
+<div class="line"> </div>
+<div class="line">  <span class="keywordtype">void</span> MyPage::DoSomething() {</div>
+<div class="line">    <span class="comment">// when MyInt is modified, it automatically sends NPC!</span></div>
+<div class="line">    MyInt = 39; </div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// if we want to manually send a notification:</span></div>
+<div class="line">    RaisePropertyChanged(L<span class="stringliteral">&quot;MyInt&quot;</span>);</div>
+<div class="line">  }</div>
 <div class="line">};</div>
 <div class="ttc" id="a_xaml_property_8h_html_a6f8179c8087199cdf981985f77208549"><div class="ttname"><a href="_xaml_property_8h.html#a6f8179c8087199cdf981985f77208549">INIT_PROPERTY</a></div><div class="ttdeci">#define INIT_PROPERTY(NAME, VALUE)</div><div class="ttdoc">use this to initialize a cppxaml::XamlPropertyWithNPC in your class constructor.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:201</div></div>
 <div class="ttc" id="astructcppxaml_1_1_simple_notify_property_changed_html"><div class="ttname"><a href="structcppxaml_1_1_simple_notify_property_changed.html">cppxaml::SimpleNotifyPropertyChanged</a></div><div class="ttdoc">Helper base class to inherit from to have a simple implementation of INotifyPropertyChanged.</div><div class="ttdef"><b>Definition:</b> XamlProperty.h:78</div></div>
@@ -178,11 +186,19 @@ TextBlock</h3>
 <p >Most commonly, you will want to construct a <code>TextBlock</code> from a string of text. This can be a bit cumbersome if you are using C++/WinRT directly. With cppxaml, as you've seen above, you can just write: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> tb = <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;Hello&quot;</span>);</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md8"></a>
 StackPanel</h3>
-<p >Panels in XAML can have zero or more children. CppXAML makes it easy to naturally describe a panel's children with an initializer list. For example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> sp = <a class="code hl_function" href="namespacecppxaml.html#a4f19238f531dcc396954a81f0dbc75b1">cppxaml::StackPanel</a>({</div>
+<p >Panels in XAML can have zero or more children. CppXAML makes it easy to naturally describe a panel's children with an initializer list. For example:</p>
+<p ><b>Before (plain C++/WinRT)</b> </p><div class="fragment"><div class="line"><span class="keyword">auto</span> sp = <a class="code hl_function" href="namespacecppxaml.html#a4f19238f531dcc396954a81f0dbc75b1">winrt::Windows::UI::Xaml::Controls::StackPanel</a>();</div>
+<div class="line"><span class="keyword">auto</span> tb1 = <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">winrt::Windows::UI::Xaml::Controls::TextBlock</a>();</div>
+<div class="line">tb1.Text(L<span class="stringliteral">&quot;Hello&quot;</span>);</div>
+<div class="line"><span class="keyword">auto</span> tb2 = <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">winrt::Windows::UI::Xaml::Controls::TextBlock</a>();</div>
+<div class="line">tb2.Text(L<span class="stringliteral">&quot;world!&quot;</span>);</div>
+<div class="line">sp.Children().Append(tb1);</div>
+<div class="line">sp.Children().Append(tb2);</div>
+<div class="ttc" id="anamespacecppxaml_html_a4f19238f531dcc396954a81f0dbc75b1"><div class="ttname"><a href="namespacecppxaml.html#a4f19238f531dcc396954a81f0dbc75b1">cppxaml::StackPanel</a></div><div class="ttdeci">auto StackPanel(const std::initializer_list&lt; cppxaml::xaml::UIElement &gt; &amp;elems)</div><div class="ttdoc">Creates a StackPanel.</div><div class="ttdef"><b>Definition:</b> Controls.h:483</div></div>
+</div><!-- fragment --><p ><b>After (with CppXaml)</b> </p><div class="fragment"><div class="line"><span class="keyword">auto</span> sp = <a class="code hl_function" href="namespacecppxaml.html#a4f19238f531dcc396954a81f0dbc75b1">cppxaml::StackPanel</a>({</div>
 <div class="line">  <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;Hello&quot;</span>),</div>
 <div class="line">  <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;world!&quot;</span>)</div>
 <div class="line">  });</div>
-<div class="ttc" id="anamespacecppxaml_html_a4f19238f531dcc396954a81f0dbc75b1"><div class="ttname"><a href="namespacecppxaml.html#a4f19238f531dcc396954a81f0dbc75b1">cppxaml::StackPanel</a></div><div class="ttdeci">auto StackPanel(const std::initializer_list&lt; cppxaml::xaml::UIElement &gt; &amp;elems)</div><div class="ttdoc">Creates a StackPanel.</div><div class="ttdef"><b>Definition:</b> Controls.h:483</div></div>
 </div><!-- fragment --><p >You can also set its <code>Orientation</code>: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> sp <a class="code hl_function" href="namespacecppxaml.html#a4f19238f531dcc396954a81f0dbc75b1">cppxaml::StackPanel</a>({</div>
 <div class="line">    <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;Hello&quot;</span>),</div>
 <div class="line">    <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;world!&quot;</span>).Name(L<span class="stringliteral">&quot;worldTB&quot;</span>)</div>
@@ -200,13 +216,36 @@ Locating elements by name</h3>
 <p >Sometimes you will need to perform some operation on an element that is deeply nested in a builder-style declaration. You can use <code>FindChildByName</code> to find an element in a XAML tree with a given name: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> worldTB = cppxaml::FindChildByName&lt;Controls::TextBlock&gt;(*scrollViewer, L<span class="stringliteral">&quot;worldTB&quot;</span>);</div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md11"></a>
 Grid</h3>
-<p >Declaring a <code>Grid</code> in XAML via code is cumbersome as one has to create and set its <code>RowDefinitions</code> and <code>ColumnDefinitions</code>. CppXAML makes this a lot more straightforward: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> grid = <a class="code hl_function" href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">cppxaml::Grid</a>({<span class="stringliteral">&quot;40, *&quot;</span>}, {<span class="stringliteral">&quot;Auto, Auto&quot;</span>}, {</div>
+<p >Declaring a <code>Grid</code> in XAML via code is cumbersome as one has to create and set its <code>RowDefinitions</code> and <code>ColumnDefinitions</code>.</p>
+<p ><b>Before (plain C++/WinRT)</b> </p><div class="fragment"><div class="line"><a class="code hl_function" href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">winrt::Windows::UI::Xaml::Controls::Grid</a> g;</div>
+<div class="line"><span class="keyword">auto</span> rd1 = winrt::Windows::UI::Xaml::Controls::RowDefinition();</div>
+<div class="line">rd1.Height(winrt::Windows::UI::Xaml::GridLengthHelper::FromPixels(40));</div>
+<div class="line"><span class="keyword">auto</span> rd2 = winrt::Windows::UI::Xaml::Controls::RowDefinition();</div>
+<div class="line">rd2.Height(winrt::Windows::UI::Xaml::GridLengthHelper::FromValueAndType(1, </div>
+<div class="line">    winrt::Windows::UI::Xaml::GridUnitType::Star));</div>
+<div class="line">g.RowDefinitions().Append(rd1);</div>
+<div class="line">g.RowDefinitions().Append(rd2);</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">auto</span> cd1 = winrt::Windows::UI::Xaml::Controls::ColumnDefinition();</div>
+<div class="line">cd1.Width(winrt::Windows::UI::Xaml::GridLengthHelper::Auto());</div>
+<div class="line"><span class="keyword">auto</span> cd2 = winrt::Windows::UI::Xaml::Controls::ColumnDefinition();</div>
+<div class="line">cd2.Width(winrt::Windows::UI::Xaml::GridLengthHelper::Auto());</div>
+<div class="line">g.ColumnDefinitions().Append(cd1);</div>
+<div class="line">g.ColumnDefinitions().Append(cd2);</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">auto</span> tb1 = <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">winrt::Windows::UI::Xaml::Controls::TextBlock</a>();</div>
+<div class="line">tb1.Text(L<span class="stringliteral">&quot;first&quot;</span>);</div>
+<div class="line">tb1.SetValue(winrt::Windows::UI::Xaml::Controls::Grid::RowProperty(), winrt::box_value(0));</div>
+<div class="line">tb1.SetValue(winrt::Windows::UI::Xaml::Controls::Grid::ColumnProperty(), winrt::box_value(0));</div>
+<div class="line">g.Children().Append(tb1);</div>
+<div class="line"><span class="comment">// repeat 3 more times...   :-(</span></div>
+<div class="ttc" id="anamespacecppxaml_html_a31308a6e8132db9b1d292159a25452e3"><div class="ttname"><a href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">cppxaml::Grid</a></div><div class="ttdeci">Grid(details::GridRows gr, cppxaml::details::GridColumns gc, TElements &amp;&amp;elems)</div><div class="ttdoc">Creates a Grid with the specified rows, columns, and children.</div><div class="ttdef"><b>Definition:</b> Controls.h:508</div></div>
+</div><!-- fragment --><p ><b>After (with CppXaml)</b> </p><div class="fragment"><div class="line"><span class="keyword">auto</span> grid = <a class="code hl_function" href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">cppxaml::Grid</a>({<span class="stringliteral">&quot;40, *&quot;</span>}, {<span class="stringliteral">&quot;Auto, Auto&quot;</span>}, {</div>
 <div class="line">                {0, 0, <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;first&quot;</span>) },</div>
 <div class="line">                {0, 1, <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;second&quot;</span>) },</div>
 <div class="line">                {1, 0, <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;third&quot;</span>) },</div>
 <div class="line">                {1, 1, <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;fourth&quot;</span>) },</div>
 <div class="line">                }),</div>
-<div class="ttc" id="anamespacecppxaml_html_a31308a6e8132db9b1d292159a25452e3"><div class="ttname"><a href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">cppxaml::Grid</a></div><div class="ttdeci">Grid(details::GridRows gr, cppxaml::details::GridColumns gc, TElements &amp;&amp;elems)</div><div class="ttdoc">Creates a Grid with the specified rows, columns, and children.</div><div class="ttdef"><b>Definition:</b> Controls.h:508</div></div>
 </div><!-- fragment --><p >Here we defined a 2x2 <code>Grid</code>. The rows have heights of 40 px and <code>*</code>, and the columns are <code>Auto</code>. Then each child of the Grid is added in the cell designated by each entry in the initializer list, read as "row, column, child".</p>
 <p >In addition to the string syntax (which requires some parsing/tokenizing), this also works: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> grid = <a class="code hl_function" href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">cppxaml::Grid</a>({40, {<span class="stringliteral">&quot;*&quot;</span>}}, {{<span class="stringliteral">&quot;Auto&quot;</span>}, {<span class="stringliteral">&quot;Auto&quot;</span>}}, {</div>
 <div class="line">                {0, 0, <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(L<span class="stringliteral">&quot;first&quot;</span>) },</div>
@@ -251,7 +290,18 @@ Visual State change notifications</h3>
 <div class="ttc" id="anamespacecppxaml_html_a200ac8a2b9983470d2f7f1c060f59fda"><div class="ttname"><a href="namespacecppxaml.html#a200ac8a2b9983470d2f7f1c060f59fda">cppxaml::Button</a></div><div class="ttdeci">auto Button(C c)</div><div class="ttdoc">Creates a Button.</div><div class="ttdef"><b>Definition:</b> Controls.h:602</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="autotoc_md15"></a>
 Initializing Panels from collections</h3>
-<p >As we saw earlier, you can initialize a panel from its children. You can also use transforms, to map elements from a data model into its corresponding view. For more details see <code>cppxaml::transform</code> and <code>cppxaml::transform_with_index</code> in <a href="./namespacecppxaml_1_1utils.html">utils.h</a>.</p>
+<p >As we saw earlier, you can initialize a panel from its children. You can also use transforms, to map elements from a data model into its corresponding view.</p>
+<p >For example: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> strs = std::vector&lt;std::wstring&gt;{ L<span class="stringliteral">&quot;first&quot;</span>, L<span class="stringliteral">&quot;second&quot;</span>, L<span class="stringliteral">&quot;third&quot;</span>, L<span class="stringliteral">&quot;fourth&quot;</span> };</div>
+<div class="line"><span class="keyword">auto</span> grid = <a class="code hl_function" href="namespacecppxaml.html#a31308a6e8132db9b1d292159a25452e3">cppxaml::Grid</a>({<span class="stringliteral">&quot;40, *&quot;</span>}, {<span class="stringliteral">&quot;Auto, Auto&quot;</span>},</div>
+<div class="line">     <a class="code hl_function" href="namespacecppxaml_1_1utils.html#ade2530c1a3c7013fc9a488200c73029c">cppxaml::utils::transform_with_index</a>(strs, [](<span class="keyword">const</span> std::wstring&amp; t, <span class="keyword">auto</span> index) {</div>
+<div class="line">                <span class="keywordflow">return</span> <a class="code hl_function" href="namespacecppxaml.html#afafed16f54ca92b64c37bff36e938a16">cppxaml::TextBlock</a>(t)</div>
+<div class="line">                         .Set(Grid::RowProperty(), (<span class="keywordtype">int</span>)index / 2)</div>
+<div class="line">                         .Set(Grid::ColumnProperty(), (<span class="keywordtype">int</span>)index % 2);</div>
+<div class="line">                };</div>
+<div class="line">            })</div>
+<div class="line">          );</div>
+<div class="ttc" id="anamespacecppxaml_1_1utils_html_ade2530c1a3c7013fc9a488200c73029c"><div class="ttname"><a href="namespacecppxaml_1_1utils.html#ade2530c1a3c7013fc9a488200c73029c">cppxaml::utils::transform_with_index</a></div><div class="ttdeci">auto transform_with_index(TInContainer const &amp;iterable, UnaryOp &amp;&amp;unary_op)</div><div class="ttdoc">Maps each element in a container via a unary operation on each element.</div><div class="ttdef"><b>Definition:</b> utils.h:100</div></div>
+</div><!-- fragment --><p >For more details see <code>cppxaml::transform</code> and <code>cppxaml::transform_with_index</code> in <a href="./namespacecppxaml_1_1utils.html">utils.h</a>.</p>
 <h3><a class="anchor" id="autotoc_md16"></a>
 Menus and icons</h3>
 <p >You can easily compose MenuFlyoutItems into a MenuFlyout, and also have a centralized menu handler callback: </p><div class="fragment"><div class="line"><span class="keyword">auto</span> menuFlyout = <a class="code hl_function" href="namespacecppxaml.html#a9e90daf79a70dbec5ad9370a8d4c841b">cppxaml::MenuFlyout</a>(</div>

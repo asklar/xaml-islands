@@ -110,7 +110,7 @@ namespace cppxaml {
          * @endcode
         */
         auto RaisePropertyChanged(std::wstring_view name) {
-            return m_propertyChanged(self(), cppxaml::xaml::Data::PropertyChangedEventHandler{name});
+            return m_propertyChanged(self(), cppxaml::xaml::Data::PropertyChangedEventArgs{name});
         }
     protected:
         winrt::event<cppxaml::xaml::Data::PropertyChangedEventHandler> m_propertyChanged;

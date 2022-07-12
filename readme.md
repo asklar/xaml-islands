@@ -232,9 +232,9 @@ Your app can create all its UI in code. Just set up the basic scaffolding, creat
 
 Things you'll need to worry about:
 
-a. Your app must reference the VCRT Forwarders NuGet package
-b. If you are using WinUI 2 in an unpackaged app, make sure you are using the *prerelease* package, or see Using framework packages
-c. If you are using a recent version of WinUI 2.x (which includes WebView2), there is a bug for non-UWP apps that prevents it from working out of the box. The bug will be fixed in upcoming versions (fix is checked in but not released yet). For the time being, you need to:
+- Your app must reference the VCRT Forwarders NuGet package
+- If you are using WinUI 2 in an unpackaged app, make sure you are using the *prerelease* package, or see Using framework packages
+- If you are using a recent version of WinUI 2.x (which includes WebView2), there is a bug for non-UWP apps that prevents it from working out of the box. The bug will be fixed in upcoming versions (fix is checked in but not released yet). For the time being, you need to:
   - Reference the [Microsoft.Web.WebView2](https://www.nuget.org/packages/Microsoft.Web.WebView2/) NuGet package
   - Set the property in your vcxproj so that the WebView2 package knows to use WinRT APIs, not the Win32 ones:
     ```xml
@@ -247,7 +247,7 @@ c. If you are using a recent version of WinUI 2.x (which includes WebView2), the
     1> type: Microsoft.UI.Xaml.Controls.IWebView2
     ```
 
-d. You need an application manifest to mark your app as working on 19h1 since that was the first XAML islands release:
+- You need an application manifest to mark your app as working on 19h1 since that was the first XAML islands release:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
 
@@ -286,7 +286,7 @@ d. You need an application manifest to mark your app as working on 19h1 since th
 </assembly>
 ```
 
-c. Your app needs to know how to activate the different WinRT types (including WinUI controls) that it references. You either need custom build logic (seen below) or you can use the [Unpackaged](https://www.nuget.org/packages/Unpackaged/) NuGet package to do this for you.
+- Your app needs to know how to activate the different WinRT types (including WinUI controls) that it references. You either need custom build logic (seen below) or you can use the [Unpackaged](https://www.nuget.org/packages/Unpackaged/) NuGet package to do this for you.
 
 ```xml
   <Target Name="_UnpackagedWin32MapWinmdsToManifestFiles" DependsOnTargets="ResolveAssemblyReferences">
@@ -316,7 +316,7 @@ c. Your app needs to know how to activate the different WinRT types (including W
   </Target>
 ```
 
-d. Your app will need to include WinUI's `resources.pri`. 
+- Your app will need to include WinUI's `resources.pri`. 
 If your app doesn't have its own set of resources (i.e. you don't have any .xaml markup files, nor any other resources), then your app can just rename Microsoft.UI.Xaml.pri to resources.pri and put this file next to your exe.
 If you are using the Unpackaged NuGet package (see above), you can set the MSBuild property `<HasOwnPriFiles>false</HasOwnPriFiles>` to automate this copy.
 

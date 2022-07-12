@@ -6,8 +6,8 @@ There are a few ways to use UWP XAML in a Win32 app via XAML islands. These opti
 
 0. You have a win32 desktop app
 1. Add [CppWinRT](https://www.nuget.org/packages/Microsoft.Windows.CppWinRT/) NuGet package.
-2. Add [VCRT forwarders](https://www.nuget.org/packages/Microsoft.VCRTForwarders.140/) NuGet package.
-3. [optional] Add the [Microsoft.Toolkit.Win32.UI.XamlApplication](https://www.nuget.org/packages/Microsoft.Toolkit.Win32.UI.XamlApplication/) NuGet package - or create your own application type; the following assumes you used this package
+2. Add [VCRT forwarders](https://www.nuget.org/packages/Microsoft.VCRTForwarders.140/) NuGet package. -- or use the [Hybrid CRT](https://github.com/microsoft/WindowsAppSDK/blob/main/docs/Coding-Guidelines/HybridCRT.md)
+3. [optional] Add the [Microsoft.Toolkit.Win32.UI.XamlApplication](https://www.nuget.org/packages/Microsoft.Toolkit.Win32.UI.XamlApplication/) NuGet package -- or create your own application type; the following assumes you used this package
 
 ```cpp
 

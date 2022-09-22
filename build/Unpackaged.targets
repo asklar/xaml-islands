@@ -30,7 +30,7 @@
   <Target Name="_UnpackagedWin32GenerateAdditionalWinmdManifests" Inputs="@(_UnpackagedWin32WinmdManifest.WinMDPath)" Outputs="@(_UnpackagedWin32WinmdManifest)" DependsOnTargets="_UnpackagedWin32MapWinmdsToManifestFiles">
     <Message Text="Generating manifest for %(_UnpackagedWin32WinmdManifest.WinMDPath)" Importance="High" />
     <!-- This target is batched and a new Exec is spawned for each entry in _UnpackagedWin32WinmdManifest. -->
-    <Exec Command="mt.exe -winmd:%(_UnpackagedWin32WinmdManifest.WinMDPath) -dll:%(_UnpackagedWin32WinmdManifest.Implementation) -out:%(_UnpackagedWin32WinmdManifest.Identity)" />
+    <Exec Command="mt.exe -winmd:%(_UnpackagedWin32WinmdManifest.WinMDPath) -dll:%(_UnpackagedWin32WinmdManifest.Implementation) -out:%(_UnpackagedWin32WinmdManifest.Identity) -nologo" />
     <ItemGroup>
       <!-- Emit the generated manifest into the Link inputs. -->
       <Manifest Include="@(_UnpackagedWin32WinmdManifest)" />

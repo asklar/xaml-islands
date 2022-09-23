@@ -243,7 +243,7 @@ namespace cppxaml {
             void SetEventHandlers(bool caseInsensitive) {
                 m_caseInsensitive = caseInsensitive;
                 // work around MSVC bug: https://developercommunity.visualstudio.com/t/c3779-when-using-type-in-a-class-method-in-a-templ/1617634
-                auto GetReason = [](cppxaml::xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args) -> winrt::Windows::UI::Xaml::Controls::AutoSuggestBoxTextChangedEventArgs { return args.Reason(); };
+                auto GetReason = [](cppxaml::xaml::Controls::AutoSuggestBoxTextChangedEventArgs const& args) -> cppxaml::xaml::Controls::AutoSuggestionBoxTextChangeReason { return args.Reason(); };
                 m_textChangedToken = m_value.TextChanged([GetReason, caseInsensitive, items = this->m_items](cppxaml::xaml::Controls::AutoSuggestBox sender, cppxaml::xaml::Controls::AutoSuggestBoxTextChangedEventArgs args) {
                     if (GetReason(args) == cppxaml::xaml::Controls::AutoSuggestionBoxTextChangeReason::UserInput) {
                         std::wstring search = caseInsensitive ? utils::tolower(sender.Text()) : sender.Text().c_str();

@@ -2,7 +2,8 @@
 //
 
 #include "framework.h"
-#include "WindowsProject1.h"
+#include "resource.h"
+
 #include <Windows.UI.Xaml.Hosting.DesktopWindowXamlSource.h>
 
 #include <winrt/base.h>

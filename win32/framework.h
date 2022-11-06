@@ -14,6 +14,9 @@
 #include <memory.h>
 #include <tchar.h>
 
+#undef GetCurrentTime
+#include <winrt/base.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.XamlTypeInfo.h>
 #include <winrt/Windows.Foundation.Collections.h>
+

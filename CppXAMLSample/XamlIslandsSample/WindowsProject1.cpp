@@ -19,7 +19,7 @@
 #include <functional>
 #include <winrt/MarkupSample.h>
 
-#include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
+#include "XamlApplication.cpp"
 
 using namespace winrt;
 using namespace Windows::UI::Xaml::Controls;

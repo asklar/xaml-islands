@@ -176,11 +176,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="Mica.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="WindowsProject1.h" />
-    <ClInclude Include="XamlWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <!-- <ClCompile Include="Mica.cpp" /> -->
@@ -236,7 +232,7 @@
     <!-- This target is batched and a new Exec is spawned for each entry in _UnpackagedWin32WinmdManifest. -->
     <Exec Command="mt.exe -winmd:%(_UnpackagedWin32WinmdManifest.WinMDPath) -dll:%(_UnpackagedWin32WinmdManifest.Implementation) -out:%(_UnpackagedWin32WinmdManifest.Identity)" />
     <ItemGroup>
-     <!-- Emit the generated manifest into the Link inputs. Pass a metadata name that isn't used to wipe all 
+      <!-- Emit the generated manifest into the Link inputs. Pass a metadata name that isn't used to wipe all 
           metadata because otherwise VS tries copying the manifest to the output as %(FileName).winmd. -->
       <Manifest Include="@(_UnpackagedWin32WinmdManifest)" KeepMetadata="DoesntExist" />
     </ItemGroup>

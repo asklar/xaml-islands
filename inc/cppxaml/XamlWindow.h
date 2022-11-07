@@ -279,13 +279,13 @@ namespace cppxaml {
             return (int)msg.wParam;
         }
 
+        mutable HWND m_hWndXamlIsland{ nullptr };
         HWND GetBridgeWindow() const {
-            static HWND hWndXamlIsland = nullptr;
-            if (!hWndXamlIsland) {
+            if (!m_hWndXamlIsland) {
                 auto interop = m_desktopXamlSource.as<IDesktopWindowXamlSourceNative>();
-                winrt::check_hresult(interop->get_WindowHandle(&hWndXamlIsland));
+                winrt::check_hresult(interop->get_WindowHandle(&m_hWndXamlIsland));
             }
-            return hWndXamlIsland;
+            return m_hWndXamlIsland;
         }
 
         LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -298,7 +298,7 @@ namespace cppxaml {
                 auto createStruct = reinterpret_cast<LPCREATESTRUCT>(lParam);
 
                 // Parent the DesktopWindowXamlSource object to the current window.
-                winrt::check_hresult(interop->AttachToWindow(m_hWnd));  // This fails due to access violation!
+                winrt::check_hresult(interop->AttachToWindow(m_hWnd));
 
                 this->m_ui = this->m_getUI(*this);
                 if (m_controller && m_controller->OnUICreated) {

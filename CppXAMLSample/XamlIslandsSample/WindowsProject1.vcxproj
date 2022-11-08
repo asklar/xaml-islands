@@ -245,6 +245,13 @@
       <AdditionalIncludeDirectories Condition="'$(UseLocalInc)'=='true'">%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)\..\..\inc</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
+  <ItemGroup Condition="'$(IncludeXamlApplication)'!='false' And '$(UseLocalInc)'=='true'">
+    <Midl Include="$(MSBuildThisFileDirectory)\..\..\..\inc\XamlApplication.idl"/>
+    <ClInclude Include="$(MSBuildThisFileDirectory)\..\..\..\inc\XamlApplication.h">
+      <DependentUpon>$(MSBuildThisFileDirectory)\..\..\..\inc\XamlApplication.idl</DependentUpon>
+    </ClInclude>
+  </ItemGroup>
+
   <!--
     Custom build step:
       In an unpackaged app, MRT requires resources.pri in order to find resources. MUXC has resources it needs to work (theme assets).

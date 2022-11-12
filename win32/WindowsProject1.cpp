@@ -53,6 +53,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     winrt::init_apartment(apartment_type::single_threaded);
 
+    cppxaml::InitializeWinUI();
     auto winuiIXMP = winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider();
     auto markupIXMP = winrt::AppMarkup::XamlMetaDataProvider();
     xapp = winrt::make_application(winuiIXMP, markupIXMP);

@@ -49,4 +49,10 @@
     <Move SourceFiles="$(OutDir)\Microsoft.UI.Xaml.pri" DestinationFiles="$(OutDir)\resources.pri" />
   </Target>
 
+  <ItemGroup Condition="'$(IncludeXamlApplication)'!='false'">
+    <Midl Include="$(MSBuildThisFileDirectory)\..\..\inc\XamlApplication.idl"/>
+    <ClInclude Include="$(MSBuildThisFileDirectory)\..\..\inc\XamlApplication.h">
+      <DependentUpon>$(MSBuildThisFileDirectory)\..\..\inc\XamlApplication.idl</DependentUpon>
+    </ClInclude>
+  </ItemGroup>
 </Project>

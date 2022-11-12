@@ -20,7 +20,7 @@
 #include <functional>
 #include <winrt/MarkupSample.h>
 
-#include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
+#include "XamlApplication.h"
 
 using namespace winrt;
 using namespace Windows::UI::Xaml::Controls;
@@ -148,7 +148,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     auto winuiIXMP = winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider();
     auto markupIXMP = winrt::MarkupSample::XamlMetaDataProvider();
 
-    auto xapp = winrt::Microsoft::Toolkit::Win32::UI::XamlHost::XamlApplication({ winuiIXMP, markupIXMP });
+    auto xapp = winrt::make_application(winuiIXMP, markupIXMP);
 
     cppxaml::AppController controller(hInstance, xapp);
 

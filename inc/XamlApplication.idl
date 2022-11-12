@@ -1,0 +1,8 @@
+namespace CppXaml
+{
+  runtimeclass XamlApplication : Windows.UI.Xaml.Application, Windows.UI.Xaml.Markup.IXamlMetadataProvider, Windows.Foundation.IClosable
+  {
+    Windows.Foundation.Collections.IVector<Windows.UI.Xaml.Markup.IXamlMetadataProvider> MetadataProviders{ get; };
+    Windows.Foundation.IClosable WindowsXamlManager{ get; };
+  }
+}

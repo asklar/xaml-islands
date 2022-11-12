@@ -12,8 +12,8 @@
 #include <winrt/Windows.UI.Xaml.Hosting.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
 #include <winrt/Windows.UI.Xaml.Markup.h>
-#include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
 
+#include <XamlApplication.h>
 #include <winrt/AppMarkup.h>
 
 using namespace winrt;
@@ -21,7 +21,7 @@ using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Hosting;
 
-using namespace Microsoft::Toolkit::Win32::UI::XamlHost;
+using namespace CppXaml;
 
 XamlApplication xapp{ nullptr };
 
@@ -55,9 +55,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     auto winuiIXMP = winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider();
     auto markupIXMP = winrt::AppMarkup::XamlMetaDataProvider();
-
-    xapp = XamlApplication({winuiIXMP, markupIXMP});
-
+    xapp = winrt::make_application(winuiIXMP, markupIXMP);
+    
     WindowsXamlManager winxamlmanager = WindowsXamlManager::InitializeForCurrentThread();
     xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());
 

@@ -55,11 +55,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     auto winuiIXMP = winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider();
     auto markupIXMP = winrt::AppMarkup::XamlMetaDataProvider();
-    
-    xapp = winrt::make<implementation::XamlApplication>();
-    // TODO: fix passing providers in ctor
-    xapp.MetadataProviders().Append(winuiIXMP);
-    xapp.MetadataProviders().Append(markupIXMP);
+    xapp = winrt::make_application(winuiIXMP, markupIXMP);
     
     WindowsXamlManager winxamlmanager = WindowsXamlManager::InitializeForCurrentThread();
     xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());

@@ -7,7 +7,7 @@ There are a few ways to use UWP XAML in a Win32 app via XAML islands. These opti
 0. You have a win32 desktop app
 1. Add [CppWinRT](https://www.nuget.org/packages/Microsoft.Windows.CppWinRT/) NuGet package.
 2. Add [VCRT forwarders](https://www.nuget.org/packages/Microsoft.VCRTForwarders.140/) NuGet package. -- or use the [Hybrid CRT](https://github.com/microsoft/WindowsAppSDK/blob/main/docs/Coding-Guidelines/HybridCRT.md)
-3. [optional] Add the [Microsoft.Toolkit.Win32.UI.XamlApplication](https://www.nuget.org/packages/Microsoft.Toolkit.Win32.UI.XamlApplication/) NuGet package -- or create your own application type; the following assumes you used this package
+3. Add the [Unpackaged](https://www.nuget.org/packages/Unpackaged/) NuGet package -- or create your own application type; the following assumes you used this package
 
 ```cpp
 
@@ -19,7 +19,7 @@ There are a few ways to use UWP XAML in a Win32 app via XAML islands. These opti
 #include <winrt/Windows.UI.Xaml.h>
 #include <winrt/Windows.UI.Xaml.Hosting.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
-#include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
+#include "XamlApplication.h"
 
 // Needed if you have a Runtime Component to host markup
 #include <winrt/AppMarkup.h>
@@ -31,7 +31,7 @@ using namespace Windows::UI::Xaml::Hosting;
 
 using namespace Microsoft::Toolkit::Win32::UI::XamlHost;
 
-XamlApplication xapp{ nullptr };
+CppXaml::XamlApplication xapp{ nullptr };
 
 // This DesktopWindowXamlSource is the object that enables a non-UWP desktop application 
 // to host WinRT XAML controls in any UI element that is associated with a window handle (HWND).
@@ -55,7 +55,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     auto markupIXMP = winrt::AppMarkup::XamlMetaDataProvider();
 
     // remove the IXMPs that you don't need
-    xapp = XamlApplication({winuiIXMP, markupIXMP});
+    xapp = winrt::make_application(winuiIXMP, markupIXMP);
 
     WindowsXamlManager winxamlmanager = WindowsXamlManager::InitializeForCurrentThread();
     // needed if using WinUI

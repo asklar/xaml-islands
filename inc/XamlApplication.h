@@ -9,7 +9,7 @@ namespace winrt::CppXaml::implementation
     {
         XamlApplication() = default;
 
-        XamlApplication(winrt::Windows::Foundation::Collections::IVector<winrt::Windows::UI::Xaml::Markup::IXamlMetadataProvider> const& providers)
+        XamlApplication(std::initializer_list<winrt::Windows::UI::Xaml::Markup::IXamlMetadataProvider> providers)
         {
             for (auto&& provider : providers)
             {
@@ -99,9 +99,10 @@ namespace winrt::CppXaml::implementation
     };
 }
 
-namespace winrt::CppXaml::factory_implementation
-{
-    struct XamlApplication : XamlApplicationT<XamlApplication, implementation::XamlApplication>
-    {
-    };
+namespace winrt {
+  template<typename... TProviders>
+  winrt::CppXaml::XamlApplication make_application(TProviders&&... providers)
+  {
+    return winrt::make<winrt::CppXaml::implementation::XamlApplication>(std::initializer_list<winrt::Windows::UI::Xaml::Markup::IXamlMetadataProvider>{providers...});
+  }
 }

@@ -147,9 +147,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     auto winuiIXMP = winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider();
     auto markupIXMP = winrt::MarkupSample::XamlMetaDataProvider();
 
-    auto xapp = winrt::make<CppXaml::implementation::XamlApplication>();
-    xapp.MetadataProviders().Append(winuiIXMP);
-    xapp.MetadataProviders().Append(markupIXMP);
+    auto xapp = winrt::make_application(winuiIXMP, markupIXMP);
 
     cppxaml::AppController controller(hInstance, xapp);
 

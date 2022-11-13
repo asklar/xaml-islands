@@ -184,6 +184,13 @@ Functions</h2></td></tr>
 <tr class="memitem:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a0f5c28d135987dff385c3b35f3cbf7f3">FindChildByName</a> (cppxaml::xaml::DependencyObject d, std::wstring_view name)</td></tr>
 <tr class="memdesc:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a XAML element by name.  <a href="namespacecppxaml.html#a0f5c28d135987dff385c3b35f3cbf7f3">More...</a><br /></td></tr>
 <tr class="separator:a0f5c28d135987dff385c3b35f3cbf7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75a1b91815b9a6680a95deb04a805e24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecppxaml.html#a75a1b91815b9a6680a95deb04a805e24">InitializeWinUI</a> (uint8_t minorVersion=8)</td></tr>
+<tr class="memdesc:a75a1b91815b9a6680a95deb04a805e24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamically initializes WinUI 2. This API works on Windows 11 and newer. Adds the WinUI 2 framework package to the process's package graph. This enables unpackaged applications to use the stable (non-prerelease) WinUI 2 NuGet package.   <a href="namespacecppxaml.html#a75a1b91815b9a6680a95deb04a805e24">More...</a><br /></td></tr>
+<tr class="separator:a75a1b91815b9a6680a95deb04a805e24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7280a127fba451462558d3e35f2e3583"><td class="memItemLeft" align="right" valign="top"><a id="a7280a127fba451462558d3e35f2e3583" name="a7280a127fba451462558d3e35f2e3583"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UninitializeWinUI</b> ()</td></tr>
+<tr class="memdesc:a7280a127fba451462558d3e35f2e3583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a reference to WinUI from the process's package graph.  <br /></td></tr>
+<tr class="separator:a7280a127fba451462558d3e35f2e3583"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >The main CppXAML namespace. </p>
@@ -449,6 +456,32 @@ Example usage:<br  />
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="a75a1b91815b9a6680a95deb04a805e24" name="a75a1b91815b9a6680a95deb04a805e24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75a1b91815b9a6680a95deb04a805e24">&#9670;&#160;</a></span>InitializeWinUI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cppxaml::InitializeWinUI </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>minorVersion</em> = <code>8</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Dynamically initializes WinUI 2. This API works on Windows 11 and newer. Adds the WinUI 2 framework package to the process's package graph. This enables unpackaged applications to use the stable (non-prerelease) WinUI 2 NuGet package.  </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">minorVersion</td><td>Optional minor version. Defaults to 8 (for 2.8)</td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

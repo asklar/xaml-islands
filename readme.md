@@ -7,7 +7,7 @@ There are a few ways to use UWP XAML in a Win32 app via XAML islands. These opti
 0. You have a win32 desktop app
 1. Add [CppWinRT](https://www.nuget.org/packages/Microsoft.Windows.CppWinRT/) NuGet package.
 2. Add [VCRT forwarders](https://www.nuget.org/packages/Microsoft.VCRTForwarders.140/) NuGet package. -- or use the [Hybrid CRT](https://github.com/microsoft/WindowsAppSDK/blob/main/docs/Coding-Guidelines/HybridCRT.md)
-3. Add the [Unpackaged](https://www.nuget.org/packages/Unpackaged/) NuGet package -- or create your own application type; the following assumes you used this package
+3. Add the [Unpackaged](https://www.nuget.org/packages/Unpackaged/) NuGet package -- or create your own application type; the following assumes you used this package.
 
 ```cpp
 
@@ -28,8 +28,6 @@ using namespace winrt;
 using namespace Windows::UI::Xaml::Controls;
 using namespace Windows::UI::Xaml;
 using namespace Windows::UI::Xaml::Hosting;
-
-using namespace Microsoft::Toolkit::Win32::UI::XamlHost;
 
 CppXaml::XamlApplication xapp{ nullptr };
 
@@ -233,20 +231,9 @@ Your app can create all its UI in code. Just set up the basic scaffolding, creat
 Things you'll need to worry about:
 
 - Your app must reference the VCRT Forwarders NuGet package
-- If you are using WinUI 2 in an unpackaged app, make sure you are using the *prerelease* package, or see Using framework packages
-- If you are using a recent version of WinUI 2.x (which includes WebView2), there is a bug for non-UWP apps that prevents it from working out of the box. The bug will be fixed in upcoming versions (fix is checked in but not released yet). For the time being, you need to:
-  - Reference the [Microsoft.Web.WebView2](https://www.nuget.org/packages/Microsoft.Web.WebView2/) NuGet package
-  - Set the property in your vcxproj so that the WebView2 package knows to use WinRT APIs, not the Win32 ones:
-    ```xml
-    <WebView2UseWinRT>true</WebView2UseWinRT>
-    ```
-    If you don't do this, you will get an error like:
-    ```
-    1>cppwinrt : error Type 'Microsoft.Web.WebView2.Core.CoreWebView2' could not be found
-    1> method: CoreWebView2
-    1> type: Microsoft.UI.Xaml.Controls.IWebView2
-    ```
-
+- If you are using WinUI 2 in an unpackaged app:
+  - If your app needs to run on Windows 10, make sure you are using the *prerelease* package, or see [Using framework packages](#using-framework-packages).
+  - If your app only needs to run on Windows 11, you can use the `cppxaml::InitializeWinUI()` API.
 - You need an application manifest to mark your app as working on 19h1 since that was the first XAML islands release:
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -330,7 +317,6 @@ To merge the PRIs:
 1) Create a file `pri.resfiles` in your project, and list the set of PRI files your project depends on:
 ```
 C:\Users\asklar\source\repos\xaml-islands\AppMarkup\debug\AppMarkup\AppMarkup.pri
-C:\Users\asklar\source\repos\xaml-islands\win32\packages\Microsoft.Toolkit.Win32.UI.XamlApplication.6.1.3\runtimes\win10-x86\native\Microsoft.Toolkit.Win32.UI.XamlHost.pri
 C:\Users\asklar\source\repos\xaml-islands\win32\packages\Microsoft.UI.Xaml.2.8.0-prerelease.210927001\runtimes\win10-x86\native\Microsoft.UI.Xaml.pri
 ```
 
@@ -366,10 +352,14 @@ makepri new /pr . /cf .\priconfig.xml /of .\debug\resources.pri /o
 
 Apps that use WinUI stable releases don't actually ship the WinUI 2 bits in their package, instead they declare a dependency and Windows will download the right framework package - which is shared with other apps installed on the system.
 
-
 However unpackaged apps need a way to discover these framework packages. This is possible via using the Dynamic Dependencies API to add the WinUI package to your package graph (new in Windows 11, and also available separate from the Windows SDK as part of the Windows App SDK). Your app installer may also need to do more work to register the dependency.
 
-Alternatively, you can reference *prerelease* NuGet packages of WinUI, which means you'll carry the WinUI 2 bits in your app, but also means you don't have to worry about framework packages.
+If your app only needs to run on Windows 11, you can use this API just before creating any WinUI objects:
+```cpp
+  cppxaml::InitializeWinUI();   // this takes an optional value corresponding to the minor version in 2.x, defaults to 8.
+```
+
+Alternatively, you can reference *prerelease* NuGet packages of WinUI, which means you'll carry the WinUI 2 bits in your app, but also means you don't have to worry about framework packages and it works on Windows 10 too.
 
 # Accessing Win32 APIs from the Runtime Component
 Since the runtime component will be desktop-only, it is okay for it to call non-UWP APIs.

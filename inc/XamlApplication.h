@@ -2,6 +2,8 @@
 
 #include "CppXaml.XamlApplication.g.h"
 #include <winrt/Windows.UI.Xaml.Hosting.h>
+#include <appmodel.h>
+#include <strsafe.h>
 
 namespace winrt::CppXaml::implementation
 {
@@ -104,5 +106,48 @@ namespace winrt {
   winrt::CppXaml::XamlApplication make_application(TProviders&&... providers)
   {
     return winrt::make<winrt::CppXaml::implementation::XamlApplication>(std::initializer_list<winrt::Windows::UI::Xaml::Markup::IXamlMetadataProvider>{providers...});
+  }
+}
+
+#pragma comment(lib, "onecoreuap_apiset.lib")
+
+namespace cppxaml {
+  namespace details {
+    PWSTR g_winUIDepId{};
+    PACKAGEDEPENDENCY_CONTEXT g_ctx{};
+  }
+
+  /// <summary>
+  /// Dynamically initializes WinUI 2. This API works on Windows 11 and newer.
+  /// Adds the WinUI 2 framework package to the process's package graph.
+  /// This enables unpackaged applications to use the stable (non-prerelease) WinUI 2 NuGet package.
+  /// </summary>
+  /// <param name="minorVersion">Optional minor version. Defaults to 8 (for 2.8)</param>
+  void InitializeWinUI(uint8_t minorVersion = 8) {
+
+    if (details::g_winUIDepId == nullptr) {
+      PACKAGE_VERSION minVersion{};
+      minVersion.Major = minorVersion;
+
+      constexpr const std::wstring_view winuiPackageFamilyNameTemplate{ L"Microsoft.UI.Xaml.2.%d_8wekyb3d8bbwe" };
+      wchar_t pfn[PACKAGE_FAMILY_NAME_MAX_LENGTH]{};
+      winrt::check_hresult(StringCchPrintf(pfn, std::size(pfn), winuiPackageFamilyNameTemplate.data(), minorVersion));
+
+      winrt::check_hresult(TryCreatePackageDependency(nullptr, pfn, minVersion,
+        PackageDependencyProcessorArchitectures_None, PackageDependencyLifetimeKind_Process,
+        nullptr, CreatePackageDependencyOptions_None, &details::g_winUIDepId));
+    }
+
+    PWSTR packageFullName{};
+
+    winrt::check_hresult(AddPackageDependency(details::g_winUIDepId, 0, AddPackageDependencyOptions_None, &details::g_ctx, &packageFullName));
+  }
+
+  /// <summary>
+  /// Removes a reference to WinUI from the process's package graph.
+  /// </summary>
+  void UninitializeWinUI() {
+    winrt::check_hresult(RemovePackageDependency(details::g_ctx));
+    // should HeapFree g_winUIDepId - but do it in a refcounted way
   }
 }

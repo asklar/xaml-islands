@@ -55,4 +55,11 @@
       <DependentUpon>$(MSBuildThisFileDirectory)\..\..\inc\XamlApplication.idl</DependentUpon>
     </ClInclude>
   </ItemGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <ManifestInput Condition="'$(IncludeXamlIslandsManifest)'!='false'">%(ManifestInput);$(MSBuildThisFileDirectory)..\inc\xaml-islands.manifest</ManifestInput>
+      <ManifestInput Condition="'$(IncludePerMonitorV2Manifest)'!='false'">%(ManifestInput);$(MSBuildThisFileDirectory)..\inc\per-monitor-v2.manifest</ManifestInput>
+
+    </Link>
+  </ItemDefinitionGroup>
 </Project>

@@ -7,7 +7,9 @@
         WARNING - DO NOT CHANGE THE maxversiontested VALUE 
         Microsoft internal - see https://task.ms/33672605
       -->
-      <maxversiontested Id="10.0.18362.0"/>
+      <maxversiontested Id="10.0.18362.0" />
+      <!-- Enables Segoe UI Variable font on Windows 11 -->
+      <maxversiontested Id="10.0.22000.0" />
     </application>
   </compatibility>
 </assembly>

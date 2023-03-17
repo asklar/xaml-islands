@@ -241,9 +241,11 @@ Things you'll need to worry about:
 <assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3">
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1"> 
     <application> 
-      <!--This Id value indicates the application supports Windows 10 functionality -->
+      <!-- This Id value indicates the application supports Windows 10 functionality -->
       <supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />
-      <maxversiontested Id="10.0.18362.0"/>
+      <maxversiontested Id="10.0.18362.0" />
+      <!-- Enables Segoe UI Variable font on Windows 11 -->
+      <maxversiontested Id="10.0.22000.0" />
     </application>
   </compatibility>
 
